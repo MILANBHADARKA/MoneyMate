@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyMate - Your stress-free solution for group expenses.</title>
+</head>
+<body>
+    <div>
+        <h1>Profile</h1>
+        <div>
+
+            <img style="max-width: 25px; max-height: 25px;" src="/images/uploads/<%= user.profilepic %>" alt="Profile Picture">
+
+            <h2><%= user.username %></h2>
+            <h3><%= user.email %></h3>
+    
+
+            <form action="/logout" method="post">
+                <a href="/logout"><button type="submit">Logout</button></a>
+            </form>
+
+
+        </div>
+    </div>
+</body>
+</html>
