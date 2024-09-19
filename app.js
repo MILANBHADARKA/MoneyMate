@@ -16,7 +16,7 @@ const upload = require('./config/multerconfig');
 
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const session = require('express-session');
+// const session = require('express-session');
 
 
 // Load environment variables
@@ -27,11 +27,23 @@ const userModel = require('./models/user.model.js');
 
 
 // Add session middleware
+// app.use(session({
+//     secret: process.env.SESSION_SECRET, // Store a random secret key in .env
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false } // Should be true if using HTTPS
+// }));
+
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 app.use(session({
-    secret: process.env.SESSION_SECRET, // Store a random secret key in .env
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // Should be true if using HTTPS
+  secret: process.env.SESSION_SECRET,  // Replace with a secure secret
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,  // Use the MongoDB Atlas URI
+  })
 }));
 
 
