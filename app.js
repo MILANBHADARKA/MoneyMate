@@ -10,6 +10,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+app.use(express.static('public'));
 
 const connectDB = require('./config/db'); // Import the database connection
 const upload = require('./config/multerconfig');
