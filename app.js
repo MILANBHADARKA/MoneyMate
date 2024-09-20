@@ -14,7 +14,7 @@ app.use(express.static('public'));
 
 // Serve the favicon
 const favicon = require('serve-favicon');
-app.use(favicon(path.join(__dirname, 'public', 'images', 'one.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'logo.ico')));
 
 
 const connectDB = require('./config/db'); // Import the database connection
