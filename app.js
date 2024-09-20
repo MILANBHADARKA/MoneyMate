@@ -12,17 +12,11 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 app.use(express.static('public'));
 
-// Serve the favicon
-const favicon = require('serve-favicon');
-app.use(favicon(path.join(__dirname, 'public', 'images', 'logo.ico')));
-
-
 const connectDB = require('./config/db'); // Import the database connection
 const upload = require('./config/multerconfig');
 
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-// const session = require('express-session');
 
 
 // Load environment variables
@@ -30,15 +24,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
 const userModel = require('./models/user.model.js');
-
-
-// Add session middleware
-// app.use(session({
-//     secret: process.env.SESSION_SECRET, // Store a random secret key in .env
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false } // Should be true if using HTTPS
-// }));
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -51,7 +36,6 @@ app.use(session({
     mongoUrl: process.env.MONGO_URI,  // Use the MongoDB Atlas URI
   })
 }));
-
 
 // Send OTP via email
 let transporter = nodemailer.createTransport({
@@ -89,18 +73,15 @@ app.post('/registration', upload.single('profilepic'), async (req, res) => {
     const { username, email, password, confirmPassword } = req.body;
 
     if (!username || !email || !password || !confirmPassword) {
-        // return res.status(400).send('All fields are required');
         return res.render('registration', { error: 'All fields are required', username, email });         //6
     }
 
     let user = await userModel.findOne({ email: email });
     if (user) {
-        // return res.status(400).send('User already exists');
         return res.render('registration', { error: 'User already exists', username, email });      //5
     }
 
     if (password !== confirmPassword) {
-        // return res.status(400).send('Passwords do not match');
         return res.render('registration', { error: 'Passwords do not match', username, email });      //7
     }
 
@@ -143,13 +124,11 @@ app.get('/verify-otp', (req, res) => {
 
     // Check if tempUser exists in session
     if (!req.session.tempUser || req.session.tempUser.email !== email) {
-        // return res.status(400).send('Session expired or invalid email');
-        // return res.render('verify-otp', { error: 'Session expired or invalid email', email });                    //1
         return res.render('registration', { error: 'Session expired or invalid email'} );                    //1
     }
 
     res.render('verify-otp', { email });
-    // res.render('/registration', { email });
+
 });
 
 app.post('/verify-otp', async (req, res) => {
@@ -157,21 +136,16 @@ app.post('/verify-otp', async (req, res) => {
 
     // Check if tempUser exists in session
     if (!req.session.tempUser || req.session.tempUser.email !== email) {
-        // return res.status(400).send('Session expired or invalid email');
-        // return res.render('verify-otp', { error: 'Session expired or invalid email', email });          //4
         return res.render('registration', { error: 'Session expired or invalid email'} );        //4
     }
 
     const tempUser = req.session.tempUser;
 
     if (tempUser.otpexpires < Date.now()) {
-        // return res.status(400).send('OTP expired');
-        // return res.render('verify-otp', { error: 'OTP expired', email });           //2
         return res.render('registration', { error: 'OTP expired'} );           //2
     }
 
     if (tempUser.otp !== parseInt(otp)) {
-        // return res.status(400).send('Invalid OTP');
         return res.render('verify-otp', { error: 'Invalid OTP', email });            //3
     }
 
@@ -204,14 +178,12 @@ app.post('/login', async (req,res) => {
     let user = await userModel.findOne({ email: email });
 
     if(!user){
-        // res.status(400).send('User not found');
         return res.render('login', { error: 'Invalid credentials', email });          //1
     }
 
     let isMatch = await bcrypt.compare(password, user.password);
 
     if(!isMatch){
-        // res.status(400).send('Invalid credentials');
         return res.render('login', { error: 'Invalid credentials', email });          //2
     }
 
@@ -251,18 +223,14 @@ app.post('/verify-otp-login', async (req,res) => {
     let user = await userModel.findOne({ email: email });
 
     if(!user){
-        // res.status(400).send('User not found');
         return res.render('login', { error: 'User not found', email });          //1
     }
 
     if (user.otpexpires < Date.now()) {
-        // return res.status(400).send('OTP expired');
-        // return res.render('verify-otp', { error: 'OTP expired', email });           //2
         return res.render('login', { error: 'OTP expired'} );           //2
     }
 
     if (user.otp !== parseInt(otp)) {
-        // return res.status(400).send('Invalid OTP');
         return res.render('verify-otp-login', { error: 'Invalid OTP', email });            //3
     }
 
@@ -298,10 +266,6 @@ function isLoggedIn (req, res, next) {
         next();
     });
 }
-
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`)
-// })
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`)
