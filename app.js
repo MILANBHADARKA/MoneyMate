@@ -18,6 +18,11 @@ const upload = require('./config/multerconfig');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
+//feviccon
+const favicon = require('serve-favicon');
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+
 
 // Load environment variables
 const JWT_SECRET = process.env.JWT_SECRET;  
