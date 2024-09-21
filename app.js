@@ -20,7 +20,10 @@ const crypto = require('crypto');
 
 //feviccon
 const favicon = require('serve-favicon');
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/fevicon.ico'));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 
 
