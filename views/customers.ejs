@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {},
+                    spacing: {},
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- for each loop for each customer detail show like room  -->
+
+    <% customers.forEach(customer => { %>
+        <a href="/customerdetail/<%= customer._id %>">
+            <div class="bg-gray-200 p-4 m-4">
+                <h1 class="text-2xl font-bold">Customer Name: <%= customer.name %></h1>  
+
+                <a href="/editcustomer/<%= customer._id %>"><button class="bg-blue-500 text-white p-2 m-2">Edit</button></a>
+                <a href="/deletecustomer/<%= customer._id %>"><button class="bg-red-500 text-white p-2 m-2">Delete</button></a>
+            </div>
+        </a>
+    <% }) %>
+
+
+    <a href="/addcustomer"><button class="bg-blue-500 text-white p-2 m-2">Add Customer</button></a>
+
+</body>
+</html>

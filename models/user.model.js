@@ -24,7 +24,13 @@ const userSchema = new mongoose.Schema({
     otpexpires:{
         type: Date,
         required: false
-    }
+    },
+    customers:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Customer'
+        },
+    ]
 })
 
 module.exports = mongoose.model('user', userSchema);

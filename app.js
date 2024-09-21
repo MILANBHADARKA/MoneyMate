@@ -24,6 +24,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
 const userModel = require('./models/user.model.js');
+const customerModel = require('./models/customer.model.js');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -253,6 +254,163 @@ app.get('/profile', isLoggedIn , async (req,res) => {
 app.post('/logout', (req,res) => {
     res.clearCookie('token');
     res.redirect('/');
+})
+
+app.get('/customers', isLoggedIn , async (req,res) => {
+
+    let user = await userModel.findOne({ email: req.user.email }).populate('customers');   //populate is used to get the details of the customers
+
+    let customers = user.customers;
+
+    res.render('customers', { customers: customers });
+})
+
+app.get('/addcustomer', isLoggedIn , (req,res) => {
+    res.render('addcustomer');
+})
+
+app.post('/addcustomer', isLoggedIn , async (req,res) => {
+
+    let user = await userModel.findOne({ email: req.user.email });
+    const { name } = req.body;
+
+    let customer = new customerModel({
+        name: name,
+        user: user._id
+    });
+    await customer.save();
+
+    user.customers.push(customer._id);
+    await user.save();
+
+    res.redirect('/customers');
+})
+
+app.get('/customerdetail/:id', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    res.render('customerdetail', { customer: customer });
+})
+
+app.get('/customers', isLoggedIn, async (req, res) => {
+    try {
+        let user = await userModel.findOne({ email: req.user.email });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Provide a default value if user.customers is undefined
+        let customers = user.customers || [];
+
+        res.render('customers', { customers: customers });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get('/addcustomer', isLoggedIn , (req,res) => {
+    res.render('addcustomer');
+})
+
+app.post('/addcustomer', isLoggedIn , async (req,res) => {
+    
+        let user = await userModel.findOne({ email: req.user.email });
+        const { name } = req.body;
+
+        let customer = new customerModel({
+            name: name,
+        });
+
+        user.customers.push(customer);
+        await user.save();
+
+        res.redirect('/customers');
+})
+
+app.get('/editcustomer/:id', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    res.render('editcustomer', { customer: customer });
+})
+
+app.post('/editcustomer/:id', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    const { newname } = req.body;
+
+    customer.name = newname;
+
+    await customer.save();
+
+    res.redirect('/customers');
+})
+
+app.get('/deletecustomer/:id', isLoggedIn , async (req,res) => {
+    let user = await userModel.findOne({ email: req.user.email });
+
+    user.customers.pull(req.params.id);
+
+    await user.save();
+
+    await customerModel.findByIdAndDelete(req.params.id);
+
+    res.redirect('/customers');
+});
+
+app.get('/addentry/:id', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    res.render('addentry', { customer: customer });
+})
+
+app.post('/addentry/:id', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    const { entry, reason } = req.body;
+
+    customer.entries.push({
+        entry: entry,
+        reason: reason
+    });
+
+    await customer.save();
+
+    res.redirect(`/customerdetail/${req.params.id}`);
+})
+
+app.get('/editentry/:id/:entryid', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    let entry = customer.entries.id(req.params.entryid);
+
+    res.render('editentry', { customer: customer, entry: entry });
+})
+
+app.post('/editentry/:id/:entryid', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    let entrys = customer.entries.id(req.params.entryid);
+
+    const { newentry, newreason } = req.body;
+
+    entrys.entry = newentry;
+    entrys.reason = newreason;
+
+    await customer.save();
+
+    res.redirect(`/customerdetail/${req.params.id}`);
+})
+
+app.get('/deleteentry/:id/:entryid', isLoggedIn , async (req,res) => {
+    let customer = await customerModel.findById(req.params.id);
+
+    customer.entries.pull(req.params.entryid);      //pull is used to remove the entry from the array
+
+    await customer.save();
+
+    res.redirect(`/customerdetail/${req.params.id}`);
 })
 
 function isLoggedIn (req, res, next) {
