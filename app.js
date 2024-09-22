@@ -20,10 +20,8 @@ const crypto = require('crypto');
 
 //feviccon
 const favicon = require('serve-favicon');
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/fevicon.ico'));
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 
 
@@ -36,6 +34,7 @@ const customerModel = require('./models/customer.model.js');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const { type } = require('os');
 
 app.use(session({
   secret: process.env.SESSION_SECRET,  // Replace with a secure secret
@@ -367,26 +366,65 @@ app.get('/deletecustomer/:id', isLoggedIn , async (req,res) => {
     res.redirect('/customers');
 });
 
-app.get('/addentry/:id', isLoggedIn , async (req,res) => {
+// app.get('/addentry/:id', isLoggedIn , async (req,res) => {
+//     let customer = await customerModel.findById(req.params.id);
+
+//     res.render('addentry', { customer: customer });
+// })
+
+// app.post('/addentry/:id', isLoggedIn , async (req,res) => {
+//     let customer = await customerModel.findById(req.params.id);
+
+//     const { entry, reason } = req.body;
+
+//     customer.entries.push({
+//         entry: entry,
+//         reason: reason
+//     });
+
+//     await customer.save();
+
+//     res.redirect(`/customerdetail/${req.params.id}`);
+// })
+
+app.get('/addentry/:type/:id', isLoggedIn , async (req,res) => {
     let customer = await customerModel.findById(req.params.id);
 
-    res.render('addentry', { customer: customer });
+    if (req.params.type === 'yougave') {
+        res.render('addentry', { customer: customer, yougave: true, type: 'yougave' });
+    }
+    else if (req.params.type === 'yougot') {
+        res.render('addentry', { customer: customer, yougot: true , type: 'yougot' });
+    }
 })
 
-app.post('/addentry/:id', isLoggedIn , async (req,res) => {
+app.post('/addentry/:type/:id', isLoggedIn , async (req,res) => {
     let customer = await customerModel.findById(req.params.id);
 
     const { entry, reason } = req.body;
 
-    customer.entries.push({
-        entry: entry,
-        reason: reason
-    });
+    if (req.params.type === 'yougave') {
+        customer.entries.push({
+            entry: entry,
+            reason: reason,
+            yougave: true,
+            type: 'yougave'
+        });
+    }
+    else if (req.params.type === 'yougot') {
+        customer.entries.push({
+            entry: entry,
+            reason: reason,
+            yougot: true,
+            type: 'yougot'
+        });
+    }
 
     await customer.save();
 
     res.redirect(`/customerdetail/${req.params.id}`);
 })
+
 
 app.get('/editentry/:id/:entryid', isLoggedIn , async (req,res) => {
     let customer = await customerModel.findById(req.params.id);
@@ -424,7 +462,7 @@ app.get('/deleteentry/:id/:entryid', isLoggedIn , async (req,res) => {
 function isLoggedIn (req, res, next) {
     let token = req.cookies.token;
 
-    if (!token) return res.redirect('/login');
+    if (!token) return res.render('index');
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) return res.redirect('/login');
@@ -432,6 +470,7 @@ function isLoggedIn (req, res, next) {
         next();
     });
 }
+
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`)

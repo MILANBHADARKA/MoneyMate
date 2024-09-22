@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,5 +15,43 @@
             <input class="px-5 py-2 rounded-md bg-blue-500" type="submit" value="Verify OTP">
         </form>
     </div>
+
+    <script src="/public/js/app.js"></script>
+
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyMate - Verify OTP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-md p-10 bg-zinc-800 rounded-lg shadow-lg">
+        <h3 class="text-3xl font-semibold text-center underline mb-6">Enter your OTP</h3>
+
+        <!-- OTP Form -->
+        <form autocomplete="off" action="/verifyotp" method="post" class="space-y-4">
+            <!-- Hidden Email Field -->
+            <input type="hidden" name="email" value="<%= email %>">
+
+            <!-- OTP Input -->
+            <input class="w-full px-4 py-3 bg-transparent border-2 border-zinc-700 rounded-md text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none" 
+                   type="text" placeholder="OTP" name="otp" required>
+
+            <!-- Submit Button -->
+            <input class="w-full py-3 rounded-md bg-blue-500 text-white font-semibold cursor-pointer hover:bg-blue-600 transition duration-300" 
+                   type="submit" value="Verify OTP">
+        </form>
+    </div>
+
+    <script src="/public/js/app.js"></script>
 </body>
 </html>

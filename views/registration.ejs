@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,11 +27,9 @@
             <input class="m-auto w-52" type="file" name="profilepic" id="profilepic" accept=".jpg, .jpeg, .png">
 
           <div class="m-auto">
-            <!-- error -->
             <% if (typeof error !== 'undefined') { %>
               <p class="text-red-500"><%= error %></p>
             <% } %>
-            <!-- success -->
             <% if (typeof success !== 'undefined') { %>
               <p class="text-green-500"><%= success %></p>
             <% } %>
@@ -42,11 +40,95 @@
         </form>
     </div>
 
-            <!-- login -->
           <div class="m-auto mb-52">
               <span>Already have an account? </span><a href="/login" class="text-blue-600">Login</a>
           </div>
         </div>
+        <script src="/public/js/app.js"></script>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyMate - Your stress-free solution for group expenses.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563EB",
+                        secondary: "#F97316",
+                        lightGray: "#F3F4F6",
+                    },
+                    spacing: {},
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-lightGray min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+    <!-- Registration Form -->
+    <h1 class="text-3xl font-semibold text-center text-gray-800 mb-6">Register</h1>
+
+    <form action="/registration" method="post" autocomplete="off" enctype="multipart/form-data" class="space-y-6">
+      
+        <!-- Username Field -->
+        <input class="w-full border-2 border-gray-300 rounded-md p-3 focus:border-primary focus:ring-primary focus:outline-none"
+               type="text" name="username" id="username" placeholder="Username" 
+               value="<%= typeof username !== 'undefined' ? username : '' %>" required>
+
+        <!-- Email Field -->
+        <input class="w-full border-2 border-gray-300 rounded-md p-3 focus:border-primary focus:ring-primary focus:outline-none"
+               type="email" name="email" id="email" placeholder="Email"
+               value="<%= typeof email !== 'undefined' ? email : '' %>" required>
+
+        <!-- Password Field -->
+        <input class="w-full border-2 border-gray-300 rounded-md p-3 focus:border-primary focus:ring-primary focus:outline-none"
+               type="password" name="password" id="password" placeholder="Password" required>
+
+        <!-- Confirm Password Field -->
+        <input class="w-full border-2 border-gray-300 rounded-md p-3 focus:border-primary focus:ring-primary focus:outline-none"
+               type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+
+        <!-- Profile Picture Upload -->
+        <input class="w-full file:border-0 file:rounded-md file:bg-primary file:text-white file:py-2 file:px-4 file:cursor-pointer mt-2" 
+               type="file" name="profilepic" id="profilepic" accept=".jpg, .jpeg, .png">
+
+        <!-- Error/Success Messages -->
+        <div class="text-center">
+          <!-- error -->
+          <% if (typeof error !== 'undefined') { %>
+            <p class="text-red-500"><%= error %></p>
+          <% } %>
+          <!-- success -->
+          <% if (typeof success !== 'undefined') { %>
+            <p class="text-green-500"><%= success %></p>
+          <% } %>
+        </div>
+
+        <!-- Register Button -->
+        <button class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-600 transition duration-300">
+            Register
+        </button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="text-center mt-6">
+        <span>Already have an account? </span><a href="/login" class="text-primary">Login</a>
+    </div>
+
+  </div>
+
+  <script src="/public/js/app.js"></script>
 
 </body>
 </html>

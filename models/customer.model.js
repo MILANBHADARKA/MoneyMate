@@ -45,6 +45,20 @@ const entrySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    yougave: {
+        type: Boolean,
+        default: false,
+        required: false
+    },
+    yougot: {
+        type: Boolean,
+        default: false,
+        required: false
+    },
+    type: {
+        type: String,
+        required: false
+    },
     date: {
         type: Date,
         default: Date.now

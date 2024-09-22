@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,6 +28,69 @@
     </div>
 
     <a href="/customerdetail/<%= customer._id %>"><button class="bg-blue-500 text-white p-2 m-2">Back</button></a>
+    <script src="/public/js/app.js"></script>
+    
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Entry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563EB",
+                        light: "#F3F4F6",
+                        dark: "#1F2937",
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Edit Entry Form -->
+    <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
+        <h1 class="text-3xl font-bold text-primary mb-6">Edit Entry</h1>
+        <form action="/editentry/<%= customer._id %>/<%= entry._id %>" method="POST" class="space-y-4">
+            
+            <!-- Entry Input Field -->
+            <div>
+                <label for="newentry" class="block text-gray-600 text-sm font-medium mb-2">Entry</label>
+                <input type="text" id="newentry" name="newentry" placeholder="Enter new entry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+            </div>
+            
+            <!-- Reason Input Field -->
+            <div>
+                <label for="newreason" class="block text-gray-600 text-sm font-medium mb-2">Reason</label>
+                <input type="text" id="newreason" name="newreason" placeholder="Enter reason" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 ease-in-out">
+                    Edit Entry
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Back Button -->
+    <div class="max-w-lg mx-auto mt-4">
+        <a href="/customerdetail/<%= customer._id %>" class="inline-block w-full text-center bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-300 ease-in-out">
+            Back
+        </a>
+    </div>
+
+    <script src="/public/js/app.js"></script>
     
 </body>
 </html>

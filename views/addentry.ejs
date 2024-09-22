@@ -3,31 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Entry</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {},
-                    spacing: {},
+                    colors: {
+                        primary: "#2563EB",
+                        success: "#16A34A",
+                        danger: "#DC2626",
+                        light: "#F3F4F6",
+                        dark: "#1F2937",
+                    },
+                    spacing: {
+                        '108': '27rem',
+                    },
                 }
             }
         }
     </script>
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
 
-    <div class="bg-gray-200 p-4 m-4">
-        <h1 class="text-2xl font-bold">Add Entry</h1>
-        <form action="/addentry/<%= customer._id %>" method="POST">
-            <input type="text" name="entry" placeholder="Enter Entry" class="p-2 m-2">
-            <input type="text" name="reason" placeholder="Reason" class="p-2 m-2">
-            <button type="submit" class="bg-blue-500 text-white p-2 m-2">Add Entry</button>
-        </form>
+    <!-- You Gave / You Got Form -->
+    <% if (type === 'yougave') { %>
+        <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
+            <h1 class="text-3xl font-bold text-primary mb-6">You Gave</h1>
+            <form action="/addentry/yougave/<%= customer._id %>" method="POST" class="space-y-4">
+                <!-- Entry Input -->
+                <div>
+                    <label for="entry" class="block text-gray-600 text-sm font-medium mb-2">Enter Amount</label>
+                    <input type="number" id="entry" name="entry" placeholder="Enter Amount" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+                </div>
+                
+                <!-- Reason Input -->
+                <div>
+                    <label for="reason" class="block text-gray-600 text-sm font-medium mb-2">Reason</label>
+                    <input type="text" id="reason" name="reason" placeholder="Reason" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 ease-in-out">
+                        Add Entry
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    <% } else if (type === 'yougot') { %>
+        <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
+            <h1 class="text-3xl font-bold text-success mb-6">You Got</h1>
+            <form action="/addentry/yougot/<%= customer._id %>" method="POST" class="space-y-4">
+                <!-- Entry Input -->
+                <div>
+                    <label for="entry" class="block text-gray-600 text-sm font-medium mb-2">Enter Amount</label>
+                    <input type="number" id="entry" name="entry" placeholder="Enter Amount" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-success focus:outline-none" required>
+                </div>
+
+                <!-- Reason Input -->
+                <div>
+                    <label for="reason" class="block text-gray-600 text-sm font-medium mb-2">Reason</label>
+                    <input type="text" id="reason" name="reason" placeholder="Reason" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-success focus:outline-none" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" class="w-full bg-success text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300 ease-in-out">
+                        Add Entry
+                    </button>
+                </div>
+            </form>
+        </div>
+    <% } %>
+
+    <!-- Back Button -->
+    <div class="max-w-lg mx-auto mt-4">
+        <a href="/customerdetail/<%= customer._id %>" class="inline-block w-full text-center bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-300 ease-in-out">
+            Back
+        </a>
     </div>
 
-    <a href="/customerdetail/<%= customer._id %>"><button class="bg-blue-500 text-white p-2 m-2">Back</button></a>
-    
+    <script src="/public/js/app.js"></script>
 </body>
 </html>

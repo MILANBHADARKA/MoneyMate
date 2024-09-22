@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,11 +28,11 @@
     </div>
 
     <div class="m-auto">
-        <!-- error -->
+
         <% if (typeof error !== 'undefined') { %>
           <p class="text-red-500"><%= error %></p>
         <% } %>
-        <!-- success -->
+
         <% if (typeof success !== 'undefined') { %>
           <p class="text-green-500"><%= success %></p>
         <% } %>
@@ -43,6 +43,74 @@
     </div>
 
     </div>
+    <script src="/public/js/app.js"></script>
 
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyMate - Your stress-free solution for group expenses.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563EB",
+                        secondary: "#16A34A",
+                        danger: "#DC2626",
+                        lightGray: "#F3F4F6",
+                    },
+                    spacing: {},
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-lightGray min-h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+        <!-- Login Form -->
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Login to MoneyMate</h2>
+        <form class="flex flex-col gap-6" action="/login" method="post">
+            <input 
+                class="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition ease-in-out duration-300" 
+                type="email" name="email" id="email" placeholder="Email" required>
+            
+            <input 
+                class="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition ease-in-out duration-300" 
+                type="password" name="password" id="password" placeholder="Password" required>
+            
+            <button 
+                class="bg-primary text-white py-3 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300 w-full">
+                Login
+            </button>
+        </form>
+
+        <!-- Error and Success Messages -->
+        <div class="mt-4 text-center">
+            <% if (typeof error !== 'undefined') { %>
+              <p class="text-danger font-semibold"><%= error %></p>
+            <% } %>
+            <% if (typeof success !== 'undefined') { %>
+              <p class="text-secondary font-semibold"><%= success %></p>
+            <% } %>
+        </div>
+
+        <!-- Registration Redirect -->
+        <div class="mt-4 text-center">
+            <p class="text-gray-600">Don't have an account? 
+                <a href="/registration" class="text-primary font-semibold hover:underline">Register</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="/public/js/app.js"></script>
 </body>
 </html>
