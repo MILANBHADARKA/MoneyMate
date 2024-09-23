@@ -46,7 +46,7 @@
 
     <!-- All sum of yougave and yougot money -->
      <div>
-        <!-- <h1 class="text-2xl font-bold text-dark mb-4">Total Money</h1> -->
+
         <ul>
             <div class="bg-gradient-to-r from-blue-400 to-pink-500 text-white p-6 mb-4 rounded-lg shadow-md  break-words">
                 <li class="mb-2"><strong>Money You Gave:</strong> <%= totalyougave %></li>
@@ -68,9 +68,9 @@
 
 
 
-
+    <!-- Container -->
     <div class="container mx-auto px-4 py-8 max-w-3xl">
-
+      <!-- Customer Info Card -->
       <div class="bg-white shadow-xl rounded-lg p-6 mb-6">
         <div class="flex items-center mb-4 space-x-4">
 
@@ -92,11 +92,11 @@
         </div>
       </div>
 
-      <!-- Entries Section -->
+
       <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
         <h1 class="text-3xl font-bold text-dark mb-4">Entries</h1>
         <ul>
-          <% customer.entries.forEach(e => { %> <% if (e.type === 'yougave') {
+          <% customer.entries.reverse().forEach(e => { %> <% if (e.type === 'yougave') {
           %>
           <div
             class="bg-gradient-to-r from-red-400 to-red-500 text-white p-6 mb-4 rounded-lg shadow-md break-words"
@@ -119,17 +119,17 @@
           </div>
           <% } %>
 
-          <!-- Action Buttons -->
+
           <div class="flex justify-end space-x-2 mb-4">
             <a
               href="/editentry/<%= customer._id %>/<%= e._id %>"
-              class="bg-primary text-white rounded-lg hover:bg-blue-600 shadow-lg"
-              ><img src="/images/edit.jpg" alt="Edit" class="w-10"></a
+              class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 shadow-lg"
+              >Edit</a
             >
             <a
-               href="/deleteentry/<%= customer._id %>/<%= e._id %>"
-              class="bg-danger text-white rounded-lg hover:bg-red-600 shadow-lg"
-              ><img src="/images/delete.jpg" alt="Delete" class="w-10"></a
+              href="/deleteentry/<%= customer._id %>/<%= e._id %>"
+              class="bg-danger text-white px-4 py-2 rounded-lg hover:bg-red-600 shadow-lg"
+              >Delete</a
             >
           </div>
           <hr class="border-t border-gray-300 mb-4" />
@@ -137,7 +137,7 @@
         </ul>
       </div>
 
-      <!-- Footer Action Buttons -->
+
       <div
         class="sticky bottom-0 left-0 w-full bg-white p-4 shadow-lg rounded-t-lg"
       >
@@ -161,6 +161,6 @@
       </div>
     </div>
 
-    <script src="/public/js/app.js"></script>
+    <script src="/js/app.js"></script>
   </body>
 </html>

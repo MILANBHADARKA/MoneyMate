@@ -69,8 +69,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get('/', isLoggedIn , (req, res) => {
-    res.redirect('/customers');
+app.get('/' , (req, res) => {
+    // res.redirect('/customers');
+
+    // check token in cookies and verify it using jwt other vise index
+    let token = req.cookies.token;
+
+    if (!token) return res.render('index');
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.render('index');
+        res.redirect('/customers');
+    }
+    );
 })
 
 app.get('/registration', (req,res) => {
@@ -173,7 +184,7 @@ app.post('/verify-otp', async (req, res) => {
     // Generate JWT token after successful OTP verification
     let token = jwt.sign({ email: tempUser.email, userid: newUser._id }, JWT_SECRET);
     res.cookie('token', token);
-    res.redirect('/customers');
+    res.redirect('/introduction');
 });
 
 app.get('/login', (req,res) => {
@@ -517,6 +528,13 @@ function isLoggedIn (req, res, next) {
         next();
     });
 }
+
+app.get('/introduction', (req,res) => {
+    res.render('introduction');
+})
+app.get('/index', (req,res) => {
+    res.render('index');
+})
 
 
 app.listen(port, '0.0.0.0', () => {
