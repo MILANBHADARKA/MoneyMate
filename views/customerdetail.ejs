@@ -1,240 +1,166 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {},
-                    spacing: {},
-                }
-            }
-        }
-    </script>
-</head>
-<body class="">
-
-    <div class="bg-gray-200 p-4 m-4">
-        <h1 class="text-2xl font-bold">Customer Name: <%= customer.name %></h1>
-        <h1 class="text-2xl font-bold">Date: <%= customer.createdAt.toLocaleString() %></h1>
-        <h1 class="text-2xl font-bold">Date: <%= customer.updatedAt.toLocaleString() %></h1>
-    </div>
-
-    <div class="bg-gray-200 p-4 m-4">
-        <h1 class="text-2xl font-bold">Entries</h1>
-        <ul>
-            <% customer.entries.reverse().forEach(e => { %> -->
-                <!-- <li><%= e.entry %></li>
-                <li><%= e.reason %></li>
-                
-                <li><%= e.createdAt.toLocaleString() %></li>
-                <li><%= e.updatedAt.toLocaleString() %></li>
-
-                <a href="/editentry/<%= customer._id %>/<%= e._id %>"><button class="bg-blue-500 text-white p-2 m-2">Edit</button></a>
-                <a href="/deleteentry/<%= customer._id %>/<%= e._id %>"><button class="bg-red-500 text-white p-2 m-2">Delete</button></a>
-
-                <hr class="border-1 border-black"> -->
-
-                <!-- <% if (e.type === 'yougave') { %> -->
-                    <!-- <li class="bg-red-500 text-white p-2 m-2"><%= e.entry %> - <%= e.reason %> - <%= e.createdAt.toLocaleString() %> - <%= e.updatedAt.toLocaleString() %></li> -->
-                     <!-- <ul class="bg-red-500 text-white p-2 m-2 break-words">
-                        <li>Entry: <%= e.entry %> </li>
-                        <li>Reason: <%= e.reason %> </li>
-                        <li>Date: <%= e.createdAt.toLocaleString() %></li>
-                    </ul>
-                <% } else if (e.type === 'yougot') { %> -->
-                    <!-- <li class="bg-green-500 text-white p-2 m-2"><%= e.entry %> - <%= e.reason %> - <%= e.createdAt.toLocaleString() %> - <%= e.updatedAt.toLocaleString() %></li> -->
-                     <!-- <ul class="bg-green-500 text-white p-2 m-2 text-right break-words">
-                        <li>Entry: <%= e.entry %> </li>
-                        <li>Reason: <%= e.reason %> </li>
-                        <li><%= e.createdAt.toLocaleString() %></li>
-                    </ul>
-                <% } %>
-
-                <a href="/editentry/<%= customer._id %>/<%= e._id %>"><button class="bg-blue-500 text-white p-2 m-2">Edit</button></a>
-                <a href="/deleteentry/<%= customer._id %>/<%= e._id %>"><button class="bg-red-500 text-white p-2 m-2">Delete</button></a>
-
-                <hr class="border-1 border-black">
-
-
-
-            <% }) %>
-        </ul>
-    </div> -->
-
-    <!-- <a href="/addentry/<%= customer._id %>" class="bg-blue-500 text-white p-2 m-2"><button>Add entrie</button></a> -->
-    <!-- <div class="flex items-center justify-center bg-slate-400 sticky bottom-0 ">
-        <a href="/addentry/yougave/<%= customer._id %>" class="bg-red-500 text-white p-2 m-2"><button>You Gave</button></a>
-        <a href="/addentry/yougot/<%= customer._id %>" class="bg-green-500 text-white p-2 m-2"><button>You Got</button></a>
-        <a href="/customers"><button class="bg-blue-500 text-white p-2 m-2">Back</button></a>
-    </div>
-    
-    <script src="/public/js/app.js"></script>
-</body>
-</html> -->
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Details</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {},
-                    spacing: {},
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
-
-    <div class="container mx-auto p-4">
-        <div class="bg-white shadow-md rounded-lg p-6 mb-4">
-            <div class="flex items-center mb-4">
-                <div class="w-16 h-16 bg-blue-500 text-white flex items-center justify-center rounded-full mr-4">
-                    <span class="text-2xl font-bold"><%= customer.name.charAt(0) %></span>
-                </div>
-                <div>
-                    <h1 class="text-3xl font-bold mb-1">Customer Name: <%= customer.name %></h1>
-                    <p class="text-gray-600">Created on: <%= customer.createdAt.toLocaleDateString() %></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white shadow-md rounded-lg p-6 mb-4">
-            <h1 class="text-3xl font-bold mb-4">Entries</h1>
-            <ul>
-                <% customer.entries.forEach(e => { %>
-                    <% if (e.type === 'yougave') { %>
-                        <ul class="bg-red-500 text-white p-4 mb-4 rounded-lg break-words">
-                            <li class="mb-2"><strong>Entry:</strong> <%= e.entry %></li>
-                            <li class="mb-2"><strong>Reason:</strong> <%= e.reason %></li>
-                            <li class="mb-2"><strong>Date:</strong> <%= e.createdAt.toLocaleString() %></li>
-                        </ul>
-                    <% } else if (e.type === 'yougot') { %>
-                        <ul class="bg-green-500 text-white p-4 mb-4 rounded-lg text-right break-words">
-                            <li class="mb-2"><strong>Entry:</strong> <%= e.entry %></li>
-                            <li class="mb-2"><strong>Reason:</strong> <%= e.reason %></li>
-                            <li class="mb-2"><strong>Date:</strong> <%= e.createdAt.toLocaleString() %></li>
-                        </ul>
-                    <% } %>
-
-                    <div class="flex justify-end space-x-2 mb-4">
-                        <a href="/editentry/<%= customer._id %>/<%= e._id %>" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Edit</a>
-                        <a href="/deleteentry/<%= customer._id %>/<%= e._id %>" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Delete</a>
-                    </div>
-
-                    <hr class="border-t border-gray-300 mb-4">
-                <% }) %>
-            </ul>
-        </div>
-
-        <div class="flex items-center justify-center bg-slate-400 sticky bottom-0 p-4 space-x-4 rounded-md">
-            <a href="/addentry/yougave/<%= customer._id %>" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">You Gave</a>
-            <a href="/addentry/yougot/<%= customer._id %>" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">You Got</a>
-            <a href="/customers" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Back</a>
-        </div>
-    </div>
-    
-    <script src="/public/js/app.js"></script>
-</body>
-</html> -->
-
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Customer Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#2563EB",
-                        secondary: "#16A34A",
-                        danger: "#DC2626",
-                        dark: "#1E293B",
-                        light: "#F3F4F6",
-                    },
-                    spacing: {
-                        '108': '27rem',
-                    },
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563EB",
+              secondary: "#16A34A",
+              danger: "#DC2626",
+              dark: "#1E293B",
+              light: "#F3F4F6",
+            },
+            spacing: {
+              108: "27rem",
+            },
+          },
+        },
+      };
     </script>
-</head>
-<body class="bg-light font-sans leading-normal tracking-normal">
+  </head>
+  <body class="bg-light font-sans leading-normal tracking-normal">
+    <!-- navigation bar -->
+    <nav class="bg-white shadow-lg">
+      <div class="container mx-auto px-6 py-3">
+        <div class="flex justify-between items-center">
+          <a href="/" class="text-2xl font-bold text-gray-800">MoneyMate</a>
+          <div class="flex justify-between items-center gap-5">
+            <a href="/customers" class="text-blue-500 hover:text-blue-600"
+              >Customers</a
+            >
+            <a href="/logout" class="text-blue-500 hover:text-blue-600"
+              >Logout</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
 
-    <!-- Container -->
+
+    <!-- All sum of yougave and yougot money -->
+     <div>
+        <!-- <h1 class="text-2xl font-bold text-dark mb-4">Total Money</h1> -->
+        <ul>
+            <div class="bg-gradient-to-r from-blue-400 to-pink-500 text-white p-6 mb-4 rounded-lg shadow-md  break-words">
+                <li class="mb-2"><strong>Money You Gave:</strong> <%= totalyougave %></li>
+                <li class="mb-2"><strong>Money You Got:</strong> <%= totalyougot %></li>
+                
+                <hr class="border-t border-gray-300 mb-4" />
+
+                 <% if (totalyougot - totalyougave > 0) { %>
+                    <li class="mb-2"><strong>You will got:</strong> <%= totalyougot - totalyougave %></li>
+                <% } else if (totalyougot - totalyougave < 0) { %>
+                    <li class="mb-2"><strong>You will get:</strong> <%= totalyougave - totalyougot %></li>
+                <% } else { %>
+                    <li class="mb-2"><strong>Total Money:</strong> <%= totalyougot - totalyougave %> (Balanced)</li>
+                <% } %>
+            </div>
+        </ul>
+     </div>
+
+
+
+
+
     <div class="container mx-auto px-4 py-8 max-w-3xl">
 
-        <!-- Customer Info Card -->
-        <div class="bg-white shadow-xl rounded-lg p-6 mb-6">
-            <div class="flex items-center mb-4 space-x-4">
-                <!-- Avatar / Initial -->
-                <div class="w-20 h-20 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white flex items-center justify-center rounded-full">
-                    <span class="text-3xl font-semibold"><%= customer.name.charAt(0) %></span>
-                </div>
-                <div>
-                    <h1 class="text-4xl font-bold text-gray-900 mb-1">Customer: <%= customer.name %></h1>
-                    <p class="text-gray-500 text-lg">Created on: <%= customer.createdAt.toLocaleDateString() %></p>
-                </div>
-            </div>
-        </div>
+      <div class="bg-white shadow-xl rounded-lg p-6 mb-6">
+        <div class="flex items-center mb-4 space-x-4">
 
-        <!-- Entries Section -->
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
-            <h1 class="text-3xl font-bold text-dark mb-4">Entries</h1>
-            <ul>
-                <% customer.entries.forEach(e => { %>
-                    <% if (e.type === 'yougave') { %>
-                        <div class="bg-gradient-to-r from-red-400 to-red-500 text-white p-6 mb-4 rounded-lg shadow-md break-words">
-                            <li class="mb-2"><strong>Entry:</strong> <%= e.entry %></li>
-                            <li class="mb-2"><strong>Reason:</strong> <%= e.reason %></li>
-                            <li class="mb-2"><strong>Date:</strong> <%= e.createdAt.toLocaleString() %></li>
-                        </div>
-                    <% } else if (e.type === 'yougot') { %>
-                        <div class="bg-gradient-to-r from-green-400 to-green-500 text-white p-6 mb-4 rounded-lg shadow-md text-right break-words">
-                            <li class="mb-2"><strong>Entry:</strong> <%= e.entry %></li>
-                            <li class="mb-2"><strong>Reason:</strong> <%= e.reason %></li>
-                            <li class="mb-2"><strong>Date:</strong> <%= e.createdAt.toLocaleString() %></li>
-                        </div>
-                    <% } %>
-
-                    <!-- Action Buttons -->
-                    <div class="flex justify-end space-x-2 mb-4">
-                        <a href="/editentry/<%= customer._id %>/<%= e._id %>" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 shadow-lg">Edit</a>
-                        <a href="/deleteentry/<%= customer._id %>/<%= e._id %>" class="bg-danger text-white px-4 py-2 rounded-lg hover:bg-red-600 shadow-lg">Delete</a>
-                    </div>
-                    <hr class="border-t border-gray-300 mb-4">
-                <% }) %>
-            </ul>
+          <div
+            class="w-20 h-20 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white flex items-center justify-center rounded-full"
+          >
+            <span class="text-3xl font-semibold"
+              ><%= customer.name.charAt(0) %></span
+            >
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-1">
+              Customer: <%= customer.name %>
+            </h1>
+            <p class="text-gray-500 text-lg">
+              Created on: <%= customer.createdAt.toLocaleDateString() %>
+            </p>
+          </div>
         </div>
+      </div>
 
-        <!-- Footer Action Buttons -->
-        <div class="sticky bottom-0 left-0 w-full bg-white p-4 shadow-lg rounded-t-lg">
-            <div class="container mx-auto flex flex-wrap justify-center space-x-4">
-                <a href="/addentry/yougave/<%= customer._id %>" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mb-2 md:mb-0">You Gave</a>
-                <a href="/addentry/yougot/<%= customer._id %>" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 md:mb-0">You Got</a>
-                <a href="/customers" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-2 md:mb-0">Back</a>
-            </div>
+      <!-- Entries Section -->
+      <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+        <h1 class="text-3xl font-bold text-dark mb-4">Entries</h1>
+        <ul>
+          <% customer.entries.forEach(e => { %> <% if (e.type === 'yougave') {
+          %>
+          <div
+            class="bg-gradient-to-r from-red-400 to-red-500 text-white p-6 mb-4 rounded-lg shadow-md break-words"
+          >
+            <li class="mb-2"><strong>Entry:</strong> <%= e.entry %></li>
+            <li class="mb-2"><strong>Reason:</strong> <%= e.reason %></li>
+            <li class="mb-2">
+              <strong>Date:</strong> <%= e.createdAt.toLocaleString() %>
+            </li>
+          </div>
+          <% } else if (e.type === 'yougot') { %>
+          <div
+            class="bg-gradient-to-r from-green-400 to-green-500 text-white p-6 mb-4 rounded-lg shadow-md text-right break-words"
+          >
+            <li class="mb-2"><strong>Entry:</strong> <%= e.entry %></li>
+            <li class="mb-2"><strong>Reason:</strong> <%= e.reason %></li>
+            <li class="mb-2">
+              <strong>Date:</strong> <%= e.createdAt.toLocaleString() %>
+            </li>
+          </div>
+          <% } %>
+
+          <!-- Action Buttons -->
+          <div class="flex justify-end space-x-2 mb-4">
+            <a
+              href="/editentry/<%= customer._id %>/<%= e._id %>"
+              class="bg-primary text-white rounded-lg hover:bg-blue-600 shadow-lg"
+              ><img src="/images/edit.jpg" alt="Edit" class="w-10"></a
+            >
+            <a
+               href="/deleteentry/<%= customer._id %>/<%= e._id %>"
+              class="bg-danger text-white rounded-lg hover:bg-red-600 shadow-lg"
+              ><img src="/images/delete.jpg" alt="Delete" class="w-10"></a
+            >
+          </div>
+          <hr class="border-t border-gray-300 mb-4" />
+          <% }) %>
+        </ul>
+      </div>
+
+      <!-- Footer Action Buttons -->
+      <div
+        class="sticky bottom-0 left-0 w-full bg-white p-4 shadow-lg rounded-t-lg"
+      >
+        <div class="container mx-auto flex flex-wrap justify-center space-x-4">
+          <a
+            href="/addentry/yougave/<%= customer._id %>"
+            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mb-2 md:mb-0"
+            >You Gave</a
+          >
+          <a
+            href="/addentry/yougot/<%= customer._id %>"
+            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 md:mb-0"
+            >You Got</a
+          >
+          <a
+            href="/customers"
+            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-2 md:mb-0"
+            >Back</a
+          >
         </div>
+      </div>
     </div>
 
     <script src="/public/js/app.js"></script>
-</body>
+  </body>
 </html>

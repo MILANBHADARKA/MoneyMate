@@ -1,41 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {},
-                    spacing: {},
-                }
-            }
-        }
-    </script>
-</head>
-<body>
-
-
-    <% customers.forEach(customer => { %>
-        <a href="/customerdetail/<%= customer._id %>">
-            <div class="bg-gray-200 p-4 m-4">
-                <h1 class="text-2xl font-bold">Customer Name: <%= customer.name %></h1>  
-
-                <a href="/editcustomer/<%= customer._id %>"><button class="bg-blue-500 text-white p-2 m-2">Edit</button></a>
-                <a href="/deletecustomer/<%= customer._id %>"><button class="bg-red-500 text-white p-2 m-2">Delete</button></a>
-            </div>
-        </a>
-    <% }) %>
-
-
-    <a href="/addcustomer"><button class="bg-blue-500 text-white p-2 m-2">Add Customer</button></a>
-
-    <script src="/public/js/app.js"></script>
-</body>
-</html> -->
 
 
 <!DOCTYPE html>
@@ -62,18 +24,32 @@
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
-    <!-- Customer List Container -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold text-gray-800">MoneyMate</a>
+                <div class="flex justify-between items-center gap-5">
+                    <a href="/profile" class="text-blue-500 hover:text-blue-600">Profile</a>
+                <a href="/logout" class="text-blue-500 hover:text-blue-600">Logout</a>
+            </div>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mx-auto px-4 py-8 max-w-5xl">
 
-        <!-- Loop through each customer and display their details in a card -->
+        <% if (customers.length === 0) { %>
+            <h1 class="text-2xl font-semibold text-gray-800 mb-4">No customers.</h1>
+        <% } %>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <% customers.forEach(customer => { %>
                 <div class="bg-white shadow-md rounded-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl">
-                    <a href="/customerdetail/<%= customer._id %>">
-                        <h1 class="text-xl font-semibold text-gray-800 mb-4">Customer: <%= customer.name %></h1>
+                    <a href="/customerdetail/<%= customer._id %>" class="flex flex-row justify-center items-center">
+                        <h1 class="text-[22px] font-semibold text-gray-800 mb-4 inline"><strong><%= customer.name %></strong></h1>
+                        <img src="/images/touchcopy.jpg" alt="Customer Image" class="w-7 inline">
                     </a>
 
-                    <!-- Action Buttons -->
                     <div class="flex justify-between space-x-2">
                         <a href="/editcustomer/<%= customer._id %>" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
                             Edit
@@ -87,7 +63,6 @@
         </div>
     </div>
 
-    <!-- Floating Add Customer Button -->
     <a href="/addcustomer">
         <button class="fixed bottom-8 right-8 bg-blue-500 hover:bg-blue-600 text-white text-3xl font-bold w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform transform hover:scale-110">
             +
@@ -97,3 +72,6 @@
     <script src="/public/js/app.js"></script>
 </body>
 </html>
+
+
+

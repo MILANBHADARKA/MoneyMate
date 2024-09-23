@@ -1,37 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {},
-                    spacing: {},
-                }
-            }
-        }
-    </script>
-</head>
-<body>
-
-    <div class="bg-gray-200 p-4 m-4">
-        <h1 class="text-2xl font-bold">Edit Entry</h1>
-        <form action="/editentry/<%= customer._id %>/<%= entry._id %>" method="POST">
-            <input type="text" name="newentry" class="p-2 m-2" > 
-            <input type="text" name="newreason" class="p-2 m-2">
-            <button type="submit" class="bg-blue-500 text-white p-2 m-2">Edit Entry</button>
-        </form>
-    </div>
-
-    <a href="/customerdetail/<%= customer._id %>"><button class="bg-blue-500 text-white p-2 m-2">Back</button></a>
-    <script src="/public/js/app.js"></script>
-    
-</body>
-</html> -->
 
 
 <!DOCTYPE html>
@@ -65,7 +31,7 @@
             <!-- Entry Input Field -->
             <div>
                 <label for="newentry" class="block text-gray-600 text-sm font-medium mb-2">Entry</label>
-                <input type="text" id="newentry" name="newentry" placeholder="Enter new entry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+                <input type="number" id="newentry" name="newentry" placeholder="Enter new entry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
             </div>
             
             <!-- Reason Input Field -->

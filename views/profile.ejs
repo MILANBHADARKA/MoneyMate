@@ -1,34 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoneyMate - Your stress-free solution for group expenses.</title>
-</head>
-<body>
-    <div>
-        <h1>Profile</h1>
-        <div>
-
-            <img style="max-width: 25px; max-height: 25px;" src="/images/uploads/<%= user.profilepic %>" alt="Profile Picture">
-
-            <h2><%= user.username %></h2>
-            <h3><%= user.email %></h3>
-    
-
-            <form action="/logout" method="post">
-                <a href="/logout"><button type="submit">Logout</button></a>
-            </form>
-
-
-        </div>
-    </div>
-
-    <script src="/public/js/app.js"></script>
-
-</body>
-</html> -->
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +22,21 @@
         }
     </script>
 </head>
-<body class="bg-lightGray min-h-screen flex items-center justify-center">
+<body class="bg-lightGray min-h-screen flex flex-col items-center justify-center">
+
+
+    <!-- navigation bar -->
+    <nav class="bg-white shadow-lgv fixed top-0 w-screen">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold text-gray-800">MoneyMate</a>
+                <div class="flex justify-between items-center gap-5">
+                    <a href="/customers" class="text-blue-500 hover:text-blue-600">Customers</a>
+                <a href="/logout" class="text-blue-500 hover:text-blue-600">Logout</a>
+            </div>
+            </div>
+        </div>
+    </nav>
 
     <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
         <!-- Profile Picture -->
@@ -68,11 +51,19 @@
         </div>
 
         <!-- Logout Button -->
-        <form action="/logout" method="post" class="flex justify-center">
-            <button type="submit" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
-                Logout
-            </button>
-        </form>
+         <div class="flex flex-row justify-around items-center ">
+        <!-- <form action="/edituser" method="post" class="flex justify-center"> -->
+            <a href="/edituser" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
+                edit
+            </a>
+        <!-- </form> -->
+
+        <!-- <form action="/deleteuser" method="post" class="flex justify-center"></form> -->
+            <a href="/deleteuser" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
+                Delete
+            </a>
+        <!-- </form> -->
+        </div>
     </div>
 
     <script src="/public/js/app.js"></script>

@@ -1,27 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoneyMate - Your stress-free solution for group expenses.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    <div class="w-full min-h-screen bg-zinc-900 text-white p-10">
-        <h3 class="text-3xl underline mb-5">Enter your OTP</h3>
-        <form autocomplete="off" action="/verifyotp" method="post" class="mb-5">
-            <input type="hidden" name="email" value="<%= email %>">
-            <input class="px-3 py-2 rounded-md outline-none bg-transparent border-2 border-zinc-800" type="text" placeholder="OTP" name="otp">
-            <input class="px-5 py-2 rounded-md bg-blue-500" type="submit" value="Verify OTP">
-        </form>
-    </div>
-
-    <script src="/public/js/app.js"></script>
-
-</body>
-</html> -->
-
-
 
 
 <!DOCTYPE html>
@@ -37,16 +13,16 @@
     <div class="w-full max-w-md p-10 bg-zinc-800 rounded-lg shadow-lg">
         <h3 class="text-3xl font-semibold text-center underline mb-6">Enter your OTP</h3>
 
-        <!-- OTP Form -->
+
         <form autocomplete="off" action="/verifyotp" method="post" class="space-y-4">
             <!-- Hidden Email Field -->
             <input type="hidden" name="email" value="<%= email %>">
 
-            <!-- OTP Input -->
+
             <input class="w-full px-4 py-3 bg-transparent border-2 border-zinc-700 rounded-md text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none" 
                    type="text" placeholder="OTP" name="otp" required>
 
-            <!-- Submit Button -->
+
             <input class="w-full py-3 rounded-md bg-blue-500 text-white font-semibold cursor-pointer hover:bg-blue-600 transition duration-300" 
                    type="submit" value="Verify OTP">
         </form>

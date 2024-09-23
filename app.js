@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 app.use(express.static('public'));
 
-const connectDB = require('./config/db'); // Import the database connection
+const connectDB = require('./config/db');
 const upload = require('./config/multerconfig');
 
 const nodemailer = require('nodemailer');
@@ -70,7 +70,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get('/', isLoggedIn , (req, res) => {
-    res.redirect('/profile');
+    res.redirect('/customers');
 })
 
 app.get('/registration', (req,res) => {
@@ -173,7 +173,7 @@ app.post('/verify-otp', async (req, res) => {
     // Generate JWT token after successful OTP verification
     let token = jwt.sign({ email: tempUser.email, userid: newUser._id }, JWT_SECRET);
     res.cookie('token', token);
-    res.redirect('/profile');
+    res.redirect('/customers');
 });
 
 app.get('/login', (req,res) => {
@@ -249,7 +249,7 @@ app.post('/verify-otp-login', async (req,res) => {
     //login
     let token = jwt.sign({ email: email, userid: user._id }, JWT_SECRET);
     res.cookie('token', token);
-    res.redirect('/profile');
+    res.redirect('/customers');
 });
 
 app.get('/profile', isLoggedIn , async (req,res) => {
@@ -258,7 +258,40 @@ app.get('/profile', isLoggedIn , async (req,res) => {
     res.render('profile', { user: user });
 } )
 
+app.get('/logout', (req,res) => {   
+    res.clearCookie('token');
+    res.redirect('/');
+})
+
 app.post('/logout', (req,res) => {
+    res.clearCookie('token');
+    res.redirect('/');
+})
+
+app.get('/edituser', isLoggedIn , async (req,res) => {
+    let user = await userModel.findOne({ email: req.user.email });
+
+    res.render('edituser', { user: user });
+})
+
+app.post('/edituser/:id', isLoggedIn , async (req,res) => {
+    let user = await userModel.findOne({ email: req.user.email });
+
+    const { newusername } = req.body;
+
+    user.username = newusername;
+
+    await user.save();
+
+    res.redirect('/profile');
+
+})
+
+app.get('/deleteuser', isLoggedIn , async (req,res) => {
+    let user = await userModel.findOne({ email: req.user.email });
+
+    await userModel.findByIdAndDelete(user._id);
+
     res.clearCookie('token');
     res.redirect('/');
 })
@@ -296,7 +329,19 @@ app.post('/addcustomer', isLoggedIn , async (req,res) => {
 app.get('/customerdetail/:id', isLoggedIn , async (req,res) => {
     let customer = await customerModel.findById(req.params.id);
 
-    res.render('customerdetail', { customer: customer });
+    let totalyougave = 0;
+    let totalyougot = 0;
+
+    customer.entries.forEach(entry => {
+        if(entry.yougave){
+            totalyougave += parseInt(entry.entry);
+        }
+        if(entry.yougot){
+            totalyougot += parseInt(entry.entry);
+        }
+    });
+
+    res.render('customerdetail', { customer: customer, totalyougave: totalyougave, totalyougot: totalyougot });
 })
 
 app.get('/customers', isLoggedIn, async (req, res) => {
@@ -458,6 +503,8 @@ app.get('/deleteentry/:id/:entryid', isLoggedIn , async (req,res) => {
 
     res.redirect(`/customerdetail/${req.params.id}`);
 })
+
+
 
 function isLoggedIn (req, res, next) {
     let token = req.cookies.token;
