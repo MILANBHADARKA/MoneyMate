@@ -233,7 +233,7 @@ app.post('/login', async (req,res) => {
 })
 
 app.get('/verify-otp-login', (req,res) => {
-    const { email } = req.query;
+    const { email } = req.query;     //query is used to get the data from the url after the ?
 
     res.render('verify-otp-login', { email });
 });
@@ -280,6 +280,99 @@ app.post('/logout', (req,res) => {
     res.clearCookie('token');
     res.redirect('/');
 })
+
+app.get('/forgot', (req,res) => {
+    res.render('forgot');
+})
+
+app.post('/forgot', async (req,res) => {
+    const { email } = req.body;
+
+    let user = await userModel.findOne({ email: email });
+
+    if(!user){
+        return res.render('forgot', { error: 'User not found', email });          //1
+    }
+
+    const otp = generateOTP(); // Random 6-digit OTP
+    const otpexpires = Date.now() + 10 * 60 * 1000; // OTP expires in 10 minutes
+
+    //store in database
+    user.otp = otp;
+    user.otpexpires = otpexpires;
+    await user.save();
+
+    let mailOptions = {
+        from: GMAIL_USER,
+        to: email,
+        subject: 'OTP Verification',
+        text: `Your OTP for registration is ${otp}. This OTP will expire in 10 minutes.`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.status(500).send('Error sending email');
+        }
+        res.redirect(`/verify-otp-forgot?email=${email}`);
+    }
+
+    );
+});
+
+app.get('/verify-otp-forgot', (req,res) => {
+    const { email } = req.query;
+
+    res.render('verify-otp-forgot', { email });
+});
+
+app.post('/verify-otp-forgot', async (req,res) => {
+    const { email, otp } = req.body;
+
+    let user = await userModel.findOne({
+        email: email
+    });
+
+    if(!user){
+        return res.render('forgot', { error: 'User not found', email });          //1
+    }
+
+    if (user.otpexpires < Date.now()) {
+        return res.render('forgot', { error: 'OTP expired'} );           //2
+    }
+
+    if (user.otp !== parseInt(otp)) {
+        return res.render('verify-otp-forgot', { error: 'Invalid OTP', email });            //3
+    }
+
+    user.otp = null;
+
+    res.render('resetpassword', { email });
+    
+});
+
+app.post('/resetpassword', async (req,res) => {
+    const { email, password, confirmPassword } = req.body;
+
+    let user = await userModel.findOne({ email: email });
+
+    if(!user){
+        return res.render('forgot', { error: 'User not found', email });          //1
+    }
+
+    if (password !== confirmPassword) {
+        return res.render('resetpassword', { error: 'Passwords do not match', email });      //7
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    user.password = hash;
+
+    await user.save();
+
+    res.redirect('/login');
+});
+    
 
 app.get('/edituser', isLoggedIn , async (req,res) => {
     let user = await userModel.findOne({ email: req.user.email });
