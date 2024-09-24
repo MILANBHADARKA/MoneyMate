@@ -44,28 +44,6 @@
     </nav>
 
 
-    <!-- All sum of yougave and yougot money -->
-     <div>
-
-        <ul>
-            <div class="bg-gradient-to-r from-blue-400 to-pink-500 text-white p-6 mb-4 rounded-lg shadow-md  break-words">
-                <li class="mb-2"><strong>Money You Gave:</strong> <%= totalyougave %></li>
-                <li class="mb-2"><strong>Money You Got:</strong> <%= totalyougot %></li>
-                
-                <hr class="border-t border-gray-300 mb-4" />
-
-                 <% if (totalyougot - totalyougave > 0) { %>
-                    <li class="mb-2"><strong>You will give:</strong> <%= totalyougot - totalyougave %></li>
-                <% } else if (totalyougot - totalyougave < 0) { %>
-                    <li class="mb-2"><strong>You will get:</strong> <%= totalyougave - totalyougot %></li>
-                <% } else { %>
-                    <li class="mb-2"><strong>Total Money:</strong> <%= totalyougot - totalyougave %> (Balanced)</li>
-                <% } %>
-            </div>
-        </ul>
-     </div>
-
-
 
 
     <!-- Container -->
@@ -83,7 +61,7 @@
           </div>
           <div>
             <h1 class="text-4xl font-bold text-gray-900 mb-1">
-              Customer: <%= customer.name %>
+              <%= customer.name %>
             </h1>
             <p class="text-gray-500 text-lg">
               Created on: <%= customer.createdAt.toLocaleDateString() %>
@@ -91,6 +69,28 @@
           </div>
         </div>
       </div>
+
+
+      <!-- All sum of yougave and yougot money -->
+     <div>
+
+      <ul>
+          <div class="bg-gradient-to-r from-blue-400 to-pink-500 text-white p-6 mb-4 rounded-lg shadow-md  break-words">
+              <li class="mb-2"><strong>Money You Gave:</strong> <%= totalyougave %></li>
+              <li class="mb-2"><strong>Money You Got:</strong> <%= totalyougot %></li>
+              
+              <hr class="border-t border-gray-300 mb-4" />
+
+               <% if (totalyougot - totalyougave > 0) { %>
+                  <li class="mb-2"><strong>You will give:</strong> <%= totalyougot - totalyougave %></li>
+              <% } else if (totalyougot - totalyougave < 0) { %>
+                  <li class="mb-2"><strong>You will get:</strong> <%= totalyougave - totalyougot %></li>
+              <% } else { %>
+                  <li class="mb-2"><strong>Total Money:</strong> <%= totalyougot - totalyougave %> (Balanced)</li>
+              <% } %>
+          </div>
+      </ul>
+   </div>
 
 
       <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
