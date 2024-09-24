@@ -36,6 +36,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const { type } = require('os');
 
+const mongoUrl = process.env.MONGO_URI;
+
 app.use(session({
   secret: process.env.SESSION_SECRET,  // Replace with a secure secret
   resave: false,
