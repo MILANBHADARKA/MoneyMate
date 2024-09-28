@@ -21,6 +21,8 @@
             }
         }
     </script>
+        <link rel="stylesheet" href="/css/loader.css">
+
 </head>
 <body class="bg-lightGray min-h-screen flex flex-col items-center justify-center">
 
@@ -38,6 +40,15 @@
         </div>
     </nav>
 
+    <div id="loadingOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+        <div class="modern-spinner">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
     <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
         <!-- Profile Picture -->
         <div class="flex justify-center mb-4">
@@ -53,20 +64,44 @@
         <!-- Logout Button -->
          <div class="flex flex-row justify-around items-center ">
         <!-- <form action="/edituser" method="post" class="flex justify-center"> -->
-            <a href="/edituser" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
+            <!-- <a href="/edituser" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
                 edit
-            </a>
+            </a> -->
         <!-- </form> -->
 
+        <form action="/edituser" method="get">
+            <input type="submit" name="Edit" id="edit" value="Edit" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
+        </form>
+
         <!-- <form action="/deleteuser" method="post" class="flex justify-center"></form> -->
-            <a href="/deleteuser" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
+            <!-- <a href="/deleteuser" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
                 Delete
-            </a>
+            </a> -->
         <!-- </form> -->
+
+        <form action="/deleteuser" method="post">
+            <input type="submit" name="Delete" id="delete" value="Delete" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
+        </form>
+
         </div>
     </div>
 
     <script src="/js/app.js"></script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Attach event listeners to all forms
+          const forms = document.querySelectorAll('form');
+          forms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+              // Show the loading overlay
+              document.getElementById('loadingOverlay').classList.remove('hidden');
+  
+              // Disable the form submit button to prevent multiple submissions
+              form.querySelector('input[type="submit"]').disabled = true;
+            });
+          });
+        });
+      </script>
+      
 </body>
 </html>
