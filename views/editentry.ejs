@@ -20,24 +20,35 @@
             }
         }
     </script>
+    <link rel="stylesheet" href="/css/loader.css">
 </head>
 <body class="bg-gray-100 font-sans">
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+            <div class="modern-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
 
     <!-- Edit Entry Form -->
     <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
         <h1 class="text-3xl font-bold text-primary mb-6">Edit Entry</h1>
-        <form action="/editentry/<%= customer._id %>/<%= entry._id %>" method="POST" class="space-y-4">
+        <form id="editentryform" action="/editentry/<%= customer._id %>/<%= entry._id %>" method="POST" class="space-y-4">
             
             <!-- Entry Input Field -->
             <div>
                 <label for="newentry" class="block text-gray-600 text-sm font-medium mb-2">Entry</label>
-                <input type="number" id="newentry" name="newentry" placeholder="Enter new entry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+                <input autocomplete="off" type="number" id="newentry" name="newentry" placeholder="Enter new entry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
             </div>
             
             <!-- Reason Input Field -->
             <div>
                 <label for="newreason" class="block text-gray-600 text-sm font-medium mb-2">Reason</label>
-                <input type="text" id="newreason" name="newreason" placeholder="Enter reason" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+                <input autocomplete="off" type="text" id="newreason" name="newreason" placeholder="Enter reason" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
             </div>
 
             <!-- Submit Button -->
@@ -57,6 +68,16 @@
     </div>
 
     <script src="/js/app.js"></script>
+    <script>
+        // JavaScript to handle loading spinner display on form submission
+        document.getElementById('editentryform').addEventListener('submit', function(event) {
+            // Show the loading overlay
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+
+            // Disable the form submit button to prevent multiple submissions
+            document.querySelector('button[type="submit"]').disabled = true;
+        });
+    </script>
     
 </body>
 </html>

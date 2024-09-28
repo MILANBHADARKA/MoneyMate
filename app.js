@@ -24,7 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/fevicon.ico'));
 
 
-
 // Load environment variables
 const JWT_SECRET = process.env.JWT_SECRET;  
 const GMAIL_USER = process.env.GMAIL_USER;
@@ -38,14 +37,28 @@ const { type } = require('os');
 
 const mongoUrl = process.env.MONGO_URI;
 
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,  // Replace with a secure secret
+//   resave: false,
+//   saveUninitialized: true,
+//   store: MongoStore.create({
+//     mongoUrl: process.env.MONGO_URI,  // Use the MongoDB Atlas URI
+//   })
+// }));
+
 app.use(session({
-  secret: process.env.SESSION_SECRET,  // Replace with a secure secret
-  resave: false,
-  saveUninitialized: true,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,  // Use the MongoDB Atlas URI
-  })
-}));
+    secret: process.env.SESSION_SECRET,  // Replace with a secure secret
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+    }),
+    cookie: { 
+      maxAge: 600000, // Session expiration time (10 minutes)
+      secure: false, // Set to true if using HTTPS
+      httpOnly: true // Prevent client-side access
+    }
+  }));
 
 // Send OTP via email
 let transporter = nodemailer.createTransport({
@@ -113,9 +126,7 @@ app.post('/registration', upload.single('profilepic'), async (req, res) => {
     const otp = generateOTP(); // Random 6-digit OTP
     const otpexpires = Date.now() + 10 * 60 * 1000; // OTP expires in 10 minutes
 
-    // Temporarily store user details (in session)
-    req.session.tempUser = null;
-
+    // Temporarily store user details in session
     req.session.tempUser = {
         username,
         email,
@@ -144,9 +155,9 @@ app.get('/verify-otp', (req, res) => {
     const { email } = req.query;
 
     // Check if tempUser exists in session
-    if (!req.session.tempUser || req.session.tempUser.email !== email) {
-        return res.render('registration', { error: 'Session expired or invalid email'} );                    //1
-    }
+    // if (!req.session.tempUser || req.session.tempUser.email !== email) {
+        // return res.render('registration', { error: 'Session expired or invalid email'} );                    //1
+    // }
 
     res.render('verify-otp', { email });
 
@@ -156,9 +167,9 @@ app.post('/verify-otp', async (req, res) => {
     const { email, otp } = req.body;
 
     // Check if tempUser exists in session
-    if (!req.session.tempUser || req.session.tempUser.email !== email) {
-        return res.render('registration', { error: 'Session expired or invalid email'} );        //4
-    }
+    // if (!req.session.tempUser || req.session.tempUser.email !== email) {
+        // return res.render('registration', { error: 'Session expired or invalid email'} );        //4
+    // }
 
     const tempUser = req.session.tempUser;
 
@@ -208,27 +219,10 @@ app.post('/login', async (req,res) => {
         return res.render('login', { error: 'Invalid credentials', email });          //2
     }
 
-    const otp = generateOTP(); // Random 6-digit OTP
-    const otpexpires = Date.now() + 10 * 60 * 1000; // OTP expires in 10 minutes
-
-    //store in database
-    user.otp = otp;
-    user.otpexpires = otpexpires;
-    await user.save();
-
-    let mailOptions = {
-        from: GMAIL_USER,
-        to: email,
-        subject: 'OTP Verification',
-        text: `Your OTP for registration is ${otp}. This OTP will expire in 10 minutes.`
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).send('Error sending email');
-        }
-        res.redirect(`/verify-otp-login?email=${email}`);
-    });
+    //login
+    let token = jwt.sign({ email: email, userid: user._id }, JWT_SECRET);
+    res.cookie('token', token);
+    res.redirect('/customers');
 
 })
 
@@ -396,20 +390,36 @@ app.post('/edituser/:id', isLoggedIn , async (req,res) => {
 app.get('/deleteuser', isLoggedIn , async (req,res) => {
     let user = await userModel.findOne({ email: req.user.email });
 
+    let customers = await customerModel.find({ user: user._id });
+
+    customers.forEach(async customer => {
+        await customerModel.findByIdAndDelete(customer._id);
+    }
+    );
+
     await userModel.findByIdAndDelete(user._id);
 
     res.clearCookie('token');
     res.redirect('/');
 })
 
-app.get('/customers', isLoggedIn , async (req,res) => {
+app.get('/customers', isLoggedIn, async (req, res) => {
+    try {
+        let user = await userModel.findOne({ email: req.user.email }).populate('customers');
 
-    let user = await userModel.findOne({ email: req.user.email }).populate('customers');   //populate is used to get the details of the customers
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
 
-    let customers = user.customers;
+        // Provide a default value if user.customers is undefined
+        let customers = user.customers || [];   
 
-    res.render('customers', { customers: customers });
-})
+        res.render('customers', { customers: customers });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 app.get('/addcustomer', isLoggedIn , (req,res) => {
     res.render('addcustomer');
@@ -450,42 +460,7 @@ app.get('/customerdetail/:id', isLoggedIn , async (req,res) => {
     res.render('customerdetail', { customer: customer, totalyougave: totalyougave, totalyougot: totalyougot });
 })
 
-app.get('/customers', isLoggedIn, async (req, res) => {
-    try {
-        let user = await userModel.findOne({ email: req.user.email });
 
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-
-        // Provide a default value if user.customers is undefined
-        let customers = user.customers || [];
-
-        res.render('customers', { customers: customers });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-    }
-});
-
-app.get('/addcustomer', isLoggedIn , (req,res) => {
-    res.render('addcustomer');
-})
-
-app.post('/addcustomer', isLoggedIn , async (req,res) => {
-    
-        let user = await userModel.findOne({ email: req.user.email });
-        const { name } = req.body;
-
-        let customer = new customerModel({
-            name: name,
-        });
-
-        user.customers.push(customer);
-        await user.save();
-
-        res.redirect('/customers');
-})
 
 app.get('/editcustomer/:id', isLoggedIn , async (req,res) => {
     let customer = await customerModel.findById(req.params.id);
