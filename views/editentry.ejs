@@ -42,13 +42,13 @@
             <!-- Entry Input Field -->
             <div>
                 <label for="newentry" class="block text-gray-600 text-sm font-medium mb-2">Entry</label>
-                <input autocomplete="off" type="number" id="newentry" name="newentry" placeholder="Enter new entry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+                <input autocomplete="off" type="number" id="newentry" name="newentry" placeholder="Enter new entry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" value="<%= entry.entry %>" required>
             </div>
             
             <!-- Reason Input Field -->
             <div>
                 <label for="newreason" class="block text-gray-600 text-sm font-medium mb-2">Reason</label>
-                <input autocomplete="off" type="text" id="newreason" name="newreason" placeholder="Enter reason" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required>
+                <input autocomplete="off" type="text" id="newreason" name="newreason" placeholder="Enter reason" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" value="<%= entry.reason %>" required>
             </div>
 
             <!-- Submit Button -->
