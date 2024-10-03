@@ -1,4 +1,4 @@
-🚀 Full-stack project: MoneyMate! ✨
+# 🚀 Full-stack project: MoneyMate! ✨
 
 MoneyMate is a web application designed to simplify group expense management and customer data tracking.
 
