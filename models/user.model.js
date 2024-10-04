@@ -1,21 +1,37 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    username:{
+     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        trim: true,
+        minlength: [4 , "At least username have 4 characters"],
+        maxlength: [30 , "At most username have 30 characters"]
     },
-    email:{
+    email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+        match: [/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/, 'Please enter a valid email address']
     },
-    password:{
+    password: {
         type: String,
-        required: true
+        required: true,
+        minlength: [6 , "password atleast of 6 characters"],
+        match : [/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/ ,"Your password must include at least one uppercase letter, one lowercase letter, one special character, and one numeric digit."]
     },
-    profilepic:{
+    profilepic: {
         type: String,
-        default: "profilepicture.png"
+        default: "profilepicture.png",
+        validate: {
+            validator: function(v) {
+                return /\.(jpg|jpeg|png|gif)$/.test(v);
+            },
+            message: props => `${props.value} is not a valid image file!`
+        }
     },
     otp:{
         type: Number,
