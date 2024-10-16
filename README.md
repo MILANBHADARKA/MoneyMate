@@ -19,6 +19,6 @@ MoneyMate is a web application designed to simplify group expense management and
 
 # LINK
 
-- https://moneymate.up.railway.app/
+- https://moneymate.up.railway.app/            (if not work then use second link)
 
-- https://moneymate-nn1u.onrender.com/
+- https://moneymate-nn1u.onrender.com/         (this maybe take 1 minute to load)
