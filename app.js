@@ -103,30 +103,57 @@ app.get('/registration', (req,res) => {
     res.render('registration');
 })
 
+// Registration Form Submission
 app.post('/registration', upload.single('profilepic'), async (req, res) => {
     const { username, email, password, confirmPassword } = req.body;
 
+    // Check for Required Fields
     if (!username || !email || !password || !confirmPassword) {
-        return res.render('registration', { error: 'All fields are required', username, email });         //6
+        return res.render('registration', { error: 'All fields are required', username, email });
     }
 
-    let user = await userModel.findOne({ email: email });
+    // Validate Email Format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.render('registration', { error: 'Invalid email format', username });
+    }
+
+    // Check for Unique User
+    let user = await userModel.findOne({ $or: [{ username }, { email }] });      
     if (user) {
-        return res.render('registration', { error: 'User already exists', username, email });      //5
+        return res.render('registration', { error: 'Username or Email already exists', username, email });
     }
 
+    // Check Passwords Match
     if (password !== confirmPassword) {
-        return res.render('registration', { error: 'Passwords do not match', username, email });      //7
+        return res.render('registration', { error: 'Passwords do not match', username, email });
     }
 
+    // Validate Password Complexity
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+        return res.render('registration', { error: 'Your password must include at least one uppercase letter, one lowercase letter, one special character, and one numeric digit.', username, email });
+    }
+
+    // Check Profile Picture Upload
+    if (req.file) {
+        const fileType = req.file.mimetype;
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+        if (!validTypes.includes(fileType)) {
+            return res.render('registration', { error: 'Invalid file type for profile picture. Please upload JPEG, PNG, or GIF.', username, email });
+        }
+    }
+
+    // Hash Password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
     // Generate OTP
-    const otp = generateOTP(); // Random 6-digit OTP
+    const otp = generateOTP(); 
     const otpexpires = Date.now() + 10 * 60 * 1000; // OTP expires in 10 minutes
 
-    // Temporarily store user details in session
+    // Temporarily Store User Details in Session
     req.session.tempUser = {
         username,
         email,
@@ -136,6 +163,7 @@ app.post('/registration', upload.single('profilepic'), async (req, res) => {
         otpexpires
     };
 
+    // Send OTP via Email
     let mailOptions = {
         from: GMAIL_USER,
         to: email,
@@ -143,7 +171,7 @@ app.post('/registration', upload.single('profilepic'), async (req, res) => {
         text: `Your OTP for registration is ${otp}. This OTP will expire in 10 minutes.`
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
         if (error) {
             return res.status(500).send('Error sending email');
         }
@@ -379,8 +407,14 @@ app.post('/edituser/:id', isLoggedIn , async (req,res) => {
 
     const { newusername } = req.body;
 
-    user.username = newusername;
+    //check if username already exists
+    let user1 = await userModel.findOne({ username: newusername });
 
+    if(user1){
+        return res.render('edituser', { error: 'Username already exists', user: user });          //1
+    }
+
+    user.username = newusername;
     await user.save();
 
     res.redirect('/profile');
@@ -389,6 +423,21 @@ app.post('/edituser/:id', isLoggedIn , async (req,res) => {
 
 app.get('/deleteuser', isLoggedIn , async (req,res) => {
     let user = await userModel.findOne({ email: req.user.email });
+
+    //ask user to enter password to delete the account
+    res.render('deleteuser', { user: user });
+})
+
+app.post('/deleteuser', isLoggedIn , async (req,res) => {
+    let user = await userModel.findOne({ email: req.user.email });
+
+    const { password } = req.body;
+
+    let isMatch = await bcrypt.compare(password, user.password);
+
+    if(!isMatch){
+        return res.render('deleteuser', { error: 'Invalid password', user: user });          //2
+    }
 
     let customers = await customerModel.find({ user: user._id });
 

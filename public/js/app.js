@@ -1,6 +1,6 @@
 
 // Push the initial state to the browser history so that the popstate event is triggered
-console.log('Back Button Control Loaded');
+// console.log('Back Button Control Loaded');
 
 window.history.pushState({}, '', window.location.pathname);
 console.log('Initial State Pushed:', window.location.pathname);

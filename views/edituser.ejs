@@ -41,6 +41,16 @@
             <button type="submit" class="w-full py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-300">Edit User</button>
         </form>
 
+        <!-- Error and Success Messages -->
+        <div class="mt-4 text-center">
+            <% if (typeof error !== 'undefined') { %>
+              <p class="text-danger font-semibold"><%= error %></p>
+            <% } %>
+            <% if (typeof success !== 'undefined') { %>
+              <p class="text-secondary font-semibold"><%= success %></p>
+            <% } %>
+        </div>
+
         <!-- Back Button -->
         <div class="mt-4 text-center">
             <a href="/profile" class="text-blue-500 hover:underline">Back to Profile</a>

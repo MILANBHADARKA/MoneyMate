@@ -79,9 +79,11 @@
             </a> -->
         <!-- </form> -->
 
-        <form action="/deleteuser" method="get">
-            <input type="submit" name="Delete" id="delete" value="Delete" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">
-        </form>
+        <!-- <form action="/deleteuser" method="get"> -->
+            <!-- <input type="submit" name="Delete" id="delete" value="Delete" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300"> -->
+        <!-- </form> -->
+
+        <button id="delete" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out duration-300">Delete</button>
 
         </div>
     </div>
@@ -101,6 +103,14 @@
             });
           });
         });
+
+        document.getElementById('delete').addEventListener('click', function() {
+        // Show confirmation dialog
+        if (confirm('Are you sure you want to delete your account?')) {
+            // If the user confirms, redirect to the server-side route
+            window.location.href = '/deleteuser';
+        }
+    });
       </script>
       
 </body>
