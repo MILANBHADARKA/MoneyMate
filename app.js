@@ -162,6 +162,7 @@ app.post('/registration', upload.single('profilepic'), async (req, res) => {
         otp,
         otpexpires
     };
+    
 
     // Send OTP via Email
     let mailOptions = {
