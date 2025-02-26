@@ -1,6 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.model";
-import { Entry } from "./entry.model";
 
 const customerSchema = new Schema({
     name: {
@@ -9,9 +7,15 @@ const customerSchema = new Schema({
     },
     user: {
         type: Schema.ObjectId,
-        ref: User,
+        ref: "User",
         required: true
     },
+    entries: [
+        {
+            type: Schema.ObjectId,
+            ref: "Entry"
+        }
+    ]
 },{
     timestamps: true
 })

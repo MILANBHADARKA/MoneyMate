@@ -1,1 +1,1 @@
-export const DB_NAME = "MoneyMate";
+export const DB_NAME = "test_new_version";

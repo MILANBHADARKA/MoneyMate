@@ -1,7 +1,7 @@
 import mongoose, {Schema} from "mongoose";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
-import { Customer } from "./customer.model";
+import { Customer } from "./customer.model.js";
 
 const userSchema = new Schema({
     username: {
@@ -28,7 +28,7 @@ const userSchema = new Schema({
     customers: [
         {
             type: Schema.ObjectId,
-            ref: Customer
+            ref: "Customer"
         }
     ]
 },{
