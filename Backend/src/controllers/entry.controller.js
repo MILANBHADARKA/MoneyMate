@@ -74,13 +74,19 @@ const editEntry = async (req, res) => {
 }
 
 const deleteEntry = async (req, res) => {
-    const { entryId } = req.params;
+    const { customerId, entryId } = req.params;
 
     const entry = await Entry.findByIdAndDelete(entryId);
 
     if (!entry) {
         throw new ApiError(500, 'Entry not deleted!');
     }
+
+    const customer = await Customer.findById(customerId);
+
+    customer.entries = customer.entries.filter((entry) => entry.toString() !== entryId);
+    await customer.save();
+
 
     return res
         .status(200)
