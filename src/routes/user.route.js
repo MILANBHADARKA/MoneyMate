@@ -35,4 +35,5 @@ router.route("/updateuser").post(
     updateUser
 )
 
+
 export default router;

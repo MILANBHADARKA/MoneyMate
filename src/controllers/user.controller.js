@@ -5,6 +5,11 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 
 const registerUser = async (req,res) => {
+
+    //TODO
+    //otp verification
+
+
     const { username ,email ,password } = req.body;
     console.log(req.body);
 
@@ -161,6 +166,16 @@ const updateUser = async (req,res) => {
     }
 
     throw new ApiError(400, "Invalid request!");
+}
+
+const forgotPassword = async (req,res) => {
+    //TODO
+
+    //take email
+    //send otp
+    //verify otp
+    //take new password
+    //update user
 }
 
 

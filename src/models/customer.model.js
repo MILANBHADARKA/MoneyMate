@@ -14,7 +14,7 @@ const customerSchema = new Schema({
         {
             type: Schema.ObjectId,
             ref: "Entry"
-        }
+        }  
     ]
 },{
     timestamps: true
