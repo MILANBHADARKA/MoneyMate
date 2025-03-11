@@ -4,11 +4,11 @@ import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 
 const createEntry = async (req, res) => {
-    const { amount, reason } = req.body;
-    const { customerId, entryType } = req.params;
+    const { amount, reason, entryType } = req.body;
+    const { customerId } = req.params;
     //entryType will either "You Gave" or "You Get"
 
-    if (!amount || amount.trim() === "") {
+    if (!amount || amount.toString().trim() === "") {
         throw new ApiError(400, 'Amount is required!');
     }
 
@@ -50,12 +50,26 @@ const getEntries = async (req, res) => {
         .json(new ApiResponse(200, 'Entries found successfully', entries));
 }
 
+const getEntry = async (req, res) => {
+    const { entryId } = req.params;
+
+    const entry = await Entry.findById(entryId);
+
+    if (!entry) {
+        throw new ApiError(404, 'Entry not found!');
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, 'Entry found successfully', entry));
+}
+
 const editEntry = async (req, res) => {
 
     const { entryId } = req.params;
     const { amount, reason } = req.body;
 
-    if (!amount || amount.trim() === "") {
+    if (!amount || amount.toString().trim() === "") {
         throw new ApiError(400, 'Amount is required!');
     }
 
@@ -93,4 +107,4 @@ const deleteEntry = async (req, res) => {
         .json(new ApiResponse(200, 'Entry deleted successfully', entry));
 }
 
-export { createEntry, getEntries, editEntry, deleteEntry };
+export { createEntry, getEntries, getEntry, editEntry, deleteEntry };

@@ -78,7 +78,8 @@ const loginUser = async (req,res) => {
 
     const options = {                          //cookie options for secure and httpOnly 
         httpOnly: true,               //httpOnly is true so that cookie can not be accessed by javascript
-        secure: true             //secure is true so that cookie can only be sent over https
+        // TODO: do secure false after in production
+        secure: false             //secure is true so that cookie can only be sent over https
     }
 
     const currentuser = await User.findById(existsUser._id).select("-password");
@@ -93,7 +94,8 @@ const loginUser = async (req,res) => {
 const logoutUser = async (req,res) => {
     const options = {                          //cookie options for secure and httpOnly 
         httpOnly: true,               //httpOnly is true so that cookie can not be accessed by javascript
-        secure: true             //secure is true so that cookie can only be sent over https
+        secure: false,             //secure is true so that cookie can only be sent over https
+        path: "/"  // Ensure cookie is deleted across all routes
     }
 
     return res

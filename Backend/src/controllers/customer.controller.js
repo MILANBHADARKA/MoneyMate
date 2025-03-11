@@ -41,6 +41,8 @@ const getCustomers = async (req,res) => {
     
     const customers = await Customer.find({ user: req.user._id });
 
+    console.log(customers);
+
     if(!customers){
         throw new ApiError(404, "No customers found!")
     }

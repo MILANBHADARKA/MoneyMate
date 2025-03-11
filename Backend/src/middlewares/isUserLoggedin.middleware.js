@@ -7,8 +7,10 @@ export const isUserLoggedin = async (req,res,next) => {
     const token = req.cookies.token;
 
     if(!token){
-        throw new ApiError(401, "Unauthorized! Please login to continue");
+        throw new ApiError(401, "Token not found! Please login to continue");
     }
+
+    // console.log("token:", token);
 
     try {
         const { id } = jwt.verify(token, process.env.JWT_SECRET);

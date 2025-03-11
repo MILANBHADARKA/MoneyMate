@@ -1,16 +1,20 @@
 import { Router } from "express";
-import { createEntry, getEntries, editEntry, deleteEntry } from "../controllers/entry.controller.js"
+import { createEntry, getEntries, editEntry, getEntry, deleteEntry } from "../controllers/entry.controller.js"
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
-router.route("/createentry/:customerId/:entryType").post(
+router.route("/createentry/:customerId").post(
     upload.none(),
     createEntry
 )
 
 router.route("/getentries/:customerId").get(
     getEntries
+)
+
+router.route("/getentry/:entryId").get(
+    getEntry
 )
 
 router.route("/editentry/:entryId").post(
