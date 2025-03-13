@@ -29,7 +29,7 @@ const Profile = () => {
     } catch (error) {
       setError("Failed to fetch profile.");
       alert("Failed to fetch profile.");
-      navigate("/getcustomers");
+      navigate("/login");
     }
   };
 
