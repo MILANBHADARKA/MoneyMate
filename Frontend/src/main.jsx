@@ -13,8 +13,6 @@ import EditEntry from './components/Entry/EditEntry'
 import Introduction from './components/Introduction/Introduction'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
-import DeleteUser from './components/User/DeleteUser'
-import EditUser from './components/User/EditUser'
 import Forgot from './components/User/Forgot'
 import Profile from './components/User/Profile'
 import ResetPassword from './components/User/ResetPassword'
@@ -34,8 +32,6 @@ const router = createBrowserRouter(
       <Route path='verify-otp-forgot' element={<VerifyOtpForgot />} />
       <Route path='verify-otp-register' element={<VerifyOtpRegister />} />
       <Route path='profile' element={<Profile />} />
-      <Route path='edit-user' element={<EditUser />} />
-      <Route path='delete-user' element={<DeleteUser />} />
       <Route path='introduction' element={<Introduction />} />
       <Route path='createcustomer' element={<AddCustomer />} /> 
       <Route path='updatecustomer/:customerId' element={<EditCustomer />} />
@@ -48,7 +44,7 @@ const router = createBrowserRouter(
 )
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <RouterProvider router={router}/>
-  </StrictMode>,
+  // </StrictMode>,
 )

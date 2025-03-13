@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 
-// Validation Schema
 const schema = yup.object({
   name: yup.string().required("Name is required"),
 });
@@ -13,6 +12,7 @@ const schema = yup.object({
 function AddCustomer() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
 
   const {
     register,
@@ -27,16 +27,18 @@ function AddCustomer() {
     setError("");
 
     try {
-      await axios.post("http://localhost:10000/api/v1/customer/createcustomer", data, {
+      await axios.post(`${API_BASE_URL}/api/v1/customer/createcustomer`, data, {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true  // Add this to send & receive cookies
+        withCredentials: true
       });
       reset();
-      navigate("/getcustomers"); // Redirect to Customers page
+      navigate("/getcustomers");
     } catch (err) {
       setError("Failed to add customer. Please try again.");
+      navigate("/getcustomers");
+      alert("Failed to add customer. Please try again.");
     }
   };
 
@@ -48,7 +50,6 @@ function AddCustomer() {
         {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Name */}
           <div className='relative'>
             <label htmlFor='email' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Name</label>
             <input
@@ -81,7 +82,6 @@ function AddCustomer() {
           </div>
         </form>
 
-        {/* Cancel Button */}
         <button
           onClick={() => navigate("/getcustomers")}
           className="w-full mt-3 py-2 px-4 bg-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-400 transition"

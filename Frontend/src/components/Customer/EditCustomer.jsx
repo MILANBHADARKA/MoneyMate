@@ -5,36 +5,40 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 
-// Validation Schema
+
 const schema = yup.object({
   name: yup.string().required("Name is required"),
 });
 
 function EditCustomer() {
   const navigate = useNavigate();
-  const { customerId } = useParams(); // Get customer ID from URL
+  const { customerId } = useParams();
   const [error, setError] = useState("");
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setValue, // Used to set default values in the form
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    // Fetch existing customer data
+
     const fetchCustomer = async () => {
       try {
-        const response = await axios.get(`http://localhost:10000/api/v1/customer/getcustomer/${customerId}`, {
-          withCredentials: true, // Required to send cookies
+        const response = await axios.get(`${API_BASE_URL}/api/v1/customer/getcustomer/${customerId}`, {
+          withCredentials: true,
         });
-        setValue("name", response.data.data.name); // Pre-fill name
+        setValue("name", response.data.data.name);
       } catch (err) {
         setError("Failed to fetch customer data.");
+        alert("Failed to fetch customer data.");
+        navigate("/getcustomers");
       }
     };
 
@@ -46,7 +50,7 @@ function EditCustomer() {
 
     try {
       await axios.post(
-        `http://localhost:10000/api/v1/customer/updatecustomer/${customerId}`, // Use customerId in URL
+        `${API_BASE_URL}/api/v1/customer/updatecustomer/${customerId}`,
         data,
         {
           headers: {
@@ -56,9 +60,11 @@ function EditCustomer() {
         }
       );
       reset();
-      navigate("/getcustomers"); // Redirect to Customers page
+      navigate("/getcustomers");
     } catch (err) {
       setError("Failed to update customer. Please try again.");
+      alert("Failed to update customer. Please try again.");
+      navigate("/getcustomers");
     }
   };
 
@@ -105,7 +111,7 @@ function EditCustomer() {
           </div>
         </form>
 
-        {/* Cancel Button */}
+
         <button
           onClick={() => navigate("/getcustomers")}
           className="w-full mt-3 py-2 px-4 bg-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-400 transition"

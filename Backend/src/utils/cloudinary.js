@@ -12,12 +12,11 @@ const uploadOnCloudinary = async (localFilePath) => {
         console.log(localFilePath);
         if(!localFilePath) return null
 
-        //upload the file
         const response = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto"
         });
 
-        //file has been upload succesfully
+
         console.log("file is uploaded on cloudinary", response);
         console.log("file is uploaded on cloudinary", response.url);
         fs.unlinkSync(localFilePath);
@@ -26,7 +25,7 @@ const uploadOnCloudinary = async (localFilePath) => {
 
     } catch (error) {
         console.log(error);
-        fs.unlinkSync(localFilePath)    //remove the loaclly saved tamparry file as the upload operation failed
+        fs.unlinkSync(localFilePath)    
     }
 }
 

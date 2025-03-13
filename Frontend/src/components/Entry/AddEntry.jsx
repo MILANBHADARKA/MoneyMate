@@ -5,7 +5,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import * as yup from "yup";
 
-// Define validation schema using Yup
+
 const schema = yup.object({
   amount: yup.number().positive("Amount must be positive").required("Amount is required"),
   reason: yup.string().required("Reason is required"),
@@ -15,7 +15,10 @@ function AddEntry() {
   const { customerId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const entryType = new URLSearchParams(location.search).get("entryType"); // Extract entry type
+  const entryType = new URLSearchParams(location.search).get("entryType");
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+
+
 
   const {
     register,
@@ -31,17 +34,19 @@ function AddEntry() {
   const onSubmit = async (data) => {
     try {
       await axios.post(
-        `http://localhost:10000/api/v1/entry/createentry/${customerId}`,
-        { ...data, entryType }, // Send data along with type ("You Gave" or "You Get")
+        `${API_BASE_URL}/api/v1/entry/createentry/${customerId}`,
+        { ...data, entryType },
         { withCredentials: true }
       );
       reset();
-      navigate(`/getcustomer/${customerId}`); // Redirect back after submission
+      navigate(`/getcustomer/${customerId}`);
     } catch (error) {
       setError("root", {
         type: "manual",
         message: error.response?.data?.message || "Failed to add entry.",
       });
+      alert("Failed to add entry. Please try again.");
+      navigate(`/getcustomer/${customerId}`);
     }
   };
 
@@ -53,7 +58,7 @@ function AddEntry() {
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Amount Input */}
+
           <div className="relative">
             <label className="absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700">
               Amount
@@ -66,7 +71,7 @@ function AddEntry() {
             {errors.amount && <p className="text-red-500 text-sm">{errors.amount.message}</p>}
           </div>
 
-          {/* Reason Input */}
+
           <div className="relative">
             <label className="absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700">
               Reason
@@ -78,7 +83,7 @@ function AddEntry() {
             {!errors.amount && errors.reason && <p className="text-red-500 text-sm">{errors.reason.message}</p>}
           </div>
 
-          {/* Submit Button */}
+
           <div>
             <button
               type="submit"
@@ -102,7 +107,7 @@ function AddEntry() {
           </div>
         </form>
 
-        {/* Back Button */}
+
         <button
           className="mt-4 text-blue-500 w-full"
           onClick={() => navigate(`/getcustomer/${customerId}`)}

@@ -2,16 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import axios from "axios";
+import Navbar from "../ui/Navbar";
 
 function Customers() {
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [error, setError] = useState("");
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+
+
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axios.get("http://localhost:10000/api/v1/customer/getcustomers", {
-          withCredentials: true,  //  Required to send cookies
+        const response = await axios.get(`${API_BASE_URL}/api/v1/customer/getcustomers`, {
+          withCredentials: true,
         });
 
         // console.log("Customers:", response.data.data);
@@ -20,8 +26,8 @@ function Customers() {
 
       } catch (err) {
         setError("Failed to fetch customers.");
-      } finally {
-        setLoading(false);
+        navigate("/login");
+        alert("Failed to fetch customers.");
       }
     };
 
@@ -30,55 +36,46 @@ function Customers() {
 
   const handleDelete = async (customerId) => {
     try {
-      await axios.delete(`http://localhost:10000/api/v1/customer/deletecustomer/${customerId}`, {
-        withCredentials: true, // Required to send cookies
+      await axios.delete(`${API_BASE_URL}/api/v1/customer/deletecustomer/${customerId}`, {
+        withCredentials: true,
       });
 
-      const response = await axios.get("http://localhost:10000/api/v1/customer/getcustomers", {
-        withCredentials: true,  //  Required to send cookies
+      const response = await axios.get(`${API_BASE_URL}/api/v1/customer/getcustomers`, {
+        withCredentials: true,
       });
 
       setCustomers(response.data.data);
     } catch (err) {
       setError("Failed to delete customer.");
+      navigate("/getcustomers");
+      alert("Failed to delete customer.");
     }
   };
 
   const logout = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:10000/api/v1/user/logout",
-        {}, // Empty body
+        `${API_BASE_URL}/api/v1/user/logout`,
+        {},
         {
-          withCredentials: true,  // Required to send and delete cookies
+          withCredentials: true,
         }
       );
-  
-      // console.log("Logout Successful:", response.data);
-  
-      navigate("/login"); // Redirect to login page
+
+      navigate("/login");
     } catch (err) {
       console.error("Logout failed:", err);
+      alert("Failed to logout. Please try again.");
+      navigate("/getcustomers");
     }
   };
 
-
   return (
     <div className=" bg-gray-100 min-h-screen">
-      {/* Navbar */}
-      <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3">
-          <div class="flex justify-between items-center">
-            <Link to="/" class="text-2xl font-bold text-gray-800 cursor-pointer">MoneyMate</Link>
-            <div class="flex justify-between items-center gap-5">
-              <Link to="/profile" class="text-blue-500 hover:text-blue-600 cursor-pointer">Profile</Link>
-              <Link onClick={logout} class="text-blue-500 hover:text-blue-600 cursor-pointer">Logout</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
 
-      {/* Customer List */}
+      <Navbar logout={logout} />
+
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 container mx-auto px-4 py-8 max-w-5xl">
         {customers.map((customer) => (
           <div
@@ -113,7 +110,7 @@ function Customers() {
         ))}
       </div>
 
-      {/* Floating Add Button */}
+
       <button
         onClick={() => navigate("/createcustomer")}
         className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition cursor-pointer"

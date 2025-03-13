@@ -15,6 +15,7 @@ const schema = yup.object({
 function Login() {
 
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
 
   const {
     register,
@@ -31,42 +32,43 @@ function Login() {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:10000/api/v1/user/login",
+        `${API_BASE_URL}/api/v1/user/login`,
         data,
         {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            withCredentials: true  // Add this to send & receive cookies
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true
         }
-    );
-  
+      );
+
       console.log("Login Successful:", response.data);
-      // Reset form after successful login
       reset();
 
       navigate("/getcustomers");
 
     } catch (error) {
-      console.error("Error:", error.response?.data?.message || "Login failed");
-  
       setError("root", {
         type: "manual",
         message: error.response?.data?.message || "Login failed. Please try again.",
       });
+
+      // console.log(error.response?.data?.message);
+      // alert("Login failed. Please try again.");
+      navigate("/login");
     }
   };
 
-    const resetForm = () => {
-      reset();
-      clearErrors();
+  const resetForm = () => {
+    reset();
+    clearErrors();
+  };
+
+  useEffect(() => {
+    return () => {
+      resetForm();
     };
-  
-    useEffect(() => {
-      return () => {
-        resetForm();
-      };
-    }, [reset]);
+  }, [reset]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -108,6 +110,11 @@ function Login() {
             </button>
           </div>
         </form>
+
+        {
+          errors.root && <p className="text-red-500 text-center mt-4">{errors.root.message
+          }</p>
+        }
 
         <div className="text-center mt-4">
           <Link to="/forgot-password" className="text-blue-600 hover:underline">Forgot Password?</Link>

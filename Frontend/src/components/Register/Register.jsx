@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
@@ -13,11 +13,16 @@ const schema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required").min(6, "Password must be at least 6 characters").max(20, "Password must be at most 20 characters"),
   confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Passwords must match").required("Confirm Password is required"),
-  profilePic: yup.mixed(),
+  // profilePic: yup.mixed(),
+  // profilePic: yup.mixed().test("fileType", "Unsupported File Format", (value) => {
+  //   return value && ["image/jpg", "image/jpeg", "image/png", "image/svg+xml"].includes(value[0].type);
+  // })
 });
 
 function Register() {
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+
 
   const {
     register,
@@ -33,23 +38,22 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:10000/api/v1/user/register", data, {
+      const response = await axios.post(`${API_BASE_URL}/api/v1/user/register`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+
       console.log("Register Successful:", response.data);
-      // Reset form after successful login
+
       reset();
       navigate("/login");
     } catch (error) {
-      console.error("Error:", error.response?.data?.message || "Register failed");
-  
       setError("root", {
         type: "manual",
         message: error.response?.data?.message || "Register failed. Please try again.",
       });
+      navigate("/register");
     }
   };
 
@@ -67,7 +71,7 @@ function Register() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-md w-96">
-      <h2 className="text-2xl font-semibold text-center mb-8">Register to <span className="text-blue-600">MoneyMate</span></h2>
+        <h2 className="text-2xl font-semibold text-center mb-8">Register to <span className="text-blue-600">MoneyMate</span></h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
           <div className='relative'>
@@ -78,27 +82,27 @@ function Register() {
 
           <div className='relative'>
             <label htmlFor='email' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Email</label>
-          <input  {...register("email")} className='w-full p-3 border border-gray-300 rounded-md' />
-          {!errors.username && errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+            <input  {...register("email")} className='w-full p-3 border border-gray-300 rounded-md' />
+            {!errors.username && errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
-          
+
           <div className='relative'>
             <label htmlFor='password' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Password</label>
-          <input type='password'  {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' />
-          {!errors.username && !errors.email && errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+            <input type='password'  {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' />
+            {!errors.username && !errors.email && errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 
           <div className='relative'>
             <label htmlFor='confirmPassword' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Confirm Password</label>
-          <input type='password'  {...register("confirmPassword")} className='w-full p-3 border border-gray-300 rounded-md' />
-          {!errors.username && !errors.email && !errors.password && errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
+            <input type='password'  {...register("confirmPassword")} className='w-full p-3 border border-gray-300 rounded-md' />
+            {!errors.username && !errors.email && !errors.password && errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
           </div>
 
-          <div className='relative'>
+          {/* <div className='relative'>
             <label htmlFor='profilePic' className='absolute -top-2 left-2 bg-white px-1 text-sm font-medium text-gray-700'>Profile Picture</label>
             <input type='file' {...register("profilePic")} className='w-full p-3 border border-gray-300 rounded-md' />
             {!errors.username && !errors.email && !errors.password && !errors.confirmPassword && errors.profilePic && <p className="text-red-500 text-sm">{errors.profilePic.message}</p>}
-          </div>
+          </div> */}
 
           <div>
             <button
@@ -122,6 +126,11 @@ function Register() {
             </button>
           </div>
         </form>
+
+        {
+          errors.root && <p className="text-red-500 text-center mt-4">{errors.root.message}</p>
+        }
+
         <p className="text-center text-sm mt-4">Already have an account?
           <Link to='/login' className="text-indigo-600 hover:underline"> Login</Link>
         </p>

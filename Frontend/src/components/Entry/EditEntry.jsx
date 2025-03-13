@@ -5,7 +5,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import * as yup from "yup";
 
-// Validation schema
+
 const schema = yup.object({
   amount: yup.number().positive("Amount must be positive").required("Amount is required"),
   reason: yup.string().required("Reason is required"),
@@ -17,6 +17,8 @@ function EditEntry() {
   const customerId = new URLSearchParams(location.search).get("customerId");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+
 
   const {
     register,
@@ -29,37 +31,44 @@ function EditEntry() {
     mode: "onBlur",
   });
 
-  // Fetch existing entry details
+
   useEffect(() => {
     const fetchEntry = async () => {
       try {
-        const response = await axios.get(`http://localhost:10000/api/v1/entry/getentry/${entryId}`);
-        reset(response.data.data); // Pre-fill form with existing data
+        const response = await axios.get(`${API_BASE_URL}/api/v1/entry/getentry/${entryId}`);
+        reset(response.data.data);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching entry:", error);
+        setError("root", {
+          type: "manual",
+          message: error.response?.data?.message || "Failed to fetch entry.",
+        });
+        alert("Failed to fetch entry. Please try again.");
         setLoading(false);
+        navigate(`/getcustomer/${customerId}`);
       }
     };
-
     fetchEntry();
   }, [customerId, entryId, reset]);
 
-  // Handle form submission
+
   const onSubmit = async (data) => {
     try {
       await axios.post(
-        `http://localhost:10000/api/v1/entry/editentry/${entryId}`,
+        `${API_BASE_URL}/api/v1/entry/editentry/${entryId}`,
         data,
         { withCredentials: true }
       );
 
-      navigate(`/getcustomer/${customerId}`); // Redirect after successful update
+      navigate(`/getcustomer/${customerId}`);
     } catch (error) {
       setError("root", {
         type: "manual",
         message: error.response?.data?.message || "Failed to update entry.",
       });
+      alert("Failed to update entry. Please try again.");
+      navigate(`/getcustomer/${customerId
+        }`);
     }
   };
 
@@ -73,7 +82,7 @@ function EditEntry() {
         <h2 className="text-2xl font-bold text-center mb-4">Edit Entry</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Amount Input */}
+
           <div className="relative">
             <label className="absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700">
               Amount
@@ -86,7 +95,7 @@ function EditEntry() {
             {errors.amount && <p className="text-red-500 text-sm">{errors.amount.message}</p>}
           </div>
 
-          {/* Reason Input */}
+
           <div className="relative">
             <label className="absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700">
               Reason
@@ -98,7 +107,7 @@ function EditEntry() {
             {!errors.amount && errors.reason && <p className="text-red-500 text-sm">{errors.reason.message}</p>}
           </div>
 
-          {/* Submit Button */}
+
           <div>
             <button
               type="submit"
@@ -122,7 +131,7 @@ function EditEntry() {
           </div>
         </form>
 
-        {/* Cancel Button */}
+
         <button
           className="mt-4 text-blue-500 w-full"
           onClick={() => navigate(`/getcustomer/${customerId}`)}
