@@ -20,7 +20,7 @@ function Customers() {
           withCredentials: true,
         });
 
-        // console.log("Customers:", response.data.data);
+        console.log("Customers:", response.data.data);
 
         setCustomers(response.data.data);
 

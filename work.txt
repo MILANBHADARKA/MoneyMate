@@ -4,3 +4,4 @@ change password give in profile
 backend ApiError
 Routes which route on which time
 
+when registering if user or customrer alredy exists then error on frontend should be accure

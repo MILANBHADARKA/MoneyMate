@@ -47,7 +47,7 @@ function Register() {
       console.log("Register Successful:", response.data);
 
       reset();
-      navigate("/login");
+      navigate("/verifyotpregister?email=" + data.email);
     } catch (error) {
       setError("root", {
         type: "manual",

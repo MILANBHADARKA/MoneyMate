@@ -1,16 +1,13 @@
 import { User } from "../models/user.model.js";
+import { TempUser } from "../models/tempUser.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
+import { sendOTP } from "../config/sendMail.js";
 
 const registerUser = async (req, res, next) => {
-
-    //TODO
-    //otp verification
-
     try {
-
         const { username, email, password } = req.body;
         console.log(req.body);
 
@@ -33,12 +30,89 @@ const registerUser = async (req, res, next) => {
             profilePicture = await uploadOnCloudinary(profilePictureLocalPath);
         }
 
-        const user = await User.create({
+        // const user = await User.create({
+        //     username,
+        //     email,
+        //     password,
+        //     profilePicture: profilePicture?.url || ""
+        // })
+
+        // const createdUser = await User.findById(user._id).select("-password");
+
+        // if (!createdUser) {
+        //     throw new ApiError(500, "User not created!")
+        // }
+
+        const otp = Math.floor(100000 + Math.random() * 900000); 
+        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);  
+
+        const checkTempUser = await TempUser.findOne({ $or: [{ username }, { email }] })
+
+        if (checkTempUser) {
+            await TempUser.findByIdAndDelete(checkTempUser._id);
+        }
+
+        const tempUser = await TempUser.create({
             username,
             email,
             password,
-            profilePicture: profilePicture?.url || ""
+            profilePicture: profilePicture?.url || "",
+            otp,
+            otpExpires
         })
+
+        if (!tempUser) {
+            throw new ApiError(500, "User not created!")
+        }
+
+        const otpResponse = await sendOTP(email, otp, otpExpires);
+
+        if(!otpResponse){
+            throw new ApiError(500, "OTP not sent!")
+        }
+
+        return res.status(201).json(new ApiResponse(201, "Otp send Successfully!", { email, otpResponse }));
+
+        // return res.status(201).json(new ApiResponse(201, "User created successfully", createdUser));
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+const verifyOTP = async (req, res, next) => {
+    try {
+        const { email, otp } = req.body;
+
+        if (
+            [email, otp].some((field) => field?.trim() === "")
+        ) {
+            throw new ApiError(400, "All fields are required!")
+        }
+
+        const tempUser = await TempUser
+            .findOne({ email, otp, otpExpires: { $gt: Date.now() } });
+
+        if (!tempUser) {
+            throw new ApiError(404, "Invalid OTP!")
+        }
+
+        if (tempUser.email !== email || tempUser.otp !== otp || tempUser.otpExpires < Date.now()) {
+            throw new ApiError(404, "Invalid OTP!")
+        }
+
+        const user = await User.create({
+            username: tempUser.username,
+            email: tempUser.email,
+            password: tempUser.password,
+            profilePicture: tempUser.profilePicture
+        })
+
+        const deletedTempUser = await TempUser.findByIdAndDelete(tempUser._id);
+
+        if (!user) {
+            throw new ApiError(500, "User not created!")
+        }
 
         const createdUser = await User.findById(user._id).select("-password");
 
@@ -51,15 +125,12 @@ const registerUser = async (req, res, next) => {
     catch (error) {
         next(error);
     }
-
 }
 
 const loginUser = async (req, res, next) => {
 
     try {
-
         const { email, password } = req.body;
-        console.log(req.body);
 
         if (
             [email, password].some((field) => field?.trim() === "")
@@ -197,15 +268,83 @@ const updateUser = async (req, res, next) => {
 }
 
 const forgotPassword = async (req, res, next) => {
-    //TODO
+    try {
+        const { email } = req.body;
 
-    //take email
-    //send otp
-    //verify otp
-    //take new password
-    //update user
+        if (!email || email.trim() === "") {
+            throw new ApiError(400, "Email is required!")
+        }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new ApiError(404, "User not found!")
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000); 
+        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);  
+
+        user.otp = otp;
+        user.otpExpires = otpExpires;
+        await user.save();
+
+        const otpResponse = await sendOTP(email, otp, otpExpires);
+
+        if(!otpResponse){
+            throw new ApiError(500, "OTP not sent!")
+        }
+
+        return res.status(200).json(new ApiResponse(200, "Otp send Successfully!", { email, otpResponse }));
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+const resetPassword = async (req, res, next) => {
+    try {
+        const { otp, password, email } = req.body.data || req.body;
+
+        console.log(req.body.data);
+        console.log(req.body.data.email);
+        console.log(otp);
+
+        if (
+            [email, otp, password].some((field) => field?.trim() === "")
+        ) {
+            throw new ApiError(400, "All fields are required!")
+        }
+
+        // const user = await User
+        //     .findOne({ email, otp, otpExpires: { $gt: Date.now() } });
+
+        // if (!user) {
+        //     throw new ApiError(404, "Invalid OTP!")
+        // }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new ApiError(404, "User not found!")
+        }
+
+        if (user.otp !== otp || user.otpExpires < Date.now()) {
+            throw new ApiError(404, "Invalid OTP!")
+        }
+
+
+        user.password = password;
+        user.otp = undefined;
+        user.otpExpires = undefined;
+        await user.save();
+
+        return res.status(200).json(new ApiResponse(200, "Password reset successfully!"));
+    }
+    catch (error) {
+        next(error);
+    }
 }
 
 
 
-export { registerUser, loginUser, logoutUser, getUser, updateUser }
+export { registerUser,verifyOTP, loginUser, logoutUser, getUser, updateUser, forgotPassword, resetPassword };

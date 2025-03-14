@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaEdit, FaSignOutAlt } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -13,8 +15,14 @@ const Profile = () => {
     profilePicture: "",
   });
   const [error, setError] = useState("");
-  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
+    mode: "onBlur"
+  });
 
 
   const fetchProfile = async () => {
@@ -22,8 +30,6 @@ const Profile = () => {
       const response = await axios.get(`${API_BASE_URL}/api/v1/user/getuser`, {
         withCredentials: true,
       });
-
-
 
       setUser(response.data.data);
     } catch (error) {
@@ -118,6 +124,30 @@ const Profile = () => {
     }
   };
 
+  const forgotPassword = async () => {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/api/v1/user/forgotpassword`,
+        { email: user.email },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // console.log("Password Reset Email Sent:", response.data.data.otpResponse);
+
+      if (response.data.data.otpResponse) {
+        navigate("/resetpassword?email=" + user.email);
+      }
+      else {
+        alert("Failed to send password reset email.");
+      }
+
+    } catch (error) {
+      alert("Failed to send password reset email.");
+    }
+  };
+
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -196,26 +226,38 @@ const Profile = () => {
             </div>
           </div>
 
-
-          {isEditing ? (
-            <motion.button
-              className="mt-6 bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg font-semibold transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSaveChanges}
-            >
-              Save Changes
-            </motion.button>
-          ) : (
-            <motion.button
-              className="mt-6 bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg font-semibold transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Profile
-            </motion.button>
-          )}
+          <div className="flex justify-center items-center mt-6">
+            {isEditing ? (
+              <motion.button
+                className="mt-6 bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg font-semibold transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleSaveChanges}
+              >
+                Save Changes
+              </motion.button>
+            ) : (
+              <motion.button
+                className="mt-6 bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg font-semibold transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Profile
+              </motion.button>
+            )}
+            <form onSubmit={handleSubmit(forgotPassword)}>
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                className="ml-5 mt-6 bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg font-semibold transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Change Password
+              </motion.button>
+            </form>
+          </div>
         </div>
 
 

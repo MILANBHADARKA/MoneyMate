@@ -117,7 +117,7 @@ function Login() {
         }
 
         <div className="text-center mt-4">
-          <Link to="/forgot-password" className="text-blue-600 hover:underline">Forgot Password?</Link>
+          <Link to="/forgot" className="text-blue-600 hover:underline">Forgot Password?</Link>
         </div>
 
         <p className="text-center text-sm mt-4">Don't have an account? <Link to='/register' className="text-blue-600 hover:underline">Register</Link></p>

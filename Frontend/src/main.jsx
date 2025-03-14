@@ -28,9 +28,9 @@ const router = createBrowserRouter(
       <Route path='register' element={<Register />} />
       <Route path='login' element={<Login />} />
       <Route path='forgot' element={<Forgot />} />
-      <Route path='reset-password' element={<ResetPassword />} />
+      <Route path='resetpassword' element={<ResetPassword />} />
       <Route path='verify-otp-forgot' element={<VerifyOtpForgot />} />
-      <Route path='verify-otp-register' element={<VerifyOtpRegister />} />
+      <Route path='verifyotpregister' element={<VerifyOtpRegister />} />
       <Route path='profile' element={<Profile />} />
       <Route path='introduction' element={<Introduction />} />
       <Route path='createcustomer' element={<AddCustomer />} /> 
