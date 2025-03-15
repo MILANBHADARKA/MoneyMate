@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser,verifyOTP, loginUser, logoutUser, getUser, updateUser,forgotPassword, resetPassword } from "../controllers/user.controller.js";
+import { registerUser,verifyOTP,resendOTP, loginUser, logoutUser, getUser, updateUser,forgotPassword, resetPassword } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { isUserLoggedin } from "../middlewares/isUserLoggedin.middleware.js";
 
@@ -13,6 +13,11 @@ router.route("/register").post(
 router.route("/verifyotp").post(
     upload.none(),
     verifyOTP
+)
+
+router.route("/resendotp").post(
+    upload.none(),
+    resendOTP
 )
 
 router.route("/login").post(

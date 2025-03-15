@@ -14,12 +14,14 @@ const Profile = () => {
     email: "",
     profilePicture: "",
   });
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
+    setError,
+    reset,
   } = useForm({
     mode: "onBlur"
   });
@@ -43,7 +45,7 @@ const Profile = () => {
     try {
       const response = await axios.post(
         `${API_BASE_URL}/api/v1/user/logout`,
-        {}, // Empty body
+        {},
         {
           withCredentials: true,
         }
@@ -112,14 +114,17 @@ const Profile = () => {
         }
       );
 
-      console.log("Profile Updated:", response.data);
-
+      // console.log("Profile Updated:", response.data);
+      reset();
       setIsEditing(false);
     } catch (error) {
       setIsEditing(false);
-      alert("Failed to update profile.");
-
-
+      // alert("Failed to update profile.");
+      setError("root" , {
+        type: "manual",
+        message: error.response?.data?.message || "Failed to update profile."
+      }
+      )
       fetchProfile();
     }
   };
@@ -258,6 +263,9 @@ const Profile = () => {
               </motion.button>
             </form>
           </div>
+
+          {errors.root && <p className="text-red-500 text-sm text-center mt-2">{errors.root.message}</p>}
+
         </div>
 
 

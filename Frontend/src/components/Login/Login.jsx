@@ -42,7 +42,7 @@ function Login() {
         }
       );
 
-      console.log("Login Successful:", response.data);
+      // console.log("Login Successful:", response.data);
       reset();
 
       navigate("/getcustomers");

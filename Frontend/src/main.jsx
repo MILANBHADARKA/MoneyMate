@@ -2,22 +2,21 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import Layout from './Layout'
-import Index from './components/Main/Index'
-import AddCustomer from './components/Customer/AddCustomer'
-import CustomerDetail from './components/Customer/CustomerDetail'
-import Customers from './components/Customer/Customers'
-import EditCustomer from './components/Customer/EditCustomer'
-import AddEntry from './components/Entry/AddEntry'
-import EditEntry from './components/Entry/EditEntry'
-import Introduction from './components/Introduction/Introduction'
-import Login from './components/Login/Login'
-import Register from './components/Register/Register'
-import Forgot from './components/User/Forgot'
-import Profile from './components/User/Profile'
-import ResetPassword from './components/User/ResetPassword'
-import VerifyOtpForgot from './components/VerifyOtp/VerifyOtpForgot'
-import VerifyOtpRegister from './components/VerifyOtp/VerifyOtpRegister'
+import Layout from './Layout.jsx'
+import Index from './components/Main/Index.jsx'
+import AddCustomer from './components/Customer/AddCustomer.jsx'
+import CustomerDetail from './components/Customer/CustomerDetail.jsx'
+import Customers from './components/Customer/Customers.jsx'
+import EditCustomer from './components/Customer/EditCustomer.jsx'
+import AddEntry from './components/Entry/AddEntry.jsx'
+import EditEntry from './components/Entry/EditEntry.jsx'
+import Introduction from './components/Introduction/Introduction.jsx'
+import Login from './components/Login/Login.jsx'
+import Register from './components/Register/Register.jsx'
+import Forgot from './components/User/Forgot.jsx'
+import Profile from './components/User/Profile.jsx'
+import ResetPassword from './components/User/ResetPassword.jsx'
+import VerifyOtpRegister from './components/VerifyOtp/VerifyOtpRegister.jsx'
 import App from './App'
 
 
@@ -29,7 +28,6 @@ const router = createBrowserRouter(
       <Route path='login' element={<Login />} />
       <Route path='forgot' element={<Forgot />} />
       <Route path='resetpassword' element={<ResetPassword />} />
-      <Route path='verify-otp-forgot' element={<VerifyOtpForgot />} />
       <Route path='verifyotpregister' element={<VerifyOtpRegister />} />
       <Route path='profile' element={<Profile />} />
       <Route path='introduction' element={<Introduction />} />

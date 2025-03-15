@@ -127,6 +127,42 @@ const verifyOTP = async (req, res, next) => {
     }
 }
 
+const resendOTP = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+
+        if (!email || email.trim() === "") {
+            throw new ApiError(400, "Email is required!")
+        }
+
+        const tempUser = await TempUser.findOne
+            ({ email });
+
+        if (!tempUser) {
+            throw new ApiError(404, "User not found!")
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+        tempUser.otp = otp;
+        tempUser.otpExpires = otpExpires;
+        await tempUser.save();
+
+        const otpResponse = await sendOTP(email, otp, otpExpires);
+
+        if(!otpResponse){
+            throw new ApiError(500, "OTP not sent!")
+        }
+
+        return res.status(200).json(new ApiResponse(200, "Otp send Successfully!", { email, otpResponse }));
+
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
 const loginUser = async (req, res, next) => {
 
     try {
@@ -347,4 +383,4 @@ const resetPassword = async (req, res, next) => {
 
 
 
-export { registerUser,verifyOTP, loginUser, logoutUser, getUser, updateUser, forgotPassword, resetPassword };
+export { registerUser,verifyOTP,resendOTP, loginUser, logoutUser, getUser, updateUser, forgotPassword, resetPassword };

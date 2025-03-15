@@ -11,13 +11,14 @@ const schema = yup.object({
 
 function AddCustomer() {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
     reset,
   } = useForm({
     resolver: yupResolver(schema),
@@ -36,9 +37,13 @@ function AddCustomer() {
       reset();
       navigate("/getcustomers");
     } catch (err) {
-      setError("Failed to add customer. Please try again.");
-      navigate("/getcustomers");
-      alert("Failed to add customer. Please try again.");
+      // setError("Failed to add customer. Please try again.");
+      // navigate("/getcustomers");
+      // alert("Failed to add customer. Please try again.");
+      setError("root", {
+        type: "manual",
+        message: err.response?.data?.message || "Failed to add customer. Please try again.",
+      });
     }
   };
 
@@ -46,8 +51,6 @@ function AddCustomer() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-lg w-96">
         <h2 className="text-2xl font-semibold text-center mb-4">Add Customer</h2>
-
-        {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className='relative'>
@@ -80,6 +83,9 @@ function AddCustomer() {
               Add Customer
             </button>
           </div>
+
+            {errors.root && <p className="text-red-500 text-sm text-center">{errors.root.message}</p>}  
+            
         </form>
 
         <button
