@@ -1,9 +1,29 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
 
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/v1/customer/getcustomers`, {
+          withCredentials: true,
+        });
+
+        navigate("/getcustomers");
+      } catch (err) {
+        // setError("Failed to fetch customers.");
+        navigate("/");
+        // alert("Failed to fetch customers.");
+      }
+    };
+
+    fetchCustomers();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-500 to-purple-600 text-white text-center p-6">

@@ -251,6 +251,7 @@ const Profile = () => {
                 Edit Profile
               </motion.button>
             )}
+            
             <form onSubmit={handleSubmit(forgotPassword)}>
               <motion.button
                 type="submit"

@@ -25,7 +25,7 @@ function Customers() {
         setCustomers(response.data.data);
 
       } catch (err) {
-        setError("Failed to fetch customers.");
+        // setError("Failed to fetch customers.");
         navigate("/login");
         alert("Failed to fetch customers.");
       }
@@ -75,6 +75,9 @@ function Customers() {
 
       <Navbar logout={logout} />
 
+      {customers.length === 0 && (
+        <div className="text-center p-10">No customers found.</div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 container mx-auto px-4 py-8 max-w-5xl">
         {customers.map((customer) => (
