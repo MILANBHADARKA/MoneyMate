@@ -9,7 +9,7 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localFilePath) => {
     try {
-        console.log(localFilePath);
+        // console.log(localFilePath);
         if(!localFilePath) return null
 
         const response = await cloudinary.uploader.upload(localFilePath, {
@@ -17,14 +17,14 @@ const uploadOnCloudinary = async (localFilePath) => {
         });
 
 
-        console.log("file is uploaded on cloudinary", response);
-        console.log("file is uploaded on cloudinary", response.url);
+        // console.log("file is uploaded on cloudinary", response);
+        // console.log("file is uploaded on cloudinary", response.url);
         fs.unlinkSync(localFilePath);
 
         return response;
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         fs.unlinkSync(localFilePath)    
     }
 }

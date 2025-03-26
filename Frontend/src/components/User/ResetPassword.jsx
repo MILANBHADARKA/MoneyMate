@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// Validation Schema using Yup
 const schema = yup.object().shape({
   otp: yup
     .string()
@@ -36,7 +35,7 @@ function ResetPassword() {
     try {
       const response = await axios.post(
         `${API_BASE_URL}/api/v1/user/logout`,
-        {}, // Empty body
+        {}, 
         {
           withCredentials: true,
         }

@@ -3,6 +3,7 @@ import { Customer } from '../models/customer.model.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 
+
 const createEntry = async (req, res, next) => {
     try {
 
@@ -124,10 +125,8 @@ const deleteEntry = async (req, res, next) => {
         }
 
         const customer = await Customer.findById(customerId);
-
         customer.entries = customer.entries.filter((entry) => entry.toString() !== entryId);
         await customer.save();
-
 
         return res
             .status(200)
@@ -138,4 +137,10 @@ const deleteEntry = async (req, res, next) => {
     }
 }
 
-export { createEntry, getEntries, getEntry, editEntry, deleteEntry };
+export { 
+    createEntry, 
+    getEntries, 
+    getEntry, 
+    editEntry, 
+    deleteEntry 
+};

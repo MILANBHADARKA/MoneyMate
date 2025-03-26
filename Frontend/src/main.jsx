@@ -17,6 +17,11 @@ import Forgot from './components/User/Forgot.jsx'
 import Profile from './components/User/Profile.jsx'
 import ResetPassword from './components/User/ResetPassword.jsx'
 import VerifyOtpRegister from './components/VerifyOtp/VerifyOtpRegister.jsx'
+import SplitRooms from './components/SplitRoom/SplitRooms'
+import CreateSplitRoom from './components/SplitRoom/CreateSplitRoom'
+import JoinSplitRoom from './components/SplitRoom/JoinSplitRoom'
+import SplitRoomDetail from './components/SplitRoom/SplitRoomDetail'
+import AddSplitExpense from './components/SplitRoom/AddSplitExpense'
 import App from './App'
 
 
@@ -37,6 +42,12 @@ const router = createBrowserRouter(
       <Route path='getcustomers' element={<Customers />} />
       <Route path='/createentry/:customerId' element={<AddEntry />} />
       <Route path='/editentry/:entryId' element={<EditEntry />} />
+      
+      <Route path='splitrooms' element={<SplitRooms />} />
+      <Route path='createsplitroom' element={<CreateSplitRoom />} />
+      <Route path='joinsplitroom' element={<JoinSplitRoom />} />
+      <Route path='splitroom/:roomId' element={<SplitRoomDetail />} />
+      <Route path='addsplitexpense/:roomId' element={<AddSplitExpense />} />
     </Route>
   )
 )

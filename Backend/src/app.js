@@ -34,10 +34,14 @@ app.use(cookieParser())
 import userRouter from "./routes/user.route.js";
 import customerRouter from "./routes/customer.route.js"
 import entryRouter from "./routes/entry.route.js"
+import splitRoomRouter from "./routes/splitRoom.route.js"
+import splitExpensesRouter from "./routes/splitExpenses.route.js"
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/customer", customerRouter);
 app.use("/api/v1/entry", entryRouter);
+app.use("/api/v1/splitroom", splitRoomRouter);
+app.use("/api/v1/splitexpenses", splitExpensesRouter);
 
 app.use(errorHandler);
 

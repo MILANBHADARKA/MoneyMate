@@ -44,7 +44,7 @@ function Register() {
         },
       });
 
-      console.log("Register Successful:", response.data);
+      // console.log("Register Successful:", response.data);
 
       reset();
       navigate("/verifyotpregister?email=" + data.email);

@@ -2,7 +2,6 @@ import { Customer } from "../models/customer.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-
 const createCustomer = async (req, res, next) => {
 
     try {
@@ -76,6 +75,18 @@ const getCustomer = async (req, res, next) => {
     }
 };
 
+const getCustomersCount = async (req, res, next) => {
+    try {
+        const count = await Customer.countDocuments({ user: req.user._id });
+
+        return res.status(200).json({
+            message: "Customers count fetched successfully!",
+            data: count
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 const updateCustomer = async (req, res, next) => {
 
@@ -133,4 +144,11 @@ const deleteCustomer = async (req, res, next) => {
 
 }
 
-export { createCustomer, getCustomers, getCustomer, updateCustomer, deleteCustomer }
+export { 
+    createCustomer, 
+    getCustomers, 
+    getCustomer, 
+    updateCustomer, 
+    deleteCustomer,
+    getCustomersCount 
+}

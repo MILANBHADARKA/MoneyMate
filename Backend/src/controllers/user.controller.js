@@ -9,7 +9,7 @@ import { sendOTP } from "../config/sendMail.js";
 const registerUser = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
-        console.log(req.body);
+        // console.log(req.body);
 
         if (
             [username, email, password].some((field) => field?.trim() === "")
@@ -127,42 +127,6 @@ const verifyOTP = async (req, res, next) => {
     }
 }
 
-const resendOTP = async (req, res, next) => {
-    try {
-        const { email } = req.body;
-
-        if (!email || email.trim() === "") {
-            throw new ApiError(400, "Email is required!")
-        }
-
-        const tempUser = await TempUser.findOne
-            ({ email });
-
-        if (!tempUser) {
-            throw new ApiError(404, "User not found!")
-        }
-
-        const otp = Math.floor(100000 + Math.random() * 900000);
-        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
-
-        tempUser.otp = otp;
-        tempUser.otpExpires = otpExpires;
-        await tempUser.save();
-
-        const otpResponse = await sendOTP(email, otp, otpExpires);
-
-        if(!otpResponse){
-            throw new ApiError(500, "OTP not sent!")
-        }
-
-        return res.status(200).json(new ApiResponse(200, "Otp send Successfully!", { email, otpResponse }));
-
-    }
-    catch (error) {
-        next(error);
-    }
-}
-
 const loginUser = async (req, res, next) => {
 
     try {
@@ -228,7 +192,7 @@ const logoutUser = async (req, res, next) => {
 const getUser = async (req, res, next) => {
     try {
 
-        const user = await User.findById(req.user.id).select("-password");
+        const user = await User.findById(req.user.id).select("-password -otp -otpExpires");
 
         if (!user) {
             throw new ApiError(404, "User not found!")
@@ -341,9 +305,9 @@ const resetPassword = async (req, res, next) => {
     try {
         const { otp, password, email } = req.body.data || req.body;
 
-        console.log(req.body.data);
-        console.log(req.body.data.email);
-        console.log(otp);
+        // console.log(req.body.data);
+        // console.log(req.body.data.email);
+        // console.log(otp);
 
         if (
             [email, otp, password].some((field) => field?.trim() === "")
@@ -383,4 +347,13 @@ const resetPassword = async (req, res, next) => {
 
 
 
-export { registerUser,verifyOTP,resendOTP, loginUser, logoutUser, getUser, updateUser, forgotPassword, resetPassword };
+export { 
+    registerUser,
+    verifyOTP, 
+    loginUser, 
+    logoutUser, 
+    getUser, 
+    updateUser, 
+    forgotPassword, 
+    resetPassword 
+};

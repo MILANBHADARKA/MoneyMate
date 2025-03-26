@@ -6,20 +6,20 @@ function CustomerDetailNavbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-md">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md backdrop-blur-md ">
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
 
         <button
           onClick={() => navigate("/getcustomers")}
-          className="flex items-center text-gray-800 hover:text-blue-600 transition-all duration-300 px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 shadow-md"
+          className="flex items-center hover:opacity-80 transition cursor-pointer"
         >
-          <ArrowLeft size={22} />
-          <span className="ml-2 font-medium hidden sm:inline">Back</span>
+          <ArrowLeft size={20} className="mr-2" />
+          Back to Customers
         </button>
 
 
         <div
-          className="text-2xl font-extrabold text-gray-800 hover:text-blue-600 transition duration-300 cursor-pointer"
+          className="text-2xl font-extrabold hover:opacity-80 transition duration-300 cursor-pointer"
         >
           MoneyMate
         </div>

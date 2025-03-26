@@ -36,6 +36,12 @@ const userSchema = new Schema({
             type: Schema.ObjectId,
             ref: "Customer"
         }
+    ],
+    splitRooms: [
+        {
+            type: Schema.ObjectId,
+            ref: "SplitRoom"
+        }
     ]
 },{
     timestamps: true

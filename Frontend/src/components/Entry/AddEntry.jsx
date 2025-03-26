@@ -18,8 +18,6 @@ function AddEntry() {
   const entryType = new URLSearchParams(location.search).get("entryType");
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
 
-
-
   const {
     register,
     handleSubmit,

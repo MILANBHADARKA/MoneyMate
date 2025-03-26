@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCustomer, getCustomers, getCustomer, updateCustomer, deleteCustomer } from "../controllers/customer.controller.js"
+import { createCustomer, getCustomers, getCustomer, updateCustomer, deleteCustomer, getCustomersCount } from "../controllers/customer.controller.js"
 import { isUserLoggedin } from "../middlewares/isUserLoggedin.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
@@ -32,5 +32,9 @@ router.route("/deletecustomer/:customerId").delete(
     deleteCustomer
 )
 
+router.route("/getcustomerscount").get(
+    isUserLoggedin,
+    getCustomersCount
+);
 
 export default router;
