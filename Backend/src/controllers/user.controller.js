@@ -43,8 +43,8 @@ const registerUser = async (req, res, next) => {
         //     throw new ApiError(500, "User not created!")
         // }
 
-        const otp = Math.floor(100000 + Math.random() * 900000); 
-        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);  
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
 
         const checkTempUser = await TempUser.findOne({ $or: [{ username }, { email }] })
 
@@ -67,7 +67,7 @@ const registerUser = async (req, res, next) => {
 
         const otpResponse = await sendOTP(email, otp, otpExpires);
 
-        if(!otpResponse){
+        if (!otpResponse) {
             throw new ApiError(500, "OTP not sent!")
         }
 
@@ -152,9 +152,10 @@ const loginUser = async (req, res, next) => {
 
         const token = jwt.sign({ id: existsUser._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
-        const options = {                     
-            httpOnly: true,              
-            secure: false             
+        const options = {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
         }
 
         const currentuser = await User.findById(existsUser._id).select("-password");
@@ -173,10 +174,11 @@ const loginUser = async (req, res, next) => {
 const logoutUser = async (req, res, next) => {
     try {
 
-        const options = {                          
-            httpOnly: true,               
-            secure: false,           
-            path: "/"  
+        const options = {
+            httpOnly: true,
+            secure: true, 
+            sameSite: "None", 
+            path: "/"
         }
 
         return res
@@ -281,8 +283,8 @@ const forgotPassword = async (req, res, next) => {
             throw new ApiError(404, "User not found!")
         }
 
-        const otp = Math.floor(100000 + Math.random() * 900000); 
-        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);  
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
 
         user.otp = otp;
         user.otpExpires = otpExpires;
@@ -290,7 +292,7 @@ const forgotPassword = async (req, res, next) => {
 
         const otpResponse = await sendOTP(email, otp, otpExpires);
 
-        if(!otpResponse){
+        if (!otpResponse) {
             throw new ApiError(500, "OTP not sent!")
         }
 
@@ -347,13 +349,13 @@ const resetPassword = async (req, res, next) => {
 
 
 
-export { 
+export {
     registerUser,
-    verifyOTP, 
-    loginUser, 
-    logoutUser, 
-    getUser, 
-    updateUser, 
-    forgotPassword, 
-    resetPassword 
+    verifyOTP,
+    loginUser,
+    logoutUser,
+    getUser,
+    updateUser,
+    forgotPassword,
+    resetPassword
 };
