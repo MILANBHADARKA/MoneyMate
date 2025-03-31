@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { User, Edit, Camera, Mail, Key, LogOut, Save, X, Users } from 'lucide-react';
-import Navbar from '../ui/Navbar';
+import Navbar from '../ui/Navbar';  
+import { FaEdit } from 'react-icons/fa';
+
 
 function Profile() {
   const navigate = useNavigate();
@@ -46,6 +48,12 @@ function Profile() {
 
   const logout = async () => {
     try {
+      if (!window.confirm('Are you sure you want to logout?')) {
+        return;
+      }
+
+      setLoading(true);
+      setError('');
       await axios.post(
         `${API_BASE_URL}/api/v1/user/logout`,
         {},
@@ -53,8 +61,10 @@ function Profile() {
           withCredentials: true,
         }
       );
+      setLoading(false);
       navigate('/login');
     } catch (err) {
+      setLoading(false);
       // console.error('Logout failed:', err);
       setError('Failed to logout. Please try again.');
     }
@@ -89,11 +99,11 @@ function Profile() {
       if (editData.username !== user.username && editData.username.trim() !== '') {
         const formData = new FormData();
         formData.append('username', editData.username);
-        
+
         await axios.post(`${API_BASE_URL}/api/v1/user/updateuser`, formData, {
           withCredentials: true,
         });
-        
+
         setSuccess((prev) => prev + 'Username updated successfully. ');
       }
 
@@ -105,11 +115,11 @@ function Profile() {
 
         const formData = new FormData();
         formData.append('password', editData.password);
-        
+
         await axios.post(`${API_BASE_URL}/api/v1/user/updateuser`, formData, {
           withCredentials: true,
         });
-        
+
         setSuccess((prev) => prev + 'Password updated successfully. ');
         setEditData({
           ...editData,
@@ -118,35 +128,88 @@ function Profile() {
         });
       }
 
-      if (fileUpload) {
-        const formData = new FormData();
-        formData.append('profilePicture', fileUpload);
-        
-        await axios.post(`${API_BASE_URL}/api/v1/user/updateuser`, formData, {
-          withCredentials: true,
-        });
-        
-        setSuccess((prev) => prev + 'Profile picture updated successfully. ');
-        setFileUpload(null);
-        setPreviewUrl(null);
-      }
+      // if (fileUpload) {
+      //   const formData = new FormData();
+      //   formData.append('profilePicture', fileUpload);
+
+      //   await axios.post(`${API_BASE_URL}/api/v1/user/updateuser`, formData, {
+      //     withCredentials: true,
+      //   });
+
+      //   setSuccess((prev) => prev + 'Profile picture updated successfully. ');
+      //   setFileUpload(null);
+      //   setPreviewUrl(null);
+      // }
 
       const response = await axios.get(`${API_BASE_URL}/api/v1/user/getuser`, {
         withCredentials: true,
       });
       setUser(response.data.data);
-      
+
       setEditMode(false);
     } catch (err) {
       // console.error('Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
+      setSuccess('');
+    }
+  };
+
+  const handleEditProfilePic = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/jpg, image/jpeg, image/png, image/svg+xml";
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (!file) return;
+      
+      const formData = new FormData();
+      formData.append("profilePicture", file);
+
+      // Show preview immediately
+      setPreviewUrl(URL.createObjectURL(file));
+
+      try {
+        const response = await axios.post(`${API_BASE_URL}/api/v1/user/updateuser`, formData, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        // Update user data with the new profile picture URL from server response
+        if (response.data && response.data.data) {
+          setUser({ ...user, profilePicture: response.data.data.profilePicture });
+          setSuccess("Profile picture updated successfully.");
+        } else {
+          // Handle unexpected response format
+          fetchUserData(); // Refresh user data from server
+          setSuccess("Profile updated. Refreshing data.");
+        }
+      } catch (error) {
+        setError(error.response?.data?.message || "Failed to upload profile picture.");
+        setPreviewUrl(null);
+        fetchUserData(); // Reset to original picture
+      }
+    }
+  }
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/v1/user/getuser`, {
+        withCredentials: true,
+      });
+      setUser(response.data.data);
+    } catch (err) {
+      setError('Failed to refresh user data');
     }
   };
 
   const formatDate = (dateString) => {
-      const options = { year: 'numeric', month: 'short', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
-    };
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   if (loading) {
     return (
@@ -169,40 +232,39 @@ function Profile() {
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
             <div className="flex flex-col md:flex-row items-center">
               <div className="relative mb-4 md:mb-0 md:mr-6">
-                {previewUrl ? (
-                  <div className="h-24 w-24 rounded-full overflow-hidden border-4 border-white">
-                    <img 
-                      src={previewUrl} 
-                      alt="Profile Preview" 
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  user.profilePicture ? (
+                <div className="relative">
+                  {previewUrl ? (
                     <div className="h-24 w-24 rounded-full overflow-hidden border-4 border-white">
-                      <img 
-                        src={user.profilePicture} 
-                        alt="Profile" 
+                      <img
+                        src={previewUrl}
+                        alt="Profile Preview"
                         className="h-full w-full object-cover"
                       />
                     </div>
                   ) : (
-                    <div className="h-24 w-24 rounded-full bg-purple-200 text-purple-700 flex items-center justify-center border-4 border-white">
-                      <User size={40} />
-                    </div>
-                  )
-                )}
-                {editMode && (
-                  <label className="absolute bottom-0 right-0 bg-white text-purple-700 rounded-full p-1 cursor-pointer shadow-lg">
-                    <Camera size={16} />
-                    <input 
-                      type="file" 
-                      className="hidden" 
-                      onChange={handleFileChange}
-                      accept="image/*"
-                    />
-                  </label>
-                )}
+                    user.profilePicture ? (
+                      <div className="h-24 w-24 rounded-full overflow-hidden border-4 border-white">
+                        <img
+                          src={user.profilePicture}
+                          alt="Profile"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-24 w-24 rounded-full bg-purple-200 text-purple-700 flex items-center justify-center border-4 border-white">
+                        <User size={40} />
+                      </div>
+                    )
+                  )}
+                  {/* {editMode && ( */}
+                    <button
+                      onClick={handleEditProfilePic}
+                      className="absolute bottom-0 right-0 bg-green-500 p-2 rounded-full shadow-md hover:bg-green-600 transition"
+                    >
+                      <FaEdit size={16} />
+                    </button>
+                  {/* )} */}
+                </div>
               </div>
               <div className="text-center md:text-left">
                 <h1 className="text-2xl font-bold">{user.username}</h1>
@@ -214,14 +276,14 @@ function Profile() {
               <div className="ml-auto mt-4 md:mt-0">
                 {editMode ? (
                   <div className="flex space-x-2">
-                    <button 
+                    <button
                       onClick={handleUpdateProfile}
                       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center"
                     >
                       <Save size={16} className="mr-1" />
                       Save
                     </button>
-                    <button 
+                    <button
                       onClick={() => {
                         setEditMode(false);
                         setPreviewUrl(null);
@@ -239,7 +301,7 @@ function Profile() {
                     </button>
                   </div>
                 ) : (
-                  <button 
+                  <button
                     onClick={() => setEditMode(true)}
                     className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg flex items-center"
                   >
@@ -255,7 +317,7 @@ function Profile() {
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-4 relative">
               <span className="block sm:inline">{error}</span>
-              <button 
+              <button
                 onClick={() => setError('')}
                 className="absolute top-0 bottom-0 right-0 px-4 py-3"
               >
@@ -263,11 +325,11 @@ function Profile() {
               </button>
             </div>
           )}
-          
+
           {success && (
             <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-4 relative">
               <span className="block sm:inline">{success}</span>
-              <button 
+              <button
                 onClick={() => setSuccess('')}
                 className="absolute top-0 bottom-0 right-0 px-4 py-3"
               >
@@ -278,7 +340,7 @@ function Profile() {
 
           {/* Tab Navigation */}
           <div className="bg-white rounded-lg shadow-md p-1 mt-6 flex">
-            <button 
+            <button
               className={`flex-1 py-3 rounded ${activeTab === 'profile' ? 'bg-blue-100 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
               onClick={() => setActiveTab('profile')}
             >
@@ -287,7 +349,7 @@ function Profile() {
                 Profile Details
               </span>
             </button>
-            <button 
+            <button
               className={`flex-1 py-3 rounded ${activeTab === 'security' ? 'bg-blue-100 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
               onClick={() => setActiveTab('security')}
             >
@@ -303,7 +365,7 @@ function Profile() {
             {activeTab === 'profile' && (
               <div>
                 <h2 className="text-xl font-bold mb-4">Profile Information</h2>
-                
+
                 {editMode ? (
                   <div className="space-y-4">
                     <div>
@@ -318,7 +380,7 @@ function Profile() {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       />
                     </div>
-                    
+
                     <div className=''>
                       <label className="block text-gray-700 text-sm font-bold mb-2">
                         Email
@@ -352,11 +414,11 @@ function Profile() {
                 )}
               </div>
             )}
-            
+
             {activeTab === 'security' && (
               <div>
                 <h2 className="text-xl font-bold mb-4">Security Settings</h2>
-                
+
                 {editMode ? (
                   <div className="space-y-4">
                     <div>
@@ -371,7 +433,7 @@ function Profile() {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-gray-700 text-sm font-bold mb-2">
                         Confirm New Password
@@ -384,7 +446,7 @@ function Profile() {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       />
                     </div>
-                    
+
                     <p className="text-sm text-gray-500">
                       Leave passwords blank if you don't want to change it.
                     </p>

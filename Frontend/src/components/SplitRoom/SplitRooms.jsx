@@ -8,6 +8,7 @@ function SplitRooms() {
   const navigate = useNavigate();
   const [splitRooms, setSplitRooms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [error, setError] = useState("");
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -33,6 +34,12 @@ function SplitRooms() {
 
   const logout = async () => {
     try {
+      if (!window.confirm("Are you sure you want to logout?")) {
+        return;
+      }
+
+      setLoading(true);
+      setError("");
       await axios.post(
         `${API_BASE_URL}/api/v1/user/logout`,
         {},
@@ -40,9 +47,10 @@ function SplitRooms() {
           withCredentials: true,
         }
       );
-
+      setLoading(false);
       navigate("/login");
     } catch (err) {
+      setLoading(false);
       // console.error("Logout failed:", err);
       alert("Failed to logout. Please try again.");
     }
@@ -90,16 +98,16 @@ function SplitRooms() {
                   {room.users.length} {room.users.length === 1 ? "member" : "members"}
                 </p>
                 <div className="flex justify-center mt-3">
-                  <div 
-                  className="group flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full transition-all hover:bg-blue-100"
-                  onClick={() => navigate(`/splitroom/${room._id}`)}
+                  <div
+                    className="group flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full transition-all hover:bg-blue-100"
+                    onClick={() => navigate(`/splitroom/${room._id}`)}
                   >
                     <span className="text-sm font-medium">View Details</span>
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-4 w-4 transform group-hover:translate-x-1 transition-transform duration-200" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 transform group-hover:translate-x-1 transition-transform duration-200"
+                      fill="none"
+                      viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -113,11 +121,11 @@ function SplitRooms() {
       </div>
 
       <div className="fixed bottom-6 right-6 flex flex-col space-y-4">
-        <div className="relative group">
-          <div className="absolute bottom-full right-0 mb-2 w-48 transform scale-0 group-hover:scale-100 transition-transform origin-bottom">
+        <div className="relative">
+          <div className={`absolute bottom-full right-0 mb-2 w-48 transform transition-transform origin-bottom ${menuOpen ? 'scale-100' : 'scale-0'} md:group-hover:scale-100`}>
             <div className="bg-white rounded-lg shadow-lg py-2 mb-1">
-              <button 
-                onClick={() => navigate("/getcustomers")} 
+              <button
+                onClick={() => navigate("/getcustomers")}
                 className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 flex items-center"
               >
                 <Wallet className="h-4 w-4 mr-2 text-blue-600" />
@@ -127,7 +135,8 @@ function SplitRooms() {
             <div className="absolute right-4 -bottom-1 h-2 w-2 bg-white transform rotate-45"></div>
           </div>
           <button
-            className=" md:hidden bg-gray-700 text-white p-4 rounded-full shadow-lg hover:bg-gray-800"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden bg-gray-700 text-white p-4 rounded-full shadow-lg hover:bg-gray-800"
           >
             <Menu size={24} />
           </button>
@@ -144,7 +153,7 @@ function SplitRooms() {
             <path d="M16 11h6" />
           </svg>
         </button>
-        
+
         <button
           onClick={() => navigate("/createsplitroom")}
           className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition cursor-pointer"

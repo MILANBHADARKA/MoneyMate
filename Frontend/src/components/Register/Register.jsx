@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { EyeIcon, EyeOff } from 'lucide-react';
 
 
 const schema = yup.object({
@@ -22,6 +23,8 @@ const schema = yup.object({
 function Register() {
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
 
   const {
@@ -88,13 +91,21 @@ function Register() {
 
           <div className='relative'>
             <label htmlFor='password' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Password</label>
-            <input type='password'  {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' />
+            {/* <input type='password'  {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' /> */}
+            <input type={passwordVisible ? 'text' : 'password'} {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' />
+            <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)}>
+              {passwordVisible ? <EyeIcon size={20} className="opacity-60" /> : <EyeOff size={20} className="opacity-60" />}
+            </span>
             {!errors.username && !errors.email && errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 
           <div className='relative'>
             <label htmlFor='confirmPassword' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Confirm Password</label>
-            <input type='password'  {...register("confirmPassword")} className='w-full p-3 border border-gray-300 rounded-md' />
+            {/* <input type='password'  {...register("confirmPassword")} className='w-full p-3 border border-gray-300 rounded-md' /> */}
+            <input type={confirmPasswordVisible ? 'text' : 'password'} {...register("confirmPassword")} className='w-full p-3 border border-gray-300 rounded-md' />
+            <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+              {confirmPasswordVisible ? <EyeIcon size={20} className="opacity-60" /> : <EyeOff size={20} className="opacity-60" />}
+            </span>
             {!errors.username && !errors.email && !errors.password && errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
           </div>
 

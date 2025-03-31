@@ -9,6 +9,7 @@ function Customers() {
   const [customers, setCustomers] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
 
 
@@ -16,6 +17,8 @@ function Customers() {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
+
+        setLoading(true);
         const response = await axios.get(`${API_BASE_URL}/api/v1/customer/getcustomers`, {
           withCredentials: true,
         });
@@ -23,9 +26,11 @@ function Customers() {
         // console.log("Customers:", response.data.data);
 
         setCustomers(response.data.data);
+        setLoading(false);
 
       } catch (err) {
         // setError("Failed to fetch customers.");
+        setLoading(false);
         navigate("/login");
         alert("Failed to fetch customers.");
       }
@@ -36,6 +41,13 @@ function Customers() {
 
   const handleDelete = async (customerId) => {
     try {
+      if (!window.confirm("Are you sure you want to delete this customer?")) {
+        return;
+      }
+
+      setLoading(true);
+      setError("");
+
       await axios.delete(`${API_BASE_URL}/api/v1/customer/deletecustomer/${customerId}`, {
         withCredentials: true,
       });
@@ -45,7 +57,10 @@ function Customers() {
       });
 
       setCustomers(response.data.data);
+      setLoading(false);
+
     } catch (err) {
+      setLoading(false);
       setError("Failed to delete customer.");
       navigate("/getcustomers");
       alert("Failed to delete customer.");
@@ -54,6 +69,12 @@ function Customers() {
 
   const logout = async () => {
     try {
+      if (!window.confirm("Are you sure you want to logout?")) {
+        return;
+      }
+
+      setLoading(true);
+      setError("");
       const response = await axios.post(
         `${API_BASE_URL}/api/v1/user/logout`,
         {},
@@ -61,14 +82,26 @@ function Customers() {
           withCredentials: true,
         }
       );
-
+      setLoading(false);
       navigate("/login");
     } catch (err) {
+      setLoading(false);
       // console.error("Logout failed:", err);
       alert("Failed to logout. Please try again.");
       navigate("/getcustomers");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="text-center">
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <p className="mt-4 text-lg text-gray-700">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -149,8 +182,8 @@ function Customers() {
 
       {/* Floating button with options */}
       <div className="fixed bottom-6 right-6 flex flex-col space-y-4">
-        <div className="relative group">
-          <div className="absolute bottom-full right-0 mb-2 w-48 transform scale-0 group-hover:scale-100 transition-transform origin-bottom">
+        <div className="relative">
+          <div className={`absolute bottom-full right-0 mb-2 w-48 transform transition-transform origin-bottom ${menuOpen ? 'scale-100' : 'scale-0'} md:group-hover:scale-100`}>
             <div className="bg-white rounded-lg shadow-lg py-2 mb-1">
               <button 
                 onClick={() => navigate("/splitrooms")} 
@@ -163,6 +196,7 @@ function Customers() {
             <div className="absolute right-4 -bottom-1 h-2 w-2 bg-white transform rotate-45"></div>
           </div>
           <button
+            onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden bg-gray-700 text-white p-4 rounded-full shadow-lg hover:bg-gray-800"
           >
             <Menu size={24} />

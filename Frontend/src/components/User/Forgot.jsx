@@ -48,7 +48,7 @@ function Forgot() {
         <p className="text-gray-600 text-center mt-1">Enter your email to receive otp.</p>
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div>
+          {/* <div>
             <label className="block text-gray-700 font-medium">Email</label>
             <input
               type="email"
@@ -56,6 +56,14 @@ function Forgot() {
               placeholder="Enter your email"
               className="w-full px-4 py-3 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
             />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+          </div> */}
+          <div className='relative'>
+            <label htmlFor='email' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Email</label>
+            <input 
+            type="email" 
+            {...register("email")} 
+            className='w-full p-3 border border-gray-300 rounded-md' />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
 

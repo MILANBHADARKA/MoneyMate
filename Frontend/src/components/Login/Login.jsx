@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { useEffect } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { EyeIcon, EyeOff } from 'lucide-react';
 
 const schema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -16,6 +17,7 @@ function Login() {
 
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const {
     register,
@@ -84,7 +86,15 @@ function Login() {
 
           <div className='relative'>
             <label htmlFor='password' className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Password</label>
-            <input type="password" {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' />
+            {/* <input type="password" {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' /> */}
+            {/* show password */}
+            {/* <span className="absolute right-3 top-3 cursor-pointer" onClick={() => { }}>
+              <EyeOff size={20} />
+            </span> */}
+            <input type={passwordVisible ? "text" : "password"} {...register("password")} className='w-full p-3 border border-gray-300 rounded-md' />
+            <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)}>
+              {passwordVisible ? <EyeIcon size={20} className="opacity-60" /> : <EyeOff size={20} className="opacity-60" />}
+            </span>
             {!errors.email && errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 

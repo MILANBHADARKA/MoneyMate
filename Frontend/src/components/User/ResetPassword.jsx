@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { EyeIcon, EyeOff } from "lucide-react";
 
 const schema = yup.object().shape({
   otp: yup
@@ -20,6 +21,7 @@ function ResetPassword() {
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
   const email = new URLSearchParams(location.search).get("email");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   
 
   const {
@@ -86,7 +88,7 @@ function ResetPassword() {
         <p className="text-gray-600 text-center mt-1">Enter the OTP sent to your email and set a new password.</p>
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div>
+          {/* <div>
             <label className="block text-gray-700 font-medium">OTP</label>
             <input
               type="text"
@@ -96,9 +98,18 @@ function ResetPassword() {
               className="w-full px-4 py-3 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
             />
             {errors.otp && <p className="text-red-500 text-sm mt-1">{errors.otp.message}</p>}
+          </div> */}
+          <div className='relative'>
+            <label className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>Otp</label>
+            <input 
+            type="text" 
+            maxLength="6"
+            {...register("otp")} 
+            className='w-full p-3 border border-gray-300 rounded-md' />
+            {errors.otp && <p className="text-red-500 text-sm mt-1">{errors.otp.message}</p>}
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-gray-700 font-medium">New Password</label>
             <input
               type="password"
@@ -106,6 +117,18 @@ function ResetPassword() {
               placeholder="Enter new password"
               className="w-full px-4 py-3 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
             />
+            {!errors.otp && errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+          </div> */}
+          <div className='relative'>
+            <label className='absolute -top-3 left-2 bg-white px-1 text-md font-medium text-gray-700'>New Password</label>
+            <input 
+            type={passwordVisible ? 'text' : 'password'}
+            {...register("password")} 
+            className='w-full p-3 border border-gray-300 rounded-md' 
+            />
+            <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)}>
+              {passwordVisible ? <EyeIcon size={20} className="opacity-60" /> : <EyeOff size={20} className="opacity-60" />}
+            </span>
             {!errors.otp && errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
           </div>
 
