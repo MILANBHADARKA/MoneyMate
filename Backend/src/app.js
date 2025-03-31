@@ -5,10 +5,13 @@ import errorHandler from './middlewares/errorHandler.js';
 
 const app = express();
 
+const allowedOrigins = process.env.CORS_ORIGIN.split(",");
+
 app.use(
     cors({
         // origin: process.env.CORS_ORIGIN, 
-        origin: ["http://localhost:5173", "http://192.168.43.230:5173"], 
+        // origin: ["http://localhost:5173", "http://192.168.43.230:5173"], 
+        origin: allowedOrigins,
         credentials: true, 
         methods: ["GET", "POST", "PUT", "DELETE"], 
         allowedHeaders: ["Content-Type", "Authorization"], 
