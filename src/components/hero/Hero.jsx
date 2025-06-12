@@ -14,6 +14,13 @@ function Hero() {
   
   const { theme, toggleTheme } = useTheme()
   const isDarkTheme = theme === 'dark'
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    }
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -178,8 +185,8 @@ function Hero() {
             key={i}
             className={`absolute w-1 h-1 ${isDarkTheme ? 'bg-blue-400/40' : 'bg-blue-600/40'} rounded-full`}
             initial={{
-              x: Math.random() * (isMobile ? 350 : window.innerWidth),
-              y: Math.random() * (isMobile ? 600 : window.innerHeight),
+              x: Math.random() * (isMobile ? 350 : windowSize.innerWidth),
+              y: Math.random() * (isMobile ? 600 : windowSize.innerHeight),
               opacity: 0
             }}
             animate={{
