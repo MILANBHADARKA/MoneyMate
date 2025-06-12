@@ -1,0 +1,9 @@
+<svg
+                                className="w-6 h-6 lg:w-7 lg:h-7 text-white"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                            >
+                                <path d="M4 20V4l8 9 8-9v16" />
+                            </svg>
