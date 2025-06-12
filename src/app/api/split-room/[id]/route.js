@@ -4,7 +4,6 @@ import SplitRoom from "@/model/splitRoom";
 import SplitExpenses from "@/model/splitExpenses";
 import { cookies } from 'next/headers';
 import { verifyToken } from "@/lib/jwt";
-import { Trophy } from "lucide-react";
 
 export async function GET(request, { params }) {
     try {
@@ -30,7 +29,7 @@ export async function GET(request, { params }) {
             return new Response(JSON.stringify({ success: false, error: "User not found" }), { status: 404 });
         }
 
-        const { id } = params;
+        const { id } = await params;
 
         if (!id) {
             return new Response(JSON.stringify({ success: false, error: "Room ID is required" }), { status: 400 });
@@ -45,7 +44,20 @@ export async function GET(request, { params }) {
 
         if (type == "room-details") {    //done
 
-            const splitRoom = await SplitRoom.findById(id);
+            const splitRoom = await SplitRoom.findById(id)
+                .populate({
+                    path: 'expenses',
+                    populate: [
+                        {
+                            path: 'paidBy',
+                            select: 'username email'
+                        },
+                        {
+                            path: 'users',
+                            select: 'username email'
+                        }
+                    ]
+                });
 
             if (!splitRoom) {
                 return new Response(JSON.stringify({ success: false, error: "Split room not found" }), { status: 404 });
@@ -321,7 +333,7 @@ export async function GET(request, { params }) {
 
     } catch (error) {
         console.log('Error fetching split room:', error);
-        return new Response(JSON.stringify({ success: false, error: "Internal server error" }), {
+        return new Response(JSON.stringify({ success: false, error: "Internal server error!!!!!!" }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
         });
@@ -389,7 +401,7 @@ export async function PUT(req, { params }) {
 
     } catch (error) {
         console.log('Error edit split room:', error);
-        return new Response(JSON.stringify({ success: false, error: "Internal server error" }), {
+        return new Response(JSON.stringify({ success: false, error: "Internal server error!!!!!" }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
         });

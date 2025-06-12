@@ -22,7 +22,7 @@ export async function PUT(request, { params }) {
             return new Response(JSON.stringify({ success: false, error: "Invalid token" }), { status: 401 });
         }
 
-        const { id } = params;
+        const { id } = await params;
 
         if (user.id.toString() !== id.toString()) {
             return new Response(JSON.stringify({ success: false, error: "Forbidden" }), { status: 403 });

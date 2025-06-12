@@ -10,7 +10,7 @@ function Hero() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const words = ['Money', 'Expenses', 'Finances', 'Transactions'];
+  const words = ['Money', 'Expenses', 'Transactions'];
   
   const { theme, toggleTheme } = useTheme()
   const isDarkTheme = theme === 'dark'
@@ -195,170 +195,9 @@ function Hero() {
         ))}
       </div>
 
-      {/* Enhanced Navigation */}
-      <motion.nav 
-        className="relative z-20 flex justify-between items-center p-4 md:p-6 lg:px-12"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <motion.div 
-          className="flex items-center space-x-2 md:space-x-3"
-          whileHover={{ scale: 1.05 }}
-        >
-          <motion.div 
-            className={`w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br ${currentTheme.accent} rounded-lg md:rounded-xl flex items-center justify-center shadow-lg`}
-            whileHover={{ rotate: 360 }}
-            transition={{ duration: 0.6 }}
-          >
-            <svg
-              className="w-4 h-4 md:w-6 md:h-6 text-white"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M4 20V4l8 9 8-9v16" />
-            </svg>
-          </motion.div>
-          <span className={`text-lg md:text-2xl font-bold bg-gradient-to-r ${currentTheme.accent} bg-clip-text text-transparent`}>
-            MoneyMate
-          </span>
-        </motion.div>
-        
-        <div className="flex items-center space-x-4 md:space-x-8">
-          {/* Theme Toggle */}
-          <motion.button
-            onClick={toggleTheme}
-            className={`p-2 md:p-3 rounded-lg ${isDarkTheme ? 'bg-slate-700 hover:bg-slate-600' : 'bg-white hover:bg-gray-100'} shadow-lg transition-all duration-300`}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <motion.div
-              initial={false}
-              animate={{ rotate: isDarkTheme ? 0 : 180 }}
-              transition={{ duration: 0.3 }}
-            >
-              {isDarkTheme ? (
-                <svg className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg className="w-4 h-4 md:w-5 md:h-5 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                </svg>
-              )}
-            </motion.div>
-          </motion.button>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            {['Features', 'About', 'Contact'].map((item, index) => (
-              <motion.a 
-                key={item}
-                href="#" 
-                className={`${isDarkTheme ? 'text-slate-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors relative text-sm lg:text-base`}
-                whileHover={{ scale: 1.1, y: -2 }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3 }}
-              >
-                {item}
-                <motion.div
-                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r ${currentTheme.accent}`}
-                  initial={{ width: 0 }}
-                  whileHover={{ width: '100%' }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.a>
-            ))}
-            <Link href="/sign-in" className='hover:scale-105 transition-transform cursor-pointer'>
-            <motion.button 
-              className={`cursor-pointer group bg-gradient-to-r ${currentTheme.accent} hover:shadow-lg px-4 py-2 lg:px-6 lg:py-3 rounded-lg lg:rounded-xl transition-all duration-300 shadow-md relative overflow-hidden text-white text-sm lg:text-base`}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-                <span className="relative z-10 font-semibold">Sign In</span>
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ scale: 0, opacity: 0 }}
-                whileHover={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.button>
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <motion.button 
-            className="md:hidden p-2"
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <motion.div
-              animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {isMobileMenuOpen ? (
-                <svg className={`w-6 h-6 ${currentTheme.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className={`w-6 h-6 ${currentTheme.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </motion.div>
-          </motion.button>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className={`md:hidden absolute top-20 left-4 right-4 z-30 bg-gradient-to-br ${currentTheme.cardBg} border ${currentTheme.border} rounded-2xl backdrop-blur-md shadow-xl overflow-hidden`}
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="p-6 space-y-4">
-              {['Features', 'About', 'Contact'].map((item, index) => (
-                <motion.a
-                  key={item}
-                  href="#"
-                  className={`block text-lg font-semibold ${isDarkTheme ? 'text-slate-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors py-2`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item}
-                </motion.a>
-              ))}
-              <motion.button
-                className={`w-full bg-gradient-to-r ${currentTheme.accent} text-white px-6 py-3 rounded-xl font-semibold shadow-lg mt-4`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Link href="/sign-in">Sign In</Link>
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Hero Content */}
       <motion.div 
-        className="relative z-10 flex items-center justify-center min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-100px)]"
+        className="mt-3 relative z-10 flex items-center justify-center min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-100px)]"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -402,7 +241,7 @@ function Hero() {
                   initial={{ opacity: 0, y: 30, rotateX: -90 }}
                   animate={{ opacity: 1, y: 0, rotateX: 0 }}
                   exit={{ opacity: 0, y: -30, rotateX: 90 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
                   {words[currentWordIndex]}
                 </motion.span>

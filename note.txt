@@ -1,6 +1,0 @@
-add matchers (frontend pages) to middleware where user must login
-
-where i rewached
-middleware problem when i add /dashboard in middleware and now when user not sign-ined i goto /dashboard it directly redirect to /sign-in page but now cookie is not storig why?
-
-add somthing like notifiation for rooms when some roommember add payment give notificatio in header(at this time thi featue for foent is commentout in header com[ponent)])

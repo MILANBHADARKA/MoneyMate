@@ -7,7 +7,7 @@ import Footer from '../footer/Footer';
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
 
-  const hideHeaderRoutes = ['/forgot-password', '/reset-password', '/sign-in', 'sign-up', '/verify-email']
+  const hideHeaderRoutes = ['/forgot-password', '/reset-password', '/sign-in', 'sign-up', '/verify-email',]
   const hideFooterRoutes = ['/forgot-password', '/reset-password', '/sign-in', 'sign-up', '/verify-email']
 
   const showHeader = !hideHeaderRoutes.includes(pathname)
@@ -16,7 +16,9 @@ export default function LayoutWrapper({ children }) {
   return (
     <>
       {showHeader && <Header />}
-      {children}
+      <main className={showHeader ? 'pt-16 lg:pt-20' : ''}>
+        {children}
+      </main>
       {showFooter && <Footer />}
     </>
   );

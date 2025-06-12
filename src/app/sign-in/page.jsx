@@ -20,7 +20,7 @@ export default function SignInPage() {
   const { login, isLoading, isAuthenticated } = useUser()
   
   const verified = searchParams.get('verified')
-  const redirectTo = searchParams.get('redirect') || '/dashboard'
+  const redirectTo = searchParams.get('redirect') || '/customers'
 
   useEffect(() => {
     if (verified === 'true') {
@@ -165,6 +165,7 @@ export default function SignInPage() {
                 type={showPassword ? 'text' : 'password'}
                 className={`w-full pl-10 pr-12 py-3 ${currentTheme.inputBg} ${currentTheme.inputBorder} border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${currentTheme.inputText}`}
                 placeholder="Enter your password"
+                autoComplete='current-password'
               />
               <button
                 type="button"

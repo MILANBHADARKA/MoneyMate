@@ -7,14 +7,16 @@ export async function GET() {
   try {
     await dbConnect();
     
-    const cookieStore = cookies();
-    const token = await cookieStore.get('token');
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token');
 
     if (!token) {
       return new Response(JSON.stringify({ success: false, error: "Not authenticated" }), { status: 401 });
     }
 
     const decoded = verifyToken(token.value);
+
+    // If the token is invalid or expired, decoded will be null
     if (!decoded) {
       return new Response(JSON.stringify({ success: false, error: "Invalid token" }), { status: 401 });
     }
@@ -30,7 +32,9 @@ export async function GET() {
         id: user._id,
         username: user.username,
         email: user.email,
-        profilePicture: user.profilePicture
+        profilePicture: user.profilePicture,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
       }
     }), { status: 200 });
 
