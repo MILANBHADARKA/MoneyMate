@@ -56,6 +56,8 @@ export async function POST(req) {
             verifyCode: tempUser.verifyCode
         });
 
+        // console.log("Email sent status:", emailSent);
+
         if (!emailSent.success) {
             return new Response(JSON.stringify({ success: false, error: emailSent.error }), { status: 500 });
         }
