@@ -118,7 +118,7 @@ function Header() {
                     {/* Enhanced Logo */}
                     <motion.div
                         className="flex items-center space-x-3 cursor-pointer group"
-                        onClick={() => router.push('/dashboard')}
+                        onClick={() => router.push('/')}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                     >
@@ -162,9 +162,6 @@ function Header() {
                                 <span className={`text-xl lg:text-2xl font-bold bg-gradient-to-r ${currentTheme.accent} bg-clip-text text-transparent group-hover:from-blue-500 group-hover:to-purple-600 transition-all duration-300`}>
                                     MoneyMate
                                 </span>
-                                <div className={`text-xs ${currentTheme.textSecondary} font-medium group-hover:text-blue-500 transition-colors duration-300`}>
-                                    Financial Intelligence
-                                </div>
                             </motion.div>
                         </div>
                     </motion.div>

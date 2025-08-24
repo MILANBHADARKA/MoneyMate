@@ -67,11 +67,11 @@ export const UserProvider = ({ children }) => {
       } else {
         return { success: false, error: result.error }
       }
-    } catch (error) {
-      return { success: false, error: 'Login failed. Please try again.' }
-    } finally {
-      setIsLoading(false)
-    }
+      } catch (error) {
+        return { success: false, error: 'Login failed. Please try again.' }
+      } finally {
+        setIsLoading(false)
+      }
   }
 
   const logout = async () => {

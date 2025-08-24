@@ -1,0 +1,269 @@
+<mxfile host="65bd71144e">
+    <diagram name="MoneyMate Use Case Diagram" id="usecase-diagram">
+        <mxGraphModel dx="960" dy="1732" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="system-boundary" value="MoneyMate - Use Case Diagram" style="swimlane;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#9673a6;fontSize=16;fontStyle=1;startSize=40;container=0;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="-930" width="1050" height="2260" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="actor-guest" target="uc-view-profile" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-guest" target="uc-add-customer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-guest" target="uc-view-customers" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-guest" target="uc-edit-customer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-guest" target="uc-delete-customer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-guest" target="uc-view-customer-details" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-guest" target="11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor-guest" value="Guest User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="-340" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="25" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-leave-split-room" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-creator" target="uc-view-split-rooms" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-edit-expense" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-delete-expense" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-join-split-room" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-add-expense" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-view-balances" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-split-expense-equally" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="actor-room-creator" target="uc-custom-split" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="480" y="720"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="actor-room-creator" value="Room Creator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="500" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor-room-member" value="Room Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1050" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor-email-service" value="Email Service" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="1300" y="-330" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor-cloudinary" value="Cloudinary Service" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="1330" y="410" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="guest-register" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-guest" target="uc-register" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="guest-login" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-guest" target="uc-login" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="guest-forgot" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-guest" target="uc-forgot-password" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="user-logout" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="uc-reset-password" target="uc-logout" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="creator-create-room" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-creator" target="uc-create-split-room" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="creator-delete-room" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-creator" target="uc-delete-split-room" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="member-join-room" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-member" target="uc-join-split-room" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="member-add-expense" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-member" target="uc-add-expense" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="member-split-equally" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-member" target="uc-split-expense-equally" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="member-custom-split" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-member" target="uc-custom-split" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="380" y="1100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="member-view-balances" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-room-member" target="uc-view-balances" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="email-verify" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-email-service" target="uc-verify-email" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="email-reset" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-email-service" target="uc-reset-password" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cloudinary-upload" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.3;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="actor-cloudinary" target="uc-upload-picture" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-box" value="&lt;h3&gt;Legend&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Actors:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Guest User: Unregistered visitor&lt;/p&gt;&lt;p&gt;• User: Registered authenticated user&lt;/p&gt;&lt;p&gt;• Room Creator: User who creates split rooms&lt;/p&gt;&lt;p&gt;• Room Member: User who joins split rooms&lt;/p&gt;&lt;p&gt;&lt;b&gt;Use Case Categories:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Blue: Authentication &amp;amp; Security&lt;/p&gt;&lt;p&gt;• Yellow: Profile Management&lt;/p&gt;&lt;p&gt;• Red: Customer Management&lt;/p&gt;&lt;p&gt;• Orange: Transaction Management&lt;/p&gt;&lt;p&gt;• Green: Split Room Management&lt;/p&gt;&lt;p&gt;• Light Orange: Split Expense Management&lt;/p&gt;&lt;p&gt;• Gray: Balance &amp;amp; Settlement&lt;/p&gt;&lt;p&gt;• Light Gray: Dashboard &amp;amp; Reporting&lt;/p&gt;&lt;p&gt;&lt;b&gt;Relationships:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• ───── Association&lt;/p&gt;&lt;p&gt;• - - -&gt; &amp;lt;&amp;lt;include&amp;gt;&amp;gt;&lt;/p&gt;&lt;p&gt;• - - -&gt; &amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;/p&gt;" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="2400" y="230" width="320" height="560" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-register" value="Register Account" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="-770" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-verify-email" value="Verify Email" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="740" y="-770" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-login" value="Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="-700" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-forgot-password" value="Forgot Password" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="-630" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-logout" value="Logout" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="-680" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-view-profile" value="View Profile" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#1BA1E2,#1D293B);strokeColor=#6C8EBF;fontColor=light-dark(#FFFFFF,#FFFFFF);textShadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="-540" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-edit-profile" value="Edit Profile" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="-470" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-view-customers" value="View Customers" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="-320" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-add-customer" value="Add Customer" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="-390" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-edit-customer" value="Edit Customer" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="-250" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-delete-customer" value="Delete Customer" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="-180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-view-customer-details" value="View Customer Details" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="-110" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-edit-transaction" value="Edit Transaction" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="-100" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-delete-transaction" value="Delete Transaction" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="-30" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-view-transactions" value="View Transaction History" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="40" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-create-split-room" value="Create Split Room" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="150" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-join-split-room" value="Join Split Room" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#D5E8D4,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="760" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-leave-split-room" value="Leave Split Room" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="300" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-view-split-rooms" value="View Split Rooms" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="440" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-delete-split-room" value="Delete Split Room" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-add-expense" value="Add Expense" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#D5E8D4,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="850" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-edit-expense" value="Edit Expense" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-delete-expense" value="Delete Expense" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="585" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-split-expense-equally" value="Split Expense Equally" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#D5E8D4,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="1010" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-custom-split" value="Custom Split Expense" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#D5E8D4,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="1020" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-view-balances" value="View Group Balances" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#D5E8D4,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="930" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="include-register-verify" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;dashPattern=5 5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="uc-register" target="uc-verify-email" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="include-forgot-reset" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;dashPattern=5 5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="uc-forgot-password" target="uc-reset-password" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="include-profile-upload" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;dashPattern=5 5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="uc-edit-profile" target="uc-upload-picture" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="extend-custom-equal" value="&lt;&lt;extend&gt;&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;dashPattern=5 5;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="uc-custom-split" target="uc-split-expense-equally" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-reset-password" value="Reset Password" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="740" y="-630" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc-upload-picture" value="Upload Profile Picture" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="-470" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.27;entryY=1.017;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="actor-guest" target="uc-reset-password" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="390" y="-550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.04;entryY=0.803;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="actor-guest" target="uc-edit-profile" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.047;entryY=0.803;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="actor-guest" target="uc-upload-picture" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="390" y="-400"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="Manage Entries" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#FFF2CC,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="-40" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;dashPattern=5 5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="11" target="uc-view-transactions" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="487" y="69.29000000000002" as="sourcePoint"/>
+                        <mxPoint x="707" y="69.29000000000002" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;dashPattern=5 5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="11" target="uc-edit-transaction" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="530" y="-80.70999999999998" as="sourcePoint"/>
+                        <mxPoint x="750" y="-80.70999999999998" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;dashPattern=5 5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="11" target="uc-delete-transaction" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="540" y="-160" as="sourcePoint"/>
+                        <mxPoint x="760" y="-160" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="25" value="Edit Split Room" style="ellipse;whiteSpace=wrap;html=1;fillColor=light-dark(#E1D5E7,#1D293B);strokeColor=#6C8EBF;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="220" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

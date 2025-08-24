@@ -150,15 +150,6 @@ function Footer() {
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {/* <svg
-                    className="w-7 h-7 text-white"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                  >
-                    <path d="M4 20V4l8 9 8-9v16" />
-                  </svg> */}
                   <img src="/Logo.jpeg" alt="Logo" className='rounded-xl'/>
                 </motion.div>
                 <span className={`text-2xl font-bold bg-gradient-to-r ${currentTheme.accent} bg-clip-text text-transparent`}>

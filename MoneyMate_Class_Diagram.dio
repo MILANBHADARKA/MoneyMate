@@ -1,0 +1,224 @@
+<mxfile host="65bd71144e">
+    <diagram name="MoneyMate Class Diagram" id="class-diagram">
+        <mxGraphModel dx="2100" dy="1873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="User" value="User" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=light-dark(#DAE8FC,#0000FF);strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="240" height="378" as="geometry"/>
+                </mxCell>
+                <mxCell id="User-attributes" value="- _id: ObjectId&#xa;- username: String (required, unique)&#xa;- email: String (required, unique)&#xa;- password: String (required)&#xa;- profilePicture: String&#xa;- customers: ObjectId[] (ref: Customer)&#xa;- splitRooms: ObjectId[] (ref: SplitRoom)&#xa;- verifyCode: String&#xa;- verifyCodeExpires: Date&#xa;- createdAt: Date&#xa;- updatedAt: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="User" vertex="1">
+                    <mxGeometry y="26" width="240" height="184" as="geometry"/>
+                </mxCell>
+                <mxCell id="User-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="User" vertex="1">
+                    <mxGeometry y="210" width="240" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="User-methods" value="+ authenticate(password): Boolean&#xa;+ generateVerifyCode(): String&#xa;+ verifyEmail(code): Boolean&#xa;+ addCustomer(customerId): void&#xa;+ removeCustomer(customerId): void&#xa;+ joinSplitRoom(roomId): void&#xa;+ leaveSplitRoom(roomId): void&#xa;+ updateProfile(data): User&#xa;+ changePassword(newPassword): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="User" vertex="1">
+                    <mxGeometry y="218" width="240" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="Customer" value="Customer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=light-dark(#FFF2CC,#3D2900);strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="-120" width="250" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="Customer-attributes" value="- _id: ObjectId&#xa;- name: String (required, unique per user)&#xa;- user: ObjectId (ref: User, required)&#xa;- entries: ObjectId[] (ref: Entry)&#xa;- createdAt: Date&#xa;- updatedAt: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Customer" vertex="1">
+                    <mxGeometry y="26" width="250" height="114" as="geometry"/>
+                </mxCell>
+                <mxCell id="Customer-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="Customer" vertex="1">
+                    <mxGeometry y="140" width="250" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="Customer-methods" value="+ addEntry(entry): Entry&#xa;+ removeEntry(entryId): Boolean&#xa;+ calculateBalance(): Number&#xa;+ getTotalDebt(): Number&#xa;+ getTotalCredit(): Number" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Customer" vertex="1">
+                    <mxGeometry y="148" width="250" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="Entry" value="Entry" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=light-dark(#F8CECC,#FF0000);strokeColor=light-dark(#B85450,#FF0000);" parent="1" vertex="1">
+                    <mxGeometry x="850" y="-110" width="200" height="270" as="geometry"/>
+                </mxCell>
+                <mxCell id="Entry-attributes" value="- _id: ObjectId&#xa;- amount: Number (required)&#xa;- entryType: String (enum: You Gave, You Get)&#xa;- reason: String (optional)&#xa;- customer: ObjectId (ref: Customer)&#xa;- createdAt: Date&#xa;- updatedAt: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Entry" vertex="1">
+                    <mxGeometry y="26" width="200" height="144" as="geometry"/>
+                </mxCell>
+                <mxCell id="Entry-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="Entry" vertex="1">
+                    <mxGeometry y="170" width="200" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="Entry-methods" value="+ validate(): Boolean&#xa;+ updateAmount(amount): Entry&#xa;+ updateReason(reason): Entry&#xa;+ isDebit(): Boolean&#xa;+ isCredit(): Boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Entry" vertex="1">
+                    <mxGeometry y="178" width="200" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="SplitExpenses" value="SplitExpenses" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=light-dark(#D5E8D4,#009900);strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="410" width="280" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="SplitExpenses-attributes" value="- _id: ObjectId&#xa;- amount: Number (required)&#xa;- reason: String&#xa;- paidBy: ObjectId (ref: User, required)&#xa;- users: ObjectId[] (ref: User)&#xa;- splits: Split[] (embedded)&#xa;- createdAt: Date&#xa;- updatedAt: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="SplitExpenses" vertex="1">
+                    <mxGeometry y="26" width="280" height="154" as="geometry"/>
+                </mxCell>
+                <mxCell id="SplitExpenses-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="SplitExpenses" vertex="1">
+                    <mxGeometry y="180" width="280" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="SplitExpenses-methods" value="+ calculateEqualSplit(): Split[]&#xa;+ calculateCustomSplit(amounts): Split[]&#xa;+ updateSplits(splits): void&#xa;+ getOwedAmount(userId): Number&#xa;+ getPaidAmount(userId): Number" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="SplitExpenses" vertex="1">
+                    <mxGeometry y="188" width="280" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="TempUser" value="TempUser" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=light-dark(#FFCC99,#FF8000);strokeColor=#36393d;" parent="1" vertex="1">
+                    <mxGeometry x="-470" y="40" width="240" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="TempUser-attributes" value="- _id: ObjectId&#xa;- username: String (required, lowercase)&#xa;- email: String (required, unique, lowercase)&#xa;- password: String (required)&#xa;- profilePicture: String&#xa;- verifyCode: String (required)&#xa;- verifyCodeExpires: Date (required)&#xa;- createdAt: Date (TTL: 900s)&#xa;- updatedAt: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="TempUser" vertex="1">
+                    <mxGeometry y="26" width="240" height="144" as="geometry"/>
+                </mxCell>
+                <mxCell id="TempUser-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="TempUser" vertex="1">
+                    <mxGeometry y="170" width="240" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="TempUser-methods" value="+ verifyCode(code): Boolean&#xa;+ regenerateCode(): String&#xa;+ migrateToUser(): User" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="TempUser" vertex="1">
+                    <mxGeometry y="178" width="240" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="user-customer-rel" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="User" target="Customer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="user-customer-label1" value="owns" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-customer-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-customer-label2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-customer-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="5" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-customer-label3" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-customer-rel" connectable="0" vertex="1">
+                    <mxGeometry x="0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-5" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="customer-entry-rel" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Customer" target="Entry" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="customer-entry-label1" value="has" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="customer-entry-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="customer-entry-label2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="customer-entry-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="5" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="customer-entry-label3" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="customer-entry-rel" connectable="0" vertex="1">
+                    <mxGeometry x="0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-5" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-creator-rel" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="User" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="170" y="690" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-creator-label1" value="creates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-splitroom-creator-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-creator-label2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-splitroom-creator-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="10" y="5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-creator-label3" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-splitroom-creator-rel" connectable="0" vertex="1">
+                    <mxGeometry x="0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-10" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-member-rel" value="" style="endArrow=none;html=1;rounded=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.838;entryY=0.006;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="User" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="230" y="690" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-member-label1" value="joins" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-splitroom-member-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+                        <mxPoint x="15" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-member-label2" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-splitroom-member-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="15" y="5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-splitroom-member-label3" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-splitroom-member-rel" connectable="0" vertex="1">
+                    <mxGeometry x="0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-15" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="splitroom-expenses-rel" value="" style="endArrow=none;html=1;rounded=0;exitX=1.012;exitY=0.038;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" parent="1" source="4" target="SplitExpenses" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="290" y="709" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="splitroom-expenses-label1" value="contains" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="splitroom-expenses-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="splitroom-expenses-label2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="splitroom-expenses-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="5" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="splitroom-expenses-label3" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="splitroom-expenses-rel" connectable="0" vertex="1">
+                    <mxGeometry x="0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-5" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-expenses-paidby-rel" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="User" target="SplitExpenses" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-expenses-paidby-label1" value="Add" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-expenses-paidby-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-2" y="-2" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-expenses-paidby-label2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-expenses-paidby-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="user-expenses-paidby-label3" value="*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="user-expenses-paidby-rel" connectable="0" vertex="1">
+                    <mxGeometry x="0.8" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-5" y="5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tempuser-user-rel" value="" style="endArrow=block;html=1;rounded=0;dashed=1;dashPattern=5 5;exitX=1.008;exitY=0.77;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="TempUser-attributes" target="User-attributes" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points"/>
+                        <mxPoint x="-220" y="185" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tempuser-user-label" value="&lt;&lt;migrates to&gt;&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="tempuser-user-rel" connectable="0" vertex="1">
+                    <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="title-header" value="MoneyMate - Class Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="-380" width="380" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="system-overview" value="&lt;h3&gt;System Overview&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Architecture:&lt;/b&gt; Next.js 14 + MongoDB + Mongoose ODM&lt;/p&gt;&lt;p&gt;&lt;b&gt;Authentication:&lt;/b&gt; JWT with Email Verification&lt;/p&gt;&lt;p&gt;&lt;b&gt;Features:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Personal Customer &amp;amp; Transaction Management&lt;/p&gt;&lt;p&gt;• Group Expense Splitting&lt;/p&gt;&lt;p&gt;• Real-time Balance Calculations&lt;/p&gt;&lt;p&gt;• Secure Registration Flow with TempUser&lt;/p&gt;&lt;p&gt;• Profile Management with Image Upload&lt;/p&gt;" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="1420" y="-120" width="280" height="290" as="geometry"/>
+                </mxCell>
+                <mxCell id="schema-notes" value="&lt;h3&gt;Database Schema Notes&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Indexes:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• User: email (unique), username (unique)&lt;/p&gt;&lt;p&gt;• Customer: {name, user} (compound unique)&lt;/p&gt;&lt;p&gt;• Entry: customer, createdAt, entryType&lt;/p&gt;&lt;p&gt;• TempUser: createdAt (TTL: 900 seconds)&lt;/p&gt;&lt;p&gt;&lt;b&gt;Validations:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Email regex pattern validation&lt;/p&gt;&lt;p&gt;• EntryType enum: [You Gave, You Get]&lt;/p&gt;" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="1420" y="210" width="280" height="260" as="geometry"/>
+                </mxCell>
+                <mxCell id="relationship-legend" value="&lt;h3&gt;Relationship Types&lt;/h3&gt;&lt;p&gt;&lt;b&gt;───&lt;/b&gt; Association&lt;/p&gt;&lt;p&gt;&lt;b&gt;- - -&amp;gt;&lt;/b&gt; Migration&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: transparent; color: rgb(192, 192, 192);&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(192, 192, 192), rgb(255, 255, 255));&quot;&gt;Colors&lt;/font&gt;&lt;/b&gt;&lt;b style=&quot;color: rgb(192, 192, 192); background-color: transparent;&quot;&gt;:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Blue: Core User Management&lt;/p&gt;&lt;p&gt;• Brown: Customer Management&lt;/p&gt;&lt;p&gt;• Red: Transaction Entries&lt;/p&gt;&lt;p&gt;• Purple: Split Room Management&lt;/p&gt;&lt;p&gt;• Green: Split Expenses&lt;/p&gt;&lt;p&gt;• Orange: Temporary Registration&lt;/p&gt;" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="1169" width="280" height="291" as="geometry"/>
+                </mxCell>
+                <mxCell id="api-summary" value="&lt;h3&gt;Key API Endpoints&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Authentication:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• POST /api/auth/sign-up&lt;/p&gt;&lt;p&gt;• POST /api/auth/sign-in&lt;/p&gt;&lt;p&gt;• POST /api/auth/verify-code&lt;/p&gt;&lt;p&gt;• POST /api/auth/forgot&lt;/p&gt;&lt;p&gt;• POST /api/auth/reset-password&lt;/p&gt;&lt;p&gt;&lt;b&gt;Customer Management:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• GET/POST /api/customer&lt;/p&gt;&lt;p&gt;• GET/PUT/DELETE /api/customer/[id]&lt;/p&gt;&lt;p&gt;&lt;b&gt;Entries:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• GET/POST /api/entry&lt;/p&gt;&lt;p&gt;• PUT/DELETE /api/entry/[id]&lt;/p&gt;&lt;p&gt;&lt;b&gt;Split Rooms:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• GET/POST /api/split-room&lt;/p&gt;&lt;p&gt;• GET/PUT/DELETE /api/split-room/[id]&lt;/p&gt;&lt;p&gt;• POST /api/split-expense&lt;/p&gt;" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="1420" y="520" width="280" height="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="SplitRoom" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=light-dark(#DAE8FC,#7F00FF);strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="720" width="240" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="- _id: ObjectId&#xa;- name: String (required)&#xa;- createdBy: ObjectId (ref: User, required)&#xa;- users: ObjectId[] (ref: User)&#xa;- expenses: ObjectId[] (ref: SplitExpenses)&#xa;- createdAt: Date&#xa;- updatedAt: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3" vertex="1">
+                    <mxGeometry y="26" width="240" height="134" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="3" vertex="1">
+                    <mxGeometry y="160" width="240" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="+ addUser(userId): Boolean&#xa;+ addExpense(expense): SplitExpenses&#xa;+ calculateBalances(): Object&#xa;+ getTotalExpenses(): Number" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3" vertex="1">
+                    <mxGeometry y="168" width="240" height="82" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
