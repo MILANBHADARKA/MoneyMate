@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="MoneyMate Class Diagram" id="class-diagram">
-        <mxGraphModel dx="2100" dy="1873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2721" dy="1532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -195,16 +195,16 @@
                     <mxGeometry x="270" y="-380" width="380" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="system-overview" value="&lt;h3&gt;System Overview&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Architecture:&lt;/b&gt; Next.js 14 + MongoDB + Mongoose ODM&lt;/p&gt;&lt;p&gt;&lt;b&gt;Authentication:&lt;/b&gt; JWT with Email Verification&lt;/p&gt;&lt;p&gt;&lt;b&gt;Features:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Personal Customer &amp;amp; Transaction Management&lt;/p&gt;&lt;p&gt;• Group Expense Splitting&lt;/p&gt;&lt;p&gt;• Real-time Balance Calculations&lt;/p&gt;&lt;p&gt;• Secure Registration Flow with TempUser&lt;/p&gt;&lt;p&gt;• Profile Management with Image Upload&lt;/p&gt;" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#333333;" parent="1" vertex="1">
-                    <mxGeometry x="1420" y="-120" width="280" height="290" as="geometry"/>
+                    <mxGeometry x="1410" y="240" width="280" height="290" as="geometry"/>
                 </mxCell>
                 <mxCell id="schema-notes" value="&lt;h3&gt;Database Schema Notes&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Indexes:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• User: email (unique), username (unique)&lt;/p&gt;&lt;p&gt;• Customer: {name, user} (compound unique)&lt;/p&gt;&lt;p&gt;• Entry: customer, createdAt, entryType&lt;/p&gt;&lt;p&gt;• TempUser: createdAt (TTL: 900 seconds)&lt;/p&gt;&lt;p&gt;&lt;b&gt;Validations:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Email regex pattern validation&lt;/p&gt;&lt;p&gt;• EntryType enum: [You Gave, You Get]&lt;/p&gt;" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="1420" y="210" width="280" height="260" as="geometry"/>
+                    <mxGeometry x="1410" y="610" width="280" height="260" as="geometry"/>
                 </mxCell>
                 <mxCell id="relationship-legend" value="&lt;h3&gt;Relationship Types&lt;/h3&gt;&lt;p&gt;&lt;b&gt;───&lt;/b&gt; Association&lt;/p&gt;&lt;p&gt;&lt;b&gt;- - -&amp;gt;&lt;/b&gt; Migration&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: transparent; color: rgb(192, 192, 192);&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(192, 192, 192), rgb(255, 255, 255));&quot;&gt;Colors&lt;/font&gt;&lt;/b&gt;&lt;b style=&quot;color: rgb(192, 192, 192); background-color: transparent;&quot;&gt;:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• Blue: Core User Management&lt;/p&gt;&lt;p&gt;• Brown: Customer Management&lt;/p&gt;&lt;p&gt;• Red: Transaction Entries&lt;/p&gt;&lt;p&gt;• Purple: Split Room Management&lt;/p&gt;&lt;p&gt;• Green: Split Expenses&lt;/p&gt;&lt;p&gt;• Orange: Temporary Registration&lt;/p&gt;" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="560" y="1169" width="280" height="291" as="geometry"/>
                 </mxCell>
                 <mxCell id="api-summary" value="&lt;h3&gt;Key API Endpoints&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Authentication:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• POST /api/auth/sign-up&lt;/p&gt;&lt;p&gt;• POST /api/auth/sign-in&lt;/p&gt;&lt;p&gt;• POST /api/auth/verify-code&lt;/p&gt;&lt;p&gt;• POST /api/auth/forgot&lt;/p&gt;&lt;p&gt;• POST /api/auth/reset-password&lt;/p&gt;&lt;p&gt;&lt;b&gt;Customer Management:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• GET/POST /api/customer&lt;/p&gt;&lt;p&gt;• GET/PUT/DELETE /api/customer/[id]&lt;/p&gt;&lt;p&gt;&lt;b&gt;Entries:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• GET/POST /api/entry&lt;/p&gt;&lt;p&gt;• PUT/DELETE /api/entry/[id]&lt;/p&gt;&lt;p&gt;&lt;b&gt;Split Rooms:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;• GET/POST /api/split-room&lt;/p&gt;&lt;p&gt;• GET/PUT/DELETE /api/split-room/[id]&lt;/p&gt;&lt;p&gt;• POST /api/split-expense&lt;/p&gt;" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="1420" y="520" width="280" height="490" as="geometry"/>
+                    <mxGeometry x="1410" y="960" width="280" height="490" as="geometry"/>
                 </mxCell>
                 <mxCell id="3" value="SplitRoom" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=light-dark(#DAE8FC,#7F00FF);strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="30" y="720" width="240" height="250" as="geometry"/>
@@ -217,6 +217,12 @@
                 </mxCell>
                 <mxCell id="6" value="+ addUser(userId): Boolean&#xa;+ addExpense(expense): SplitExpenses&#xa;+ calculateBalances(): Object&#xa;+ getTotalExpenses(): Number" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3" vertex="1">
                     <mxGeometry y="168" width="240" height="82" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Authentication System" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e6f3ff;strokeColor=#0066cc;" vertex="1" parent="1">
+                    <mxGeometry x="1400" y="-140" width="300" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Components:&#xa;• JWT Token Generation/Verification&#xa;• Password Hashing (bcryptjs)&#xa;• Email Verification System&#xa;• Cookie-based Session Management&#xa;• User Context Provider&#xa;&#xa;API Routes:&#xa;• /api/auth/sign-in&#xa;• /api/auth/sign-up&#xa;• /api/auth/verify-email&#xa;• /api/auth/resend-verification&#xa;• /api/auth/logout&#xa;• /api/auth/me" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="8">
+                    <mxGeometry y="30" width="300" height="280" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
