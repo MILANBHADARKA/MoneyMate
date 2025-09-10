@@ -47,56 +47,9 @@ function Footer() {
     {
       title: 'Product',
       links: [
-        { name: 'Features', href: '/features' },
-        { name: 'Pricing', href: '/pricing' },
-        { name: 'Security', href: '/security' },
-        { name: 'Integrations', href: '/integrations' }
+        { name: 'Customer', href: '/customers' },
+        { name: 'Split Rooms', href: '/split-rooms' },
       ]
-    },
-    {
-      title: 'Company',
-      links: [
-        { name: 'About', href: '/about' },
-        { name: 'Blog', href: '/blog' },
-        { name: 'Careers', href: '/careers' },
-        { name: 'Contact', href: '/contact' }
-      ]
-    },
-    {
-      title: 'Support',
-      links: [
-        { name: 'Help Center', href: '/help' },
-        { name: 'Documentation', href: '/docs' },
-        { name: 'Status', href: '/status' },
-        { name: 'Community', href: '/community' }
-      ]
-    },
-    {
-      title: 'Legal',
-      links: [
-        { name: 'Privacy', href: '/privacy' },
-        { name: 'Terms', href: '/terms' },
-        { name: 'Cookies', href: '/cookies' },
-        { name: 'Licenses', href: '/licenses' }
-      ]
-    }
-  ]
-
-  const socialLinks = [
-    {
-      name: 'Twitter',
-      href: '#',
-      icon: Twitter
-    },
-    {
-      name: 'GitHub',
-      href: '#',
-      icon: Github
-    },
-    {
-      name: 'LinkedIn',
-      href: '#',
-      icon: Linkedin
     }
   ]
 
@@ -221,26 +174,6 @@ function Footer() {
             {/* Copyright */}
             <div className={`text-sm ${currentTheme.text} flex items-center`}>
               © 2024 MoneyMate. All rights reserved.
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              {socialLinks.map((social, index) => {
-                const IconComponent = social.icon
-                return (
-                  <motion.a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`p-2 rounded-lg ${currentTheme.text} ${currentTheme.hover} transition-all duration-300 hover:scale-110`}
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <IconComponent className="w-5 h-5" />
-                  </motion.a>
-                )
-              })}
             </div>
 
             {/* Back to Top */}

@@ -4,8 +4,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Home() {
   return (
-    <ProtectedRoute>
+    // <ProtectedRoute>
       <Hero />
-    </ProtectedRoute>
+    // </ProtectedRoute>
   );
 } 

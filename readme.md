@@ -1,6 +1,6 @@
 # 💰 MoneyMate - Personal Finance Management App
 
-**MoneyMate** is a modern, full-stack personal finance management application built with Next.js 14, featuring customer management and expense splitting capabilities. Track your finances and split expenses with friends seamlessly.
+**MoneyMate** is a modern, full-stack personal finance management application built with Next.js, featuring customer management and expense splitting capabilities. Track your finances and split expenses with friends seamlessly.
 
 
 ## ✨ Features
@@ -33,9 +33,8 @@
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Next.js 14** - React framework with App Router
-- **React 18** - Latest React features with hooks
-- **TypeScript** - Type-safe development
+- **Next.js** - React framework with App Router
+- **React** - Latest React features with hooks
 - **Tailwind CSS** - Utility-first CSS framework
 - **Framer Motion** - Smooth animations and transitions
 - **React Hook Form** - Form management with validation
@@ -56,7 +55,7 @@
 
 ### Prerequisites
 - **Node.js** (v18 or higher)
-- **npm** or **yarn**
+- **npm**
 - **MongoDB** database
 - **Cloudinary** account (for image uploads)
 - **Email service** (Gmail, SendGrid, etc.)
@@ -159,13 +158,6 @@ moneymate/
 - **System Preference** - Automatic theme detection
 - **Smooth Transitions** - Animated theme switching
 
-### UI/UX Features
-- **Glass Morphism** - Modern translucent design elements
-- **Micro-interactions** - Subtle hover and click animations
-- **Responsive Grid** - Adaptive layouts for all screen sizes
-- **Loading States** - Smooth loading indicators
-- **Form Validation** - Real-time validation with helpful messages
-
 ## 🔐 Security Features
 
 - **JWT Authentication** - Secure token-based authentication
@@ -207,11 +199,10 @@ moneymate/
 
 ### Upcoming Features
 - 📊 Advanced analytics and charts
-- 📱 Mobile app (React Native)
 - 🔔 Push notifications
 - 📧 Email reminders
-- 💳 Payment integration
 - 📤 Data export functionality
+- 💳Will introduce some subscription plans
 
 ---
 

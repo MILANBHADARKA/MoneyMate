@@ -35,7 +35,7 @@ function Header() {
     const router = useRouter()
     const pathname = usePathname()
     const { theme, toggleTheme } = useTheme()
-    const { user, logout } = useUser()
+    const { user, logout, isAuthenticated } = useUser()
     const isDarkTheme = theme === 'dark'
 
     // Handle scroll effect
@@ -45,6 +45,9 @@ function Header() {
         }
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
+
+
+
     }, [])
 
     const handleLogout = async () => {
@@ -62,7 +65,6 @@ function Header() {
         }
     }
 
-    // Navigation items with enhanced design
     const navItems = [
         {
             name: 'Customers',
@@ -115,7 +117,6 @@ function Header() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 lg:h-20">
 
-                    {/* Enhanced Logo */}
                     <motion.div
                         className="flex items-center space-x-3 cursor-pointer group"
                         onClick={() => router.push('/')}
@@ -124,9 +125,9 @@ function Header() {
                     >
                         <motion.div
                             className={`relative w-12 h-12 lg:w-14 lg:h-14 bg-gradient-to-br ${currentTheme.accent} rounded-2xl flex items-center justify-center shadow-lg ${currentTheme.glow} group-hover:shadow-xl transition-all duration-300`}
-                            whileHover={{ 
+                            whileHover={{
                                 rotate: [0, -10, 10, -5, 5, 0],
-                                scale: 1.1 
+                                scale: 1.1
                             }}
                             transition={{ duration: 0.6 }}
                         >
@@ -136,14 +137,14 @@ function Header() {
                                 whileHover={{ opacity: 1 }}
                                 transition={{ duration: 0.3 }}
                             />
-                            <img 
-                                src="/Logo.jpeg" 
-                                alt="Logo" 
+                            <img
+                                src="/Logo.jpeg"
+                                alt="Logo"
                                 className='w-10 h-10 lg:w-12 lg:h-12 rounded-xl object-cover z-10 relative'
                             />
                             <motion.div
                                 className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center"
-                                animate={{ 
+                                animate={{
                                     scale: [1, 1.2, 1],
                                     rotate: [0, 180, 360]
                                 }}
@@ -166,7 +167,6 @@ function Header() {
                         </div>
                     </motion.div>
 
-                    {/* Enhanced Desktop Navigation */}
                     <nav className="hidden lg:flex items-center space-x-2">
                         {navItems.map((item, index) => (
                             <motion.div
@@ -180,25 +180,23 @@ function Header() {
                             >
                                 <Link
                                     href={item.href}
-                                    className={`group relative flex items-center px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
-                                        item.active
+                                    className={`group relative flex items-center px-4 py-3 rounded-xl font-medium transition-all duration-300 ${item.active
                                             ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg ${currentTheme.glow}`
                                             : `${currentTheme.text} ${currentTheme.hover} hover:scale-105`
-                                    }`}
+                                        }`}
                                 >
                                     <motion.div
-                                        className={`p-1 rounded-lg mr-3 ${
-                                            item.active 
-                                                ? 'bg-white/20' 
+                                        className={`p-1 rounded-lg mr-3 ${item.active
+                                                ? 'bg-white/20'
                                                 : `bg-transparent group-hover:bg-gradient-to-r group-hover:${item.gradient} group-hover:text-white`
-                                        }`}
+                                            }`}
                                         whileHover={{ scale: 1.1 }}
                                         transition={{ duration: 0.2 }}
                                     >
                                         <item.icon size={18} />
                                     </motion.div>
                                     {item.name}
-                                    
+
                                     {/* Animated indicator */}
                                     {item.active && (
                                         <motion.div
@@ -231,10 +229,8 @@ function Header() {
                         ))}
                     </nav>
 
-                    {/* Enhanced Right Section */}
                     <div className="flex items-center space-x-3">
-                        
-                        {/* Enhanced Search Button */}
+
                         {/* <motion.button
                             onClick={() => setSearchOpen(!searchOpen)}
                             className={`hidden md:flex items-center justify-center w-10 h-10 rounded-xl ${currentTheme.hover} transition-all duration-300 group`}
@@ -244,7 +240,6 @@ function Header() {
                             <Search className={`w-5 h-5 ${currentTheme.textSecondary} group-hover:text-blue-500 transition-colors`} />
                         </motion.button> */}
 
-                        {/* Enhanced Notifications */}
                         {/* <motion.button
                             className={`relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl ${currentTheme.hover} transition-all duration-300 group`}
                             whileHover={{ scale: 1.1 }}
@@ -258,7 +253,6 @@ function Header() {
                             />
                         </motion.button> */}
 
-                        {/* Enhanced Theme Toggle */}
                         <motion.button
                             onClick={toggleTheme}
                             className={`relative w-10 h-10 rounded-xl ${currentTheme.hover} transition-all duration-300 overflow-hidden group`}
@@ -283,113 +277,138 @@ function Header() {
                             </motion.div>
                         </motion.button>
 
-                        {/* Enhanced Profile Dropdown */}
                         <div className="relative">
-                            <motion.button
-                                onClick={() => setProfileOpen(!profileOpen)}
-                                className={`flex items-center space-x-3 p-2 rounded-xl ${currentTheme.hover} transition-all duration-300 group`}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                <div className={`relative w-8 h-8 bg-gradient-to-br ${currentTheme.accent} rounded-xl flex items-center justify-center shadow-lg ${currentTheme.glow} group-hover:shadow-xl transition-all duration-300`}>
-                                    <span className="text-white font-bold text-sm">
-                                        {user?.username?.[0]?.toUpperCase() || 'U'}
-                                    </span>
-                                    <motion.div
-                                        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"
-                                        initial={{ opacity: 0 }}
-                                        whileHover={{ opacity: 1 }}
-                                        transition={{ duration: 0.3 }}
-                                    />
-                                </div>
-                                
-                                <div className="hidden lg:block text-left">
-                                    <div className={`text-sm font-semibold ${currentTheme.text} group-hover:text-blue-500 transition-colors`}>
-                                        {user?.username || 'User'}
-                                    </div>
-                                    <div className={`text-xs ${currentTheme.textSecondary} truncate max-w-32`}>
-                                        {user?.email || 'user@example.com'}
-                                    </div>
-                                </div>
-                                
-                                <motion.div
-                                    animate={{ rotate: profileOpen ? 180 : 0 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    <ChevronDown className={`w-4 h-4 ${currentTheme.textSecondary} group-hover:text-blue-500 transition-colors`} />
-                                </motion.div>
-                            </motion.button>
-
-                            <AnimatePresence>
-                                {profileOpen && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                        transition={{ duration: 0.2, ease: "easeOut" }}
-                                        className={`absolute right-0 mt-3 w-72 ${currentTheme.cardBg} backdrop-blur-xl border rounded-2xl shadow-2xl ${currentTheme.glow} z-50 overflow-hidden`}
+                            {isAuthenticated ? (
+                                <>
+                                    <motion.button
+                                        onClick={() => setProfileOpen(!profileOpen)}
+                                        className={`flex items-center space-x-3 p-2 rounded-xl ${currentTheme.hover} transition-all duration-300 group`}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
                                     >
-                                        {/* Profile Header */}
-                                        <div className={`p-5 ${isDarkTheme ? 'bg-gradient-to-r from-slate-700/50 to-slate-600/50 border-slate-600/30' : 'bg-gradient-to-r from-blue-50/80 to-purple-50/80 border-gray-200/50'} border-b`}>
-                                            <div className="flex items-center space-x-3">
-                                                <div className={`w-12 h-12 bg-gradient-to-br ${currentTheme.accent} rounded-xl flex items-center justify-center shadow-lg`}>
-                                                    <span className="text-white font-bold text-lg">
-                                                        {user?.username?.[0]?.toUpperCase() || 'U'}
-                                                    </span>
-                                                </div>
-                                                <div className="flex-1">
-                                                    <div className={`font-semibold ${currentTheme.text} text-base`}>
-                                                        {user?.username || 'User'}
-                                                    </div>
-                                                    <div className={`text-sm ${currentTheme.textSecondary} truncate`}>
-                                                        {user?.email || 'user@example.com'}
-                                                    </div>
-                                                    <div className="flex items-center mt-1">
-                                                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2" />
-                                                        <span className="text-xs text-green-500 font-medium">Online</span>
-                                                    </div>
-                                                </div>
+                                        <div className={`relative w-8 h-8 bg-gradient-to-br ${currentTheme.accent} rounded-xl flex items-center justify-center shadow-lg ${currentTheme.glow} group-hover:shadow-xl transition-all duration-300`}>
+                                            <span className="text-white font-bold text-sm">
+                                                {user?.username?.[0]?.toUpperCase() || 'U'}
+                                            </span>
+                                            <motion.div
+                                                className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"
+                                                initial={{ opacity: 0 }}
+                                                whileHover={{ opacity: 1 }}
+                                                transition={{ duration: 0.3 }}
+                                            />
+                                        </div>
+
+                                        <div className="hidden lg:block text-left">
+                                            <div className={`text-sm font-semibold ${currentTheme.text} group-hover:text-blue-500 transition-colors`}>
+                                                {user?.username || 'User'}
+                                            </div>
+                                            <div className={`text-xs ${currentTheme.textSecondary} truncate max-w-32`}>
+                                                {user?.email || 'user@example.com'}
                                             </div>
                                         </div>
 
-                                        {/* Profile Menu */}
-                                        <div className="p-2">
-                                            <Link
-                                                href="/profile"
-                                                className={`flex items-center space-x-3 px-3 py-3 rounded-xl ${currentTheme.hover} transition-all duration-300 group`}
-                                                onClick={() => setProfileOpen(false)}
+                                        <motion.div
+                                            animate={{ rotate: profileOpen ? 180 : 0 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            <ChevronDown className={`w-4 h-4 ${currentTheme.textSecondary} group-hover:text-blue-500 transition-colors`} />
+                                        </motion.div>
+                                    </motion.button>
+
+                                    {/* Dropdown */}
+                                    <AnimatePresence>
+                                        {profileOpen && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                transition={{ duration: 0.2, ease: "easeOut" }}
+                                                className={`absolute right-0 mt-3 w-72 ${currentTheme.cardBg} backdrop-blur-xl border rounded-2xl shadow-2xl ${currentTheme.glow} z-50 overflow-hidden`}
                                             >
-                                                <div className={`w-8 h-8 ${isDarkTheme ? 'bg-blue-500/20' : 'bg-blue-100'} rounded-lg flex items-center justify-center group-hover:${isDarkTheme ? 'bg-blue-500/30' : 'bg-blue-200'} transition-colors`}>
-                                                    <User className="w-4 h-4 text-blue-500" />
+                                                {/* Profile Header */}
+                                                <div className={`p-5 ${isDarkTheme ? 'bg-gradient-to-r from-slate-700/50 to-slate-600/50 border-slate-600/30' : 'bg-gradient-to-r from-blue-50/80 to-purple-50/80 border-gray-200/50'} border-b`}>
+                                                    <div className="flex items-center space-x-3">
+                                                        <div className={`w-12 h-12 bg-gradient-to-br ${currentTheme.accent} rounded-xl flex items-center justify-center shadow-lg`}>
+                                                            <span className="text-white font-bold text-lg">
+                                                                {user?.username?.[0]?.toUpperCase() || 'U'}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <div className={`font-semibold ${currentTheme.text} text-base`}>
+                                                                {user?.username || 'User'}
+                                                            </div>
+                                                            <div className={`text-sm ${currentTheme.textSecondary} truncate`}>
+                                                                {user?.email || 'user@example.com'}
+                                                            </div>
+                                                            <div className="flex items-center mt-1">
+                                                                <div className="w-2 h-2 bg-green-400 rounded-full mr-2" />
+                                                                <span className="text-xs text-green-500 font-medium">Online</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <div className={`font-medium ${currentTheme.text}`}>Profile</div>
-                                                    <div className={`text-xs ${currentTheme.textSecondary}`}>Manage your account</div>
+
+                                                {/* Profile Menu */}
+                                                <div className="p-2">
+                                                    <Link
+                                                        href="/profile"
+                                                        className={`flex items-center space-x-3 px-3 py-3 rounded-xl ${currentTheme.hover} transition-all duration-300 group`}
+                                                        onClick={() => setProfileOpen(false)}
+                                                    >
+                                                        <div className={`w-8 h-8 ${isDarkTheme ? 'bg-blue-500/20' : 'bg-blue-100'} rounded-lg flex items-center justify-center group-hover:${isDarkTheme ? 'bg-blue-500/30' : 'bg-blue-200'} transition-colors`}>
+                                                            <User className="w-4 h-4 text-blue-500" />
+                                                        </div>
+                                                        <div>
+                                                            <div className={`font-medium ${currentTheme.text}`}>Profile</div>
+                                                            <div className={`text-xs ${currentTheme.textSecondary}`}>Manage your account</div>
+                                                        </div>
+                                                    </Link>
+
+                                                    <button
+                                                        onClick={() => {
+                                                            setProfileOpen(false)
+                                                            handleLogout()
+                                                        }}
+                                                        className={`flex items-center space-x-3 px-3 py-3 rounded-xl text-red-500 ${isDarkTheme ? 'hover:bg-red-500/10' : 'hover:bg-red-50'} transition-all duration-300 w-full text-left group`}
+                                                    >
+                                                        <div className={`w-8 h-8 ${isDarkTheme ? 'bg-red-500/20' : 'bg-red-100'} rounded-lg flex items-center justify-center group-hover:${isDarkTheme ? 'bg-red-500/30' : 'bg-red-200'} transition-colors`}>
+                                                            <LogOut className="w-4 h-4 text-red-500" />
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-medium">Sign Out</div>
+                                                            <div className={`text-xs ${isDarkTheme ? 'text-red-400' : 'text-red-500'}`}>End your session</div>
+                                                        </div>
+                                                    </button>
                                                 </div>
-                                            </Link>
-                                            
-                                            <button
-                                                onClick={() => {
-                                                    setProfileOpen(false)
-                                                    handleLogout()
-                                                }}
-                                                className={`flex items-center space-x-3 px-3 py-3 rounded-xl text-red-500 ${isDarkTheme ? 'hover:bg-red-500/10' : 'hover:bg-red-50'} transition-all duration-300 w-full text-left group`}
-                                            >
-                                                <div className={`w-8 h-8 ${isDarkTheme ? 'bg-red-500/20' : 'bg-red-100'} rounded-lg flex items-center justify-center group-hover:${isDarkTheme ? 'bg-red-500/30' : 'bg-red-200'} transition-colors`}>
-                                                    <LogOut className="w-4 h-4 text-red-500" />
-                                                </div>
-                                                <div>
-                                                    <div className="font-medium">Sign Out</div>
-                                                    <div className={`text-xs ${isDarkTheme ? 'text-red-400' : 'text-red-500'}`}>End your session</div>
-                                                </div>
-                                            </button>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </>
+                            ) : (
+                                <div className="flex space-x-3">
+                                    <Link href="/sign-in">
+                                        <motion.button
+                                            className={`px-4 py-2 rounded-xl font-medium ${currentTheme.hover} ${currentTheme.text} transition-all duration-300`}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            Sign In
+                                        </motion.button>
+                                    </Link>
+                                    <Link href="/sign-up">
+                                        <motion.button
+                                            className="px-4 py-2 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md hover:shadow-lg transition-all duration-300"
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            Sign Up
+                                        </motion.button>
+                                    </Link>
+                                </div>
+                            )}
                         </div>
 
-                        {/* Enhanced Mobile Menu Button */}
+
                         <motion.button
                             className="lg:hidden p-2 rounded-xl transition-all duration-300"
                             whileTap={{ scale: 0.9 }}
@@ -410,7 +429,6 @@ function Header() {
                 </div>
             </div>
 
-            {/* Enhanced Mobile Menu */}
             <AnimatePresence>
                 {menuOpen && (
                     <motion.div
@@ -430,16 +448,14 @@ function Header() {
                                 >
                                     <Link
                                         href={item.href}
-                                        className={`flex items-center px-4 py-4 rounded-xl font-medium transition-all duration-300 ${
-                                            item.active
+                                        className={`flex items-center px-4 py-4 rounded-xl font-medium transition-all duration-300 ${item.active
                                                 ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
                                                 : `${currentTheme.text} ${currentTheme.hover}`
-                                        }`}
+                                            }`}
                                         onClick={() => setMenuOpen(false)}
                                     >
-                                        <div className={`p-2 rounded-lg mr-4 ${
-                                            item.active ? 'bg-white/20' : `${isDarkTheme ? 'bg-slate-700/50' : 'bg-gray-100'}`
-                                        }`}>
+                                        <div className={`p-2 rounded-lg mr-4 ${item.active ? 'bg-white/20' : `${isDarkTheme ? 'bg-slate-700/50' : 'bg-gray-100'}`
+                                            }`}>
                                             <item.icon size={20} />
                                         </div>
                                         <div>
